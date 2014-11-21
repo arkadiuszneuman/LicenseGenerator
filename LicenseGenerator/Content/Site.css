@@ -1,0 +1,11 @@
+﻿.css-form input.ng-invalid.ng-dirty {
+    border: 2px solid #FA787E;
+}
+
+#drop_zone {
+    border: 2px dashed black;
+}
+
+/*.css-form input.ng-valid.ng-dirty {
+    background-color: #78FA89;
+}*/
