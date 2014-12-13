@@ -51,7 +51,7 @@ namespace LicenseGenerator.Controllers.Utilities
                 throw new ArgumentNullException("vrpLicense.Nip");
             }
 
-            if (vrpLicense.Nip.Length != 9)
+            if (vrpLicense.Nip.Length != 10)
             {
                 throw new InvalidNipException();
             }

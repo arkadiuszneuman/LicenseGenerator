@@ -51,7 +51,7 @@ namespace LicenseGeneratorTests
         {
             LicenseCreator vrlLicenseCreator = new LicenseCreator();
             LicenseViewModel vrlLicenseViewModel = GetLicenseViewModel();
-            vrlLicenseViewModel.Nip = "1234567890";
+            vrlLicenseViewModel.Nip = "12345678901";
 
             Assert.Throws<InvalidNipException>(() =>
             {
@@ -80,7 +80,7 @@ namespace LicenseGeneratorTests
 
             string vrlLicense = vrlLicenseCreator.CreateLicenseFromVM(vrlLicenseViewModel);
             const string correctLicense = "Program\r\n" +
-                                             "123456789\r\n" +
+                                             "1234567890\r\n" +
                                              "priv1, priv2\r\n" +
                                              "Company\r\n" +
                                              "Addional info\r\n" +
@@ -100,7 +100,7 @@ namespace LicenseGeneratorTests
 
             string vrlLicense = vrlLicenseCreator.CreateLicenseFromVM(vrlLicenseViewModel);
             const string correctLicense = "Program\r\n" +
-                                             "123456789\r\n" +
+                                             "1234567890\r\n" +
                                              "priv1, priv2\r\n" +
                                              "Company\r\n" +
                                              "Addional info\r\n" +
@@ -121,7 +121,7 @@ namespace LicenseGeneratorTests
 
             string vrlLicense = vrlLicenseCreator.CreateLicenseFromVM(vrlLicenseViewModel);
             const string correctLicense = "Program\r\n" +
-                                          "123456789\r\n" +
+                                          "1234567890\r\n" +
                                           "priv1, priv2\r\n" +
                                           "Company\r\n" +
                                           "Addional info\r\n" +
@@ -139,7 +139,7 @@ namespace LicenseGeneratorTests
 
             string vrlLicense = vrlLicenseCreator.CreateLicenseFromVM(vrlLicenseViewModel);
             const string correctLicense = "Program\r\n" +
-                                             "123456789\r\n" +
+                                             "1234567890\r\n" +
                                              "0\r\n" +
                                              "Company\r\n" +
                                              "Addional info\r\n" +
@@ -159,7 +159,7 @@ namespace LicenseGeneratorTests
 
             string vrlLicense = vrlLicenseCreator.CreateLicenseFromVM(vrlLicenseViewModel);
             const string correctLicense = "Program\r\n" +
-                                             "123456789\r\n" +
+                                             "1234567890\r\n" +
                                              "priv1, priv2\r\n" +
                                              "Company\r\n" +
                                              "\r\n" +
@@ -179,7 +179,7 @@ namespace LicenseGeneratorTests
                 Date = new DateTime(2010, 12, 15),
                 LicenseNumbers = 5,
                 Name = "Program",
-                Nip = "123456789",
+                Nip = "1234567890",
                 Privileges = "priv1, priv2",
                 ProgramVersion = "1.0.1"
             };
