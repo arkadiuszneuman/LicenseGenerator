@@ -91,11 +91,20 @@ class LicenseGeneratorButtonsCreator {
         return license;
     }
 
+    private getLicenseName(license) {
+        var licenseName = license.name + "_" + license.nip;
 
+        if (license.partnernip != null) {
+            licenseName += "_" + license.partnernip;
+        }
+
+        return licenseName;
+    }
 
     public configureButtons($scope) {
 
         var that = this;
+
 
         $scope.generateLicense = function (lic) {
 
@@ -103,7 +112,7 @@ class LicenseGeneratorButtonsCreator {
 
             $.post(siteUrl + "Home/GenerateLicense", { license: license }, function (result) {
                 //var blob = new Blob([result], { type: "example/binary" });
-                saveToDisk(siteUrl + result, license.name + ".lic");
+                saveToDisk(siteUrl + result, that.getLicenseName(license) + ".lic");
             });
         };
 
@@ -111,7 +120,7 @@ class LicenseGeneratorButtonsCreator {
             var license = that.createValidLicense(lic);
 
             $.post(siteUrl + "Home/GenerateLicense", { license: license }, function (result) {
-                saveToDisk(siteUrl + result, license.name + "S.txt");
+                saveToDisk(siteUrl + result, that.getLicenseName(license) + "S.txt");
             });
         };
 
@@ -121,7 +130,7 @@ class LicenseGeneratorButtonsCreator {
 
             $.post(siteUrl + "Home/GenerateDecryptedLicense", { license: license }, function (result) {
                 var blob = new Blob([result], { type: "text/plain;charset=utf-8" });
-                saveAs(blob, license.name + ".txt")
+                saveAs(blob, that.getLicenseName(license) + ".txt");
             });
         };
     }

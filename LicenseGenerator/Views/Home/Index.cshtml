@@ -6,79 +6,87 @@
 
 <div ng-controller="LicenseGeneratorController">
     @*<div id="drop_zone">asdasd</div>*@
-        <div class="jumbotron">
-            <h1>Informacje o licencji</h1>
+    <div class="jumbotron">
+        <h1>Informacje o licencji</h1>
 
-            <form role="form" class="form-horizontal css-form" name="licform">
-                <div class="form-group">
-                    <label for="name" class="col-sm-4 control-label">Nazwa programu:</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="name" placeholder="Wpisz nazwę identyfikującą program" required
-                               ng-model="lic.name">
-                    </div>
+        <form role="form" class="form-horizontal css-form" name="licform">
+            <div class="form-group">
+                <label for="name" class="col-sm-4 control-label">Nazwa programu:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="name" placeholder="Wpisz nazwę identyfikującą program" required
+                           ng-model="lic.name">
                 </div>
-                <div class="form-group">
-                    <label for="nip" class="col-sm-4 control-label">NIP:</label>
-                    <div class="col-sm-8">
-                        <input type="text" only-digits class="form-control" id="nip" placeholder="Wpisz NIP klienta" required integer ng-minlength="10" ng-maxlength="10"
-                               ng-model="lic.nip">
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="nip" class="col-sm-4 control-label">NIP:</label>
+                <div class="col-sm-8">
+                    <input type="text" only-digits class="form-control" id="nip" placeholder="Wpisz NIP klienta" required integer ng-minlength="10" ng-maxlength="10"
+                           ng-model="lic.nip">
                 </div>
-                <div class="form-group">
-                    <label for="privileges" class="col-sm-4 control-label">Uprawnienia:</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="privileges" placeholder="Wpisz uprawnienia dla klienta (niewymagane)" ng-model="lic.privileges">
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="privileges" class="col-sm-4 control-label">Uprawnienia:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="privileges" placeholder="Wpisz uprawnienia dla klienta (niewymagane)" ng-model="lic.privileges">
                 </div>
-                <div class="form-group">
-                    <label for="company1" class="col-sm-4 control-label">Firma:</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="company1" placeholder="Wpisz informacje klienta" required ng-model="lic.company1">
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="company1" class="col-sm-4 control-label">Firma:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="company1" placeholder="Wpisz informacje klienta" required ng-model="lic.company1">
                 </div>
-                <div class="form-group">
-                    <label for="company2" class="col-sm-4 control-label">Dodatkowe informacje:</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="company2" placeholder="Wpisz dodatkowe informacje klienta" ng-model="lic.company2">
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="company2" class="col-sm-4 control-label">Dodatkowe informacje:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="company2" placeholder="Wpisz dodatkowe informacje klienta" ng-model="lic.company2">
                 </div>
-                <div class="form-group">
-                    <label for="date" class="col-sm-4 control-label">Licencja aktualna do:</label>
-                    <div class="col-sm-8">
-                        @*<div class="input-group date">*@
-                        <input type="text" placeholder="Data wygaśniecia licencji (niewymagane)" ng-click="open($event)" class="form-control" datepicker-popup="{{format}}" is-open="opened" min-date="minDate"
-                               datepicker-options="dateOptions" ng-required="false" ng-model="lic.date" />
-                        @*<span class="input-group-addon" ng-click="clearDate($event)">
-                                <i class="glyphicon glyphicon-th"></i>
-                            </span>*@
-                        @*</div>*@
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="date" class="col-sm-4 control-label">Licencja aktualna do:</label>
+                <div class="col-sm-8">
+                    @*<div class="input-group date">*@
+                    <input type="text" placeholder="Data wygaśniecia licencji (niewymagane)" ng-click="open($event)" class="form-control" datepicker-popup="{{format}}" is-open="opened" min-date="minDate"
+                           datepicker-options="dateOptions" ng-required="false" ng-model="lic.date" />
+                    @*<span class="input-group-addon" ng-click="clearDate($event)">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>*@
+                    @*</div>*@
                 </div>
-                <div class="form-group">
-                    <label for="licensenumbers" class="col-sm-4 control-label">Liczba stanowisk:</label>
-                    <div class="col-sm-8">
-                        <input type="text" only-digits class="form-control" id="licensenumbers" placeholder="Wpisz liczbę stanowisk (niewymagane)" integer ng-model="lic.licensenumbers">
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="licensenumbers" class="col-sm-4 control-label">Liczba stanowisk:</label>
+                <div class="col-sm-8">
+                    <input type="text" only-digits class="form-control" id="licensenumbers" placeholder="Wpisz liczbę stanowisk (niewymagane)" integer ng-model="lic.licensenumbers">
                 </div>
-                <div class="form-group">
-                    <label for="programversion" class="col-sm-4 control-label">Wersja programu:</label>
-                    <div class="col-sm-8">
-                        <input type="text" only-digits class="form-control" id="licensenumbers" placeholder="Wpisz wersję programu (niewymagane)" ng-model="lic.programversion">
-                    </div>
+            </div>
+            <div class="form-group">
+                <label for="programversion" class="col-sm-4 control-label">Wersja programu:</label>
+                <div class="col-sm-8">
+                    <input type="text" only-digits class="form-control" id="licensenumbers" placeholder="Wpisz wersję programu (niewymagane)" ng-model="lic.programversion">
                 </div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary" ng-click="generateTxtLicense(lic)" ng-disabled="licform.$invalid">Generuj licencję</button>
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-disabled="licform.$invalid">
-                        <span class="caret"></span>
-                        <span class="sr-only">Pokaż podmenu</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        @*<li><a href="" ng-click="generateTxtLicense(lic)">Generuj licencję zaszyfrowaną jako *.txt</a></li>*@
-                        <li><a href="" ng-click="generateDecryptedLicense(lic)">Generuj licencję niezaszyfrowaną</a></li>
-                    </ul>
+            </div>
+            <hr/>
+            <div class="form-group">
+                <label for="partnernip" class="col-sm-4 control-label">NIP partnera:</label>
+                <div class="col-sm-8">
+                    <input type="text" only-digits class="form-control" id="partnernip" placeholder="Wpisz NIP partnera" integer ng-minlength="10" ng-maxlength="10"
+                           ng-model="lic.partnernip">
                 </div>
-            </form>
-        </div>
-    
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary" ng-click="generateTxtLicense(lic)" ng-disabled="licform.$invalid">Generuj licencję</button>
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-disabled="licform.$invalid">
+                    <span class="caret"></span>
+                    <span class="sr-only">Pokaż podmenu</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    @*<li><a href="" ng-click="generateTxtLicense(lic)">Generuj licencję zaszyfrowaną jako *.txt</a></li>*@
+                    <li><a href="" ng-click="generateDecryptedLicense(lic)">Generuj licencję niezaszyfrowaną</a></li>
+                </ul>
+            </div>
+        </form>
+    </div>
+
     @*<output id="list"></output>*@
 </div>

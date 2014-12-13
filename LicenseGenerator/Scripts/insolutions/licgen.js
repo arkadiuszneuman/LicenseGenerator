@@ -87,6 +87,16 @@ var LicenseGeneratorButtonsCreator = (function () {
         return license;
     };
 
+    LicenseGeneratorButtonsCreator.prototype.getLicenseName = function (license) {
+        var licenseName = license.name + "_" + license.nip;
+
+        if (license.partnernip != null) {
+            licenseName += "_" + license.partnernip;
+        }
+
+        return licenseName;
+    };
+
     LicenseGeneratorButtonsCreator.prototype.configureButtons = function ($scope) {
         var that = this;
 
@@ -95,7 +105,7 @@ var LicenseGeneratorButtonsCreator = (function () {
 
             $.post(siteUrl + "Home/GenerateLicense", { license: license }, function (result) {
                 //var blob = new Blob([result], { type: "example/binary" });
-                saveToDisk(siteUrl + result, license.name + ".lic");
+                saveToDisk(siteUrl + result, that.getLicenseName(license) + ".lic");
             });
         };
 
@@ -103,7 +113,7 @@ var LicenseGeneratorButtonsCreator = (function () {
             var license = that.createValidLicense(lic);
 
             $.post(siteUrl + "Home/GenerateLicense", { license: license }, function (result) {
-                saveToDisk(siteUrl + result, license.name + "S.txt");
+                saveToDisk(siteUrl + result, that.getLicenseName(license) + "S.txt");
             });
         };
 
@@ -112,7 +122,7 @@ var LicenseGeneratorButtonsCreator = (function () {
 
             $.post(siteUrl + "Home/GenerateDecryptedLicense", { license: license }, function (result) {
                 var blob = new Blob([result], { type: "text/plain;charset=utf-8" });
-                saveAs(blob, license.name + ".txt");
+                saveAs(blob, that.getLicenseName(license) + ".txt");
             });
         };
     };
