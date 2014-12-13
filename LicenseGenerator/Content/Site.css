@@ -2,7 +2,7 @@
     border: 2px solid #FA787E;
 }
 
-#drop_zone {
+.on-drop-over {
     border: 2px dashed black;
 }
 

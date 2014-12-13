@@ -66,6 +66,8 @@ namespace LicenseGenerator
             bundles.Add(new ScriptBundle("~/bundles/insolutions").Include(
                          "~/Scripts/insolutions/*.js"
                          ));
+
+            BundleTable.EnableOptimizations = false;
         }
     }
 }

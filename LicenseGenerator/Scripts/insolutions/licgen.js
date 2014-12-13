@@ -3,7 +3,8 @@
 angular.module('licensegenerator').controller('LicenseGeneratorController', function ($scope, datepickerPopupConfig) {
     new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
     new LicenseGeneratorButtonsCreator().configureButtons($scope);
-    new DropFileConfigurator().configureDropFiles($scope);
+    //new DropFileConfigurator().configureDropFiles($scope);
+    //$scope.lic = { name: 'Arek' };
 });
 
 var DropFileConfigurator = (function () {
@@ -20,7 +21,8 @@ var DropFileConfigurator = (function () {
 
         reader.onload = (function (theFile) {
             return function (e) {
-                DropFileConfigurator.$scope.lic.name = e.target.result;
+                var lines = e.target.result.split("\n");
+                DropFileConfigurator.$scope.lic = { name: lines[0] };
             };
         })(file);
 
@@ -39,7 +41,7 @@ var DropFileConfigurator = (function () {
     DropFileConfigurator.prototype.handleDragOver = function (evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+        evt.dataTransfer.dropEffect = 'move'; // Explicitly show this is a copy.
     };
 
     DropFileConfigurator.prototype.configureDropFiles = function ($scope) {
