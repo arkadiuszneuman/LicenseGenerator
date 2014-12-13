@@ -1,4 +1,5 @@
 ﻿using inSolutions.Utilities.Security;
+using LicenseGenerator.Controllers.Utilities;
 using LicenseGenerator.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace LicenseGenerator.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly LicenseCreator licenseCreator = new LicenseCreator();
         //
         // GET: /Home/
 
@@ -23,7 +25,7 @@ namespace LicenseGenerator.Controllers
         [HttpPost]
         public JsonResult GenerateLicense(LicenseViewModel license)
         {
-            string oneFileLicense = CreateLicenseFromVM(license);
+            string oneFileLicense = licenseCreator.CreateLicenseFromVM(license);
             string encryptedLicense = Cl_DataEncryption.EncryptText(oneFileLicense);
 
             string vrlDirectory = ControllerContext.HttpContext.Server.MapPath("~/licenses/");
@@ -45,7 +47,7 @@ namespace LicenseGenerator.Controllers
         {
             string filePath = license.Name + DateTime.Now.ToString()
                             .Replace(" ", "").Replace(":", "").Replace("-", "") + "S.txt";
-            
+
             if (!System.IO.File.Exists(filePath))
             {
                 return filePath;
@@ -68,26 +70,8 @@ namespace LicenseGenerator.Controllers
         [HttpPost]
         public JsonResult GenerateDecryptedLicense(LicenseViewModel license)
         {
-            string decryptedLicense = CreateLicenseFromVM(license);
+            string decryptedLicense = licenseCreator.CreateLicenseFromVM(license);
             return Json(decryptedLicense);
-        }
-
-        private string CreateLicenseFromVM(LicenseViewModel license)
-        {
-            StringBuilder builder = new StringBuilder();
-
-            builder.AppendLine(license.Name)
-                .AppendLine(license.Nip)
-                .AppendLine(license.Privileges == null ? "0" : license.Privileges)
-                .AppendLine(license.Company1)
-                .Append(license.Company2);
-
-            if (license.Date != null )
-            {
-                builder.Append(Environment.NewLine + license.Date.Value.Date.ToString("yyyy-MM-dd"));
-            }
-
-            return builder.ToString();
         }
 
         public ActionResult About()
