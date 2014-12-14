@@ -50,9 +50,7 @@ namespace LicenseGenerator
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                         "~/Scripts/angular-file-upload-shim.js",
-                         "~/Scripts/angular.js",
-                         "~/Scripts/angular-file-upload.js",
+                         "~/Scripts/angular*",
                          "~/Scripts/i18n/angular-locale_pl-pl.js",
                          "~/Scripts/angular-ui/ui-bootstrap.js",
                          "~/Scripts/angular-ui/ui-bootstrap-tpls.js"
