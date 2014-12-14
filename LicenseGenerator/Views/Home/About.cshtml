@@ -1,10 +1,17 @@
-﻿
+﻿@using System.ComponentModel
+@using System.Reflection
+
 @{
     ViewBag.Title = "Generator licencji - o programie";
-    ViewBag.Module = "About";    
+    ViewBag.Module = "About";
+
+    Assembly reference = typeof(LicenseGenerator.Controllers.HomeController).Assembly;
+    Version version = reference.GetName().Version;
+
+    string versionString = "v" + version.Major + "." + version.Minor;
 }
 
 <div class="jumbotron">
-    <h1>Generator licencji v1.0</h1>
+    <h1>Generator licencji @versionString</h1>
     <p class="lead">Autor: Arkadiusz Neuman &copy; inSolutions @DateTime.Now.Date.Year</p>
 </div>
