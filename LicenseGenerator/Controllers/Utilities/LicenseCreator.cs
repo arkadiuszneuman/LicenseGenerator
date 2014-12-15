@@ -56,8 +56,8 @@ namespace LicenseGenerator.Controllers.Utilities
                 throw new InvalidNipException();
             }
 
-            int number;
-            bool isNumeric = int.TryParse(vrpLicense.Nip, out number);
+            long number;
+            bool isNumeric = long.TryParse(vrpLicense.Nip, out number);
 
             if (!isNumeric)
             {
