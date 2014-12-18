@@ -209,3 +209,33 @@ app.directive('integer', function () {
         }
     };
 });
+
+var NIP_REGEXP = /^((\d{3}[- ]\d{3}[- ]\d{2}[- ]\d{2})|(\d{3}[- ]\d{2}[- ]\d{2}[- ]\d{3}))$/;
+
+app.directive('nip', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ctrl) {
+            ctrl.$validators.integer = function (modelValue, viewValue) {
+                if (ctrl.$isEmpty(modelValue)) {
+                    // consider empty models to be valid
+                    return true;
+                }
+
+
+                if (NIP_REGEXP.test(viewValue)) {
+                    // it is valid
+                    return true;
+                }
+
+                if (viewValue.length == 10 && INTEGER_REGEXP.test(viewValue)) {
+                    // it is valid
+                    return true;
+                }
+
+                // it is invalid
+                return false;
+            };
+        }
+    };
+});
