@@ -82,7 +82,7 @@ namespace LicenseGeneratorTests
             const string correctLicense = "Program\r\n" +
                                              "1234567890\r\n" +
                                              "priv1, priv2\r\n" +
-                                             "Company\r\n" +
+                                             "Customer\r\n" +
                                              "Addional info\r\n" +
                                              "2010-12-15\r\n" +
                                              "5\r\n" +
@@ -102,7 +102,7 @@ namespace LicenseGeneratorTests
             const string correctLicense = "Program\r\n" +
                                              "1234567890\r\n" +
                                              "priv1, priv2\r\n" +
-                                             "Company\r\n" +
+                                             "Customer\r\n" +
                                              "Addional info\r\n" +
                                              "2010-12-15\r\n" +
                                              "\r\n" +
@@ -123,7 +123,7 @@ namespace LicenseGeneratorTests
             const string correctLicense = "Program\r\n" +
                                           "1234567890\r\n" +
                                           "priv1, priv2\r\n" +
-                                          "Company\r\n" +
+                                          "Customer\r\n" +
                                           "Addional info\r\n" +
                                           "2010-12-15";
 
@@ -141,7 +141,7 @@ namespace LicenseGeneratorTests
             const string correctLicense = "Program\r\n" +
                                              "1234567890\r\n" +
                                              "0\r\n" +
-                                             "Company\r\n" +
+                                             "Customer\r\n" +
                                              "Addional info\r\n" +
                                              "2010-12-15\r\n" +
                                              "5\r\n" +
@@ -161,7 +161,7 @@ namespace LicenseGeneratorTests
             const string correctLicense = "Program\r\n" +
                                              "1234567890\r\n" +
                                              "priv1, priv2\r\n" +
-                                             "Company\r\n" +
+                                             "Customer\r\n" +
                                              "\r\n" +
                                              "2010-12-15\r\n" +
                                              "5\r\n" +
@@ -174,7 +174,7 @@ namespace LicenseGeneratorTests
         {
             return new LicenseViewModel()
             {
-                Company1 = "Company",
+                Company1 = "Customer",
                 Company2 = "Addional info",
                 Date = new DateTime(2010, 12, 15),
                 LicenseNumbers = 5,

@@ -4,7 +4,7 @@ declare function saveToDisk(fileURL, fileName);
 
 var app = angular.module('licensegenerator', ['ui.bootstrap']);
 
-angular.module('licensegenerator').controller('LicenseGeneratorController', function ($scope, datepickerPopupConfig, $filter) {
+angular.module('licensegenerator').controller('LicenseGeneratorController', function ($scope, datepickerPopupConfig, $filter, $http) {
     $scope.lic = {};
 
     new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
@@ -13,13 +13,24 @@ angular.module('licensegenerator').controller('LicenseGeneratorController', func
     //new DropFileConfigurator().configureDropFiles($scope);
 
     //$scope.lic = { name: 'Arek' };
+
+    $scope.getClients = function (val) {
+        return $http.post(siteUrl + "Home/LoadClients", { clientValue: val })
+            .then(function (response) {
+                return response.data;
+            });
+    };
+
+    $scope.onClientSelected = function ($item, $model, $label) {
+        $scope.lic.nip = $model.Nip;
+    };
 });
 
 function createDefaultLicense($scope, $filter) {
     var date = new Date();
     date.setMonth(date.getMonth() + 1);
 
-    $scope.lic.date = $filter('date')(date, 'yyyy-MM-dd'); 
+    $scope.lic.date = $filter('date')(date, 'yyyy-MM-dd');
 };
 
 class DropFileConfigurator {

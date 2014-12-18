@@ -1,5 +1,8 @@
-﻿using inSolutions.Utilities.Security;
+﻿using System.Reflection.Emit;
+using inSolutions.Utilities.Security;
 using LicenseGenerator.Controllers.Utilities;
+using LicenseGenerator.DAL;
+using LicenseGenerator.Models;
 using LicenseGenerator.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,6 +23,17 @@ namespace LicenseGenerator.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public JsonResult LoadClients(string clientValue)
+        {
+            using (LicenseGeneratorContext context = new LicenseGeneratorContext())
+            {
+                IEnumerable<Customer> vrlCustomers = context.Companies.Where(c => c.Name.Contains(clientValue) || c.Symbol.Contains(clientValue)).Take(10).ToList();
+                IEnumerable<CustomerViewModel> vrlCustomerViewModels = AutoMapper.Mapper.Map<IEnumerable<CustomerViewModel>>(vrlCustomers);
+
+                return Json(vrlCustomerViewModels);
+            }
         }
 
         [HttpPost]

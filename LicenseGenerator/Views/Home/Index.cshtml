@@ -18,6 +18,15 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="company1" class="col-sm-4 control-label">Firma:</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control" id="company1" placeholder="Wpisz nazwę firmy" required ng-model="lic.company1"
+                           typeahead="client as client.Name for client in getClients($viewValue)" typeahead-loading="loadingClients"
+                           typeahead-on-select='onClientSelected($item, $model, $label)'>
+                    @*<i ng-show="loadingClients" class="glyphicon glyphicon-refresh"></i>*@
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="nip" class="col-sm-4 control-label">NIP:</label>
                 <div class="col-sm-8">
                     <input type="text" only-digits class="form-control" id="nip" placeholder="Wpisz NIP klienta" required integer ng-minlength="10" ng-maxlength="10"
@@ -28,12 +37,6 @@
                 <label for="privileges" class="col-sm-4 control-label">Uprawnienia:</label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" id="privileges" placeholder="Wpisz uprawnienia dla klienta (niewymagane)" ng-model="lic.privileges">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="company1" class="col-sm-4 control-label">Firma:</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="company1" placeholder="Wpisz informacje klienta" required ng-model="lic.company1">
                 </div>
             </div>
             <div class="form-group">
