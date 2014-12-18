@@ -23,6 +23,7 @@ angular.module('licensegenerator').controller('LicenseGeneratorController', func
 
     $scope.onClientSelected = function ($item, $model, $label) {
         $scope.lic.nip = $model.Nip;
+        $scope.lic.company1 = $model.Name;
     };
 });
 
@@ -107,6 +108,11 @@ class LicenseGeneratorButtonsCreator {
         var license = angular.copy(lic);
         if (license.date != null) {
             license.date = this.customFormatDate(new Date(lic.date), "#YYYY#-#MM#-#DD# #hh#:#mm#:#ss#");
+        }
+
+        license.nip = license.nip.split("-").join("").split(" ").join("");
+        if (!angular.isUndefined(license.partnernip)) {
+            license.partnernip = license.partnernip.split("-").join("").split(" ").join("");
         }
 
         return license;
