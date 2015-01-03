@@ -180,7 +180,9 @@ var LicenseGeneratorButtonsCreator = (function () {
         $scope.generateTxtLicense = function (lic) {
             var license = that.createValidLicense(lic);
 
+            $("#btnGenerateLicense").button("loading");
             $.post(siteUrl + "Home/GenerateLicense", { license: license }, function (result) {
+                $("#btnGenerateLicense").button("reset");
                 saveToDisk(siteUrl + result, that.getLicenseName(license) + "S.txt");
             });
         };
@@ -188,7 +190,9 @@ var LicenseGeneratorButtonsCreator = (function () {
         $scope.generateDecryptedLicense = function (lic) {
             var license = that.createValidLicense(lic);
 
+            $("#btnGenerateLicense").button("loading");
             $.post(siteUrl + "Home/GenerateDecryptedLicense", { license: license }, function (result) {
+                $("#btnGenerateLicense").button("reset");
                 var blob = new Blob([result], { type: "text/plain;charset=utf-8" });
                 saveAs(blob, that.getLicenseName(license) + ".txt");
             });

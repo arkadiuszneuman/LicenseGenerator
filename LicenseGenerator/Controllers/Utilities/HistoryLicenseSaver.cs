@@ -16,7 +16,6 @@ namespace LicenseGenerator.Controllers.Utilities
         public void SaveLicenseHistory(GeneratedLicense license)
         {
             license.IsEncrypted = isEncrypted;
-
             using (LicenseGeneratorContext ctx = new LicenseGeneratorContext())
             {
                 ctx.GeneratedLicensesHistory.Add(license);
