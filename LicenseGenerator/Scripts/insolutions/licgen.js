@@ -1,7 +1,28 @@
-﻿var app = angular.module('licensegenerator', ['ui.bootstrap']);
+﻿var secretEmptyKey = '[$empty$]';
+var app = angular.module('licensegenerator', ['ui.bootstrap']);
 
-angular.module('licensegenerator').controller('LicenseGeneratorController', function ($scope, datepickerPopupConfig, $filter, $http) {
+app.directive('emptyTypeahead', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, element, attrs, modelCtrl) {
+            // this parser run before typeahead's parser
+            modelCtrl.$parsers.unshift(function (inputValue) {
+                var value = (inputValue ? inputValue : secretEmptyKey);
+                modelCtrl.$viewValue = value; // this $viewValue must match the inputValue pass to typehead directive
+                return value;
+            });
+
+            // this parser run after typeahead's parser
+            modelCtrl.$parsers.push(function (inputValue) {
+                return inputValue === secretEmptyKey ? '' : inputValue;
+            });
+        }
+    };
+});
+
+app.controller('LicenseGeneratorController', function ($scope, datepickerPopupConfig, $filter, $http, $timeout) {
     $scope.lic = {};
+    $scope.lic.company2 = undefined;
 
     new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
     new LicenseGeneratorButtonsCreator().configureButtons($scope);
@@ -18,6 +39,26 @@ angular.module('licensegenerator').controller('LicenseGeneratorController', func
     $scope.onClientSelected = function ($item, $model, $label) {
         $scope.lic.nip = $model.Nip;
         $scope.lic.company1 = $model.Name;
+    };
+
+    $scope.getAddionalInfos = function () {
+        var licenseGenerator = new LicenseGeneratorButtonsCreator();
+        var date = licenseGenerator.customFormatDate(new Date($scope.lic.date), "#YYYY#-#MM#-#DD#");
+        return [
+            "Licencja testowa ważna do " + date,
+            "Licencja bezterminowa",
+            "Licencja z abonamentem ważnym do " + date];
+    };
+
+    $scope.onAddionalInfoFocus = function (e) {
+        $timeout(function () {
+            $(e.target).trigger('input');
+            $(e.target).trigger('change'); // for IE
+        });
+    };
+
+    $scope.stateComparator = function (state, viewValue) {
+        return viewValue === secretEmptyKey || ('' + state).toLowerCase().indexOf(('' + viewValue).toLowerCase()) > -1;
     };
 });
 
