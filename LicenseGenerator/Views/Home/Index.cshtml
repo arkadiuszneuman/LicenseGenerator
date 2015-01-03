@@ -14,7 +14,8 @@
                 <label for="name" class="col-sm-4 control-label">Nazwa programu:</label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control" id="name" placeholder="Wpisz nazwę identyfikującą program" required
-                           ng-model="lic.name" tooltip-placement="right" tooltip="Nazwa licencji, identyfikująca program (np. ProdukcjaNAV)" tooltip-trigger="focus">
+                           ng-model="lic.name" tooltip-placement="right" tooltip="Nazwa licencji, identyfikująca program (np. ProdukcjaNAV)" tooltip-trigger="focus"
+                           ng-maxlength="20">
                 </div>
             </div>
             <div class="form-group">
@@ -23,7 +24,8 @@
                     <input type="text" class="form-control" id="company1" placeholder="Wpisz nazwę firmy" required ng-model="lic.company1"
                            typeahead="client as client.Name for client in getClients($viewValue)" typeahead-loading="loadingClients"
                            typeahead-on-select='onClientSelected($item, $model, $label)'
-                           tooltip="Firma, dla której wystawiana jest licencja" tooltip-trigger="focus" tooltip-placement="right">
+                           tooltip="Firma, dla której wystawiana jest licencja" tooltip-trigger="focus" tooltip-placement="right"
+                           ng-maxlength="255">
                     @*<i ng-show="loadingClients" class="glyphicon glyphicon-refresh"></i>*@
                 </div>
             </div>

@@ -54,7 +54,18 @@ namespace LicenseGenerator.Controllers
             {
                 vrlWriter.Write(encryptedLicense);
             }
+
+            SaveLicenseHistory(license, true);
+
             return Json("licenses/" + fileName);
+        }
+
+        private static void SaveLicenseHistory(LicenseViewModel license, bool isEncrypted)
+        {
+            HistoryLicenseCreator vrlHistoryLicenseCreator = new HistoryLicenseCreator();
+            var vrlGeneratedLicense = vrlHistoryLicenseCreator.GenerateLicense(license);
+            HistoryLicenseSaver vrlHistoryLicenseSaver = new HistoryLicenseSaver(isEncrypted);
+            vrlHistoryLicenseSaver.SaveLicenseHistory(vrlGeneratedLicense);
         }
 
         private static string GetFileName(LicenseViewModel license)
@@ -85,6 +96,9 @@ namespace LicenseGenerator.Controllers
         public JsonResult GenerateDecryptedLicense(LicenseViewModel license)
         {
             string decryptedLicense = licenseCreator.CreateLicenseFromVM(license);
+
+            SaveLicenseHistory(license, false);
+
             return Json(decryptedLicense);
         }
 

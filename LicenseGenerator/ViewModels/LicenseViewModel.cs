@@ -16,6 +16,6 @@ namespace LicenseGenerator.ViewModels
         public string Privileges { get; set; }
         public int? LicenseNumbers { get; set; }
         public string ProgramVersion { get; set; }
-        public string ProgramNip { get; set; }
+        public string PartnerNip { get; set; }
     }
 }

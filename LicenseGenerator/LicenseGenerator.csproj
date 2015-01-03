@@ -127,12 +127,19 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Utilities\HistoryLicenseCreator.cs" />
+    <Compile Include="Controllers\Utilities\HistoryLicenseSaver.cs" />
     <Compile Include="Controllers\Utilities\InvalidNipException.cs" />
     <Compile Include="Controllers\Utilities\LicenseCreator.cs" />
     <Compile Include="DAL\LicenseGeneratorContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501031546424_License history.cs" />
+    <Compile Include="Migrations\201501031546424_License history.Designer.cs">
+      <DependentUpon>201501031546424_License history.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GeneratedLicense.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1009,6 +1016,11 @@
     <TypeScriptCompile Include="Scripts\typings\bootstrap\bootstrap.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery.bootstrap.wizard\jquery.bootstrap.wizard.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201501031546424_License history.resx">
+      <DependentUpon>201501031546424_License history.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -12,6 +12,12 @@ namespace LicenseGenerator.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            CreateCustomerModel(modelBuilder);
+            CreateLicenseHistoryModel(modelBuilder);
+        }
+
+        private static void CreateCustomerModel(DbModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<Customer>().HasKey(p => p.Id);
             modelBuilder.Entity<Customer>().Map(m =>
             {
@@ -23,6 +29,16 @@ namespace LicenseGenerator.DAL
             });
         }
 
+        private void CreateLicenseHistoryModel(DbModelBuilder vrpModelBuilder)
+        {
+            vrpModelBuilder.Entity<GeneratedLicense>().Property(c => c.ProgramName).IsRequired().HasMaxLength(20);
+            vrpModelBuilder.Entity<GeneratedLicense>().Property(c => c.Company).IsRequired().HasMaxLength(255);
+            vrpModelBuilder.Entity<GeneratedLicense>().Property(c => c.NIP).IsRequired().IsFixedLength().HasMaxLength(10);
+            vrpModelBuilder.Entity<GeneratedLicense>().Property(c => c.PartnerNIP).IsFixedLength().HasMaxLength(10);
+            vrpModelBuilder.Entity<GeneratedLicense>().Property(c => c.GenerationDate).IsRequired();
+        }
+
         public DbSet<Customer> Companies { get; set; }
+        public DbSet<GeneratedLicense> GeneratedLicensesHistory { get; set; }
     }
 }
