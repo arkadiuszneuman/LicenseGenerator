@@ -102,6 +102,11 @@ namespace LicenseGenerator.Controllers
             return Json(decryptedLicense);
         }
 
+        public ActionResult History()
+        {
+            return View();
+        }
+
         public ActionResult About()
         {
             return View();
