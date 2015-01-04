@@ -104,7 +104,11 @@ namespace LicenseGenerator.Controllers
 
         public ActionResult History()
         {
-            return View();
+            using (LicenseGeneratorContext ctx = new LicenseGeneratorContext())
+            {
+                IEnumerable<GeneratedLicense> vrlGeneratedLicenses = ctx.GeneratedLicensesHistory.OrderByDescending(l => l.GenerationDate).ToList();
+                return View(vrlGeneratedLicenses);
+            }
         }
 
         public ActionResult About()
