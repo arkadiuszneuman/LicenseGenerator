@@ -61,6 +61,10 @@ namespace LicenseGenerator
                          "~/Scripts/FileSaver.js"
                          ));
 
+            bundles.Add(new ScriptBundle("~/bundles/other").Include(
+                         "~/Scripts/thirdparty/jszip/jszip.js"
+                         ));
+
             bundles.Add(new ScriptBundle("~/bundles/insolutions").Include(
                          "~/Scripts/insolutions/*.js"
                          ));
