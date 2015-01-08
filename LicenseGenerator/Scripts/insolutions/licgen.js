@@ -1,5 +1,5 @@
 ﻿var secretEmptyKey = '[$empty$]';
-var app = angular.module('licensegenerator', ['ui.bootstrap']);
+var app = angular.module('licensegenerator', ['ui.bootstrap', 'angularFileUpload']);
 
 app.directive('emptyTypeahead', function () {
     return {
@@ -20,51 +20,71 @@ app.directive('emptyTypeahead', function () {
     };
 });
 
-app.controller('LicenseGeneratorController', function ($scope, datepickerPopupConfig, $filter, $http, $timeout) {
-    $scope.lic = {};
-    $scope.lic.company2 = undefined;
+app.controller('LicenseGeneratorController', [
+    '$scope', 'datepickerPopupConfig', '$filter', '$http', '$timeout', '$upload',
+    function ($scope, datepickerPopupConfig, $filter, $http, $timeout, $upload) {
+        $scope.lic = {};
+        $scope.lic.company2 = undefined;
 
-    $scope.lic.name = "Program";
-    $scope.lic.nip = "648-255-92-51";
-    $scope.lic.company1 = "Firma";
+        //$scope.lic.name = "Program";
+        //$scope.lic.nip = "648-255-92-51";
+        //$scope.lic.company1 = "Firma";
+        new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
+        new LicenseGeneratorButtonsCreator().configureButtons($scope, $http);
+        createDefaultLicense($scope, $filter);
 
-    new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
-    new LicenseGeneratorButtonsCreator().configureButtons($scope);
-    createDefaultLicense($scope, $filter);
+        //new DropFileConfigurator().configureDropFiles($scope);
+        //$scope.lic = { name: 'Arek' };
+        $scope.getClients = function (val) {
+            return $http.post(siteUrl + "Home/LoadClients", { clientValue: val }).then(function (response) {
+                return response.data;
+            });
+        };
 
-    //new DropFileConfigurator().configureDropFiles($scope);
-    //$scope.lic = { name: 'Arek' };
-    $scope.getClients = function (val) {
-        return $http.post(siteUrl + "Home/LoadClients", { clientValue: val }).then(function (response) {
-            return response.data;
-        });
-    };
+        $scope.onClientSelected = function ($item, $model, $label) {
+            $scope.lic.nip = $model.Nip;
+            $scope.lic.company1 = $model.Name;
+        };
 
-    $scope.onClientSelected = function ($item, $model, $label) {
-        $scope.lic.nip = $model.Nip;
-        $scope.lic.company1 = $model.Name;
-    };
+        $scope.getAddionalInfos = function () {
+            var licenseGenerator = new LicenseGeneratorButtonsCreator();
+            var date = licenseGenerator.customFormatDate(new Date($scope.lic.date), "#YYYY#-#MM#-#DD#");
+            return [
+                "Licencja testowa ważna do " + date,
+                "Licencja bezterminowa",
+                "Licencja z abonamentem ważnym do " + date];
+        };
 
-    $scope.getAddionalInfos = function () {
-        var licenseGenerator = new LicenseGeneratorButtonsCreator();
-        var date = licenseGenerator.customFormatDate(new Date($scope.lic.date), "#YYYY#-#MM#-#DD#");
-        return [
-            "Licencja testowa ważna do " + date,
-            "Licencja bezterminowa",
-            "Licencja z abonamentem ważnym do " + date];
-    };
+        $scope.onAddionalInfoFocus = function (e) {
+            $timeout(function () {
+                $(e.target).trigger('input');
+                $(e.target).trigger('change'); // for IE
+            });
+        };
 
-    $scope.onAddionalInfoFocus = function (e) {
-        $timeout(function () {
-            $(e.target).trigger('input');
-            $(e.target).trigger('change'); // for IE
-        });
-    };
+        $scope.stateComparator = function (state, viewValue) {
+            return viewValue === secretEmptyKey || ('' + state).toLowerCase().indexOf(('' + viewValue).toLowerCase()) > -1;
+        };
 
-    $scope.stateComparator = function (state, viewValue) {
-        return viewValue === secretEmptyKey || ('' + state).toLowerCase().indexOf(('' + viewValue).toLowerCase()) > -1;
-    };
-});
+        $scope.fileSelected = function ($files, $event) {
+            var file = $files[0];
+            $scope.upload = $upload.upload({
+                url: siteUrl + 'Home/LoadLicense',
+                //method: 'POST' or 'PUT',
+                //headers: {'Authorization': 'xxx'}, // only for html5
+                //withCredentials: true,
+                data: { objectToUpload: file },
+                file: file
+            }).success(function (data, status, headers, config) {
+                if (data.success === true) {
+                    $scope.lic = data.license;
+                } else {
+                    $scope.message = data.message;
+                    $('#alertModal').modal('show');
+                }
+            });
+        };
+    }]);
 
 function createDefaultLicense($scope, $filter) {
     var date = new Date();
@@ -169,7 +189,7 @@ var LicenseGeneratorButtonsCreator = (function () {
         return licenseName;
     };
 
-    LicenseGeneratorButtonsCreator.prototype.configureButtons = function ($scope) {
+    LicenseGeneratorButtonsCreator.prototype.configureButtons = function ($scope, $http) {
         var that = this;
 
         $scope.generateLicense = function (lic) {

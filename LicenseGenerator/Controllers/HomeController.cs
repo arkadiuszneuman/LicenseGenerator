@@ -9,9 +9,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace LicenseGenerator.Controllers
 {
@@ -164,6 +167,80 @@ namespace LicenseGenerator.Controllers
         public ActionResult About()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ContentResult LoadLicense(HttpPostedFileBase objectToUpload)
+        {
+            try
+            {
+                LicenseViewModel vrlLicenseViewModel = null;
+
+                if (objectToUpload != null && objectToUpload.ContentLength > 0 && objectToUpload.ContentType == "text/plain")
+                {
+                    using (StreamReader reader = new StreamReader(objectToUpload.InputStream, Encoding.GetEncoding(1250)))
+                    {
+                        string license = reader.ReadToEnd();
+                        try
+                        {
+                            license = Cl_DataEncryption.DecryptText(license);
+                        }
+                        catch (CryptographicException)
+                        {
+                        }
+
+                        LicenseLoader licenseLoader = new LicenseLoader();
+                        vrlLicenseViewModel = licenseLoader.CreateVMFromLicense(license);
+                    }
+
+                    var returnObject = new
+                    {
+                        success = true,
+                        license = vrlLicenseViewModel
+                    };
+
+                    string json =
+                          JsonConvert.SerializeObject(
+                            returnObject,
+                            Formatting.Indented,
+                            new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }
+                          );
+
+                    return this.Content(json, "application/json");
+                }
+
+                var returnObject2 = new
+                {
+                    success = false,
+                    message = "Nieprawidłowy typ pliku."
+                };
+
+                string json2 =
+                     JsonConvert.SerializeObject(
+                       returnObject2,
+                       Formatting.Indented,
+                       new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }
+                     );
+
+                return this.Content(json2, "application/json");
+            }
+            catch (Exception e)
+            {
+                var returnObject = new
+                {
+                    success = false,
+                    message = e.Message
+                };
+
+                string json =
+                     JsonConvert.SerializeObject(
+                       returnObject,
+                       Formatting.Indented,
+                       new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }
+                     );
+
+                return this.Content(json, "application/json");
+            }
         }
     }
 }

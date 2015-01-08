@@ -50,7 +50,10 @@ namespace LicenseGenerator
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                         "~/Scripts/angular*",
+                         //"~/Scripts/angular*",
+                         "~/Scripts/angular.js",
+                         "~/Scripts/angular-file-upload.js",
+
                          "~/Scripts/i18n/angular-locale_pl-pl.js",
                          "~/Scripts/angular-ui/ui-bootstrap.js",
                          "~/Scripts/angular-ui/ui-bootstrap-tpls.js"
@@ -61,9 +64,9 @@ namespace LicenseGenerator
                          "~/Scripts/FileSaver.js"
                          ));
 
-            //bundles.Add(new ScriptBundle("~/bundles/other").Include(
-            //             "~/Scripts/thirdparty/jszip/jszip.js"
-            //             ));
+            bundles.Add(new ScriptBundle("~/bundles/other").Include(
+                         "~/Scripts/thirdparty/ng-flow/ng-flow-standalone.js"
+                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/insolutions").Include(
                          "~/Scripts/insolutions/*.js"

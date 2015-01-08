@@ -8,6 +8,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using LicenseGenerator.Models;
 using LicenseGenerator.ViewModels;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace LicenseGenerator
 {
@@ -26,6 +28,12 @@ namespace LicenseGenerator
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AutoMapper.Mapper.CreateMap<Customer, CustomerViewModel>();
+
+            var formatters = GlobalConfiguration.Configuration.Formatters;
+            var jsonFormatter = formatters.JsonFormatter;
+            JsonSerializerSettings settings = jsonFormatter.SerializerSettings;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }

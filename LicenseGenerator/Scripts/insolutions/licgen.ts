@@ -3,73 +3,99 @@ declare function saveAs(blob, text);
 declare function saveToDisk(fileURL, fileName);
 
 var secretEmptyKey = '[$empty$]';
-var app = angular.module('licensegenerator', ['ui.bootstrap']);
+var app = angular.module('licensegenerator', ['ui.bootstrap', 'angularFileUpload']);
 
-app.directive('emptyTypeahead', function() {
+app.directive('emptyTypeahead', function () {
     return {
         require: 'ngModel',
-        link: function(scope, element, attrs, modelCtrl) {
+        link: function (scope, element, attrs, modelCtrl) {
             // this parser run before typeahead's parser
-            modelCtrl.$parsers.unshift(function(inputValue) {
+            modelCtrl.$parsers.unshift(function (inputValue) {
                 var value = (inputValue ? inputValue : secretEmptyKey); // replace empty string with secretEmptyKey to bypass typeahead-min-length check
                 modelCtrl.$viewValue = value; // this $viewValue must match the inputValue pass to typehead directive
                 return value;
             });
 
             // this parser run after typeahead's parser
-            modelCtrl.$parsers.push(function(inputValue) {
+            modelCtrl.$parsers.push(function (inputValue) {
                 return inputValue === secretEmptyKey ? '' : inputValue; // set the secretEmptyKey back to empty string
             });
         }
     }
 });
 
-app.controller('LicenseGeneratorController', function ($scope, datepickerPopupConfig, $filter, $http, $timeout) {
-    $scope.lic = {};
-    $scope.lic.company2 = undefined;
+app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig', '$filter', '$http', '$timeout', '$upload',
+    function ($scope, datepickerPopupConfig, $filter, $http, $timeout, $upload) {
+        $scope.lic = {};
+        $scope.lic.company2 = undefined;
 
-    $scope.lic.name = "Program";
-    $scope.lic.nip = "648-255-92-51";
-    $scope.lic.company1 = "Firma";
+        //$scope.lic.name = "Program";
+        //$scope.lic.nip = "648-255-92-51";
+        //$scope.lic.company1 = "Firma";
 
-    new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
-    new LicenseGeneratorButtonsCreator().configureButtons($scope);
-    createDefaultLicense($scope, $filter);
-    //new DropFileConfigurator().configureDropFiles($scope);
+        new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
+        new LicenseGeneratorButtonsCreator().configureButtons($scope, $http);
+        createDefaultLicense($scope, $filter);
+        //new DropFileConfigurator().configureDropFiles($scope);
 
-    //$scope.lic = { name: 'Arek' };
+        //$scope.lic = { name: 'Arek' };
 
-    $scope.getClients = function (val) {
-        return $http.post(siteUrl + "Home/LoadClients", { clientValue: val })
-            .then(function (response) {
-                return response.data;
-            });
-    };
+        $scope.getClients = function (val) {
+            return $http.post(siteUrl + "Home/LoadClients", { clientValue: val })
+                .then(function (response) {
+                    return response.data;
+                });
+        };
 
-    $scope.onClientSelected = function ($item, $model, $label) {
-        $scope.lic.nip = $model.Nip;
-        $scope.lic.company1 = $model.Name;
-    };
+        $scope.onClientSelected = function ($item, $model, $label) {
+            $scope.lic.nip = $model.Nip;
+            $scope.lic.company1 = $model.Name;
+        };
 
-    $scope.getAddionalInfos = function () {
-        var licenseGenerator = new LicenseGeneratorButtonsCreator();
-        var date = licenseGenerator.customFormatDate(new Date($scope.lic.date), "#YYYY#-#MM#-#DD#");
-        return ["Licencja testowa ważna do " + date,
-            "Licencja bezterminowa",
-            "Licencja z abonamentem ważnym do " + date];
-    }
+        $scope.getAddionalInfos = function () {
+            var licenseGenerator = new LicenseGeneratorButtonsCreator();
+            var date = licenseGenerator.customFormatDate(new Date($scope.lic.date), "#YYYY#-#MM#-#DD#");
+            return ["Licencja testowa ważna do " + date,
+                "Licencja bezterminowa",
+                "Licencja z abonamentem ważnym do " + date];
+        }
 
     $scope.onAddionalInfoFocus = function (e) {
-        $timeout(function () {
-            $(e.target).trigger('input');
-            $(e.target).trigger('change'); // for IE
-        });
-    };
+            $timeout(function () {
+                $(e.target).trigger('input');
+                $(e.target).trigger('change'); // for IE
+            });
+        };
 
-    $scope.stateComparator = function (state, viewValue) {
-        return viewValue === secretEmptyKey || ('' + state).toLowerCase().indexOf(('' + viewValue).toLowerCase()) > -1;
-    };
-});
+        $scope.stateComparator = function (state, viewValue) {
+            return viewValue === secretEmptyKey || ('' + state).toLowerCase().indexOf(('' + viewValue).toLowerCase()) > -1;
+        };
+
+        $scope.fileSelected = function ($files, $event) {
+            var file = $files[0];
+            $scope.upload = $upload.upload({
+                url: siteUrl + 'Home/LoadLicense', // upload.php script, node.js route, or servlet url
+                //method: 'POST' or 'PUT',
+                //headers: {'Authorization': 'xxx'}, // only for html5
+                //withCredentials: true,
+                data: { objectToUpload: file },
+                file: file, // single file or a list of files. list is only for html5
+                //fileName: 'doc.jpg' or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
+                //fileFormDataName: myFile, // file formData name ('Content-Disposition'), server side request form name
+                // could be a list of names for multiple files (html5). Default is 'file'
+                //formDataAppender: function(formData, key, val){}  // customize how data is added to the formData. 
+                // See #40#issuecomment-28612000 for sample code
+
+            }).success(function (data, status, headers, config) {
+                    if (data.success === true) {
+                        $scope.lic = data.license;
+                    } else {
+                        $scope.message = data.message;
+                        $('#alertModal').modal('show');
+                    }
+                });
+        }
+}]);
 
 function createDefaultLicense($scope, $filter) {
     var date = new Date();
@@ -172,7 +198,7 @@ class LicenseGeneratorButtonsCreator {
         return licenseName;
     }
 
-    public configureButtons($scope) {
+    public configureButtons($scope, $http) {
         var that = this;
 
         $scope.generateLicense = function (lic) {
