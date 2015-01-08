@@ -28,6 +28,10 @@ app.controller('LicenseGeneratorController', function ($scope, datepickerPopupCo
     $scope.lic = {};
     $scope.lic.company2 = undefined;
 
+    $scope.lic.name = "Program";
+    $scope.lic.nip = "648-255-92-51";
+    $scope.lic.company1 = "Firma";
+
     new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
     new LicenseGeneratorButtonsCreator().configureButtons($scope);
     createDefaultLicense($scope, $filter);
@@ -192,7 +196,6 @@ class LicenseGeneratorButtonsCreator {
         };
 
         $scope.generateDecryptedLicense = function (lic) {
-
             var license = that.createValidLicense(lic);
 
             $("#btnGenerateLicense").button("loading");
@@ -200,6 +203,16 @@ class LicenseGeneratorButtonsCreator {
                 $("#btnGenerateLicense").button("reset");
                 var blob = new Blob([result], { type: "text/plain;charset=utf-8" });
                 saveAs(blob, that.getLicenseName(license) + ".txt");
+            });
+        };
+
+        $scope.generateZippedLicense = function (lic) {
+            var license = that.createValidLicense(lic);
+
+            $("#btnGenerateLicense").button("loading");
+            $.post(siteUrl + "Home/GenerateZippedLicense", { license: license }, function (result) {
+                $("#btnGenerateLicense").button("reset");
+                saveToDisk(siteUrl + result, that.getLicenseName(license) + ".zip");
             });
         };
     }

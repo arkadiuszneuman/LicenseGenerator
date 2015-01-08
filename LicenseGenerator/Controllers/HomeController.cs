@@ -7,6 +7,7 @@ using LicenseGenerator.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -39,6 +40,13 @@ namespace LicenseGenerator.Controllers
         [HttpPost]
         public JsonResult GenerateLicense(LicenseViewModel license)
         {
+            var fileName = GenerateLicenseToPath(license);
+
+            return Json("licenses/" + fileName);
+        }
+
+        private string GenerateLicenseToPath(LicenseViewModel license)
+        {
             string oneFileLicense = licenseCreator.CreateLicenseFromVM(license);
             string encryptedLicense = Cl_DataEncryption.EncryptText(oneFileLicense);
 
@@ -56,8 +64,7 @@ namespace LicenseGenerator.Controllers
             }
 
             SaveLicenseHistory(license, true);
-
-            return Json("licenses/" + fileName);
+            return fileName;
         }
 
         private static void SaveLicenseHistory(LicenseViewModel license, bool isEncrypted)
@@ -100,6 +107,49 @@ namespace LicenseGenerator.Controllers
             SaveLicenseHistory(license, false);
 
             return Json(decryptedLicense);
+        }
+
+        [HttpPost]
+        public JsonResult GenerateZippedLicense(LicenseViewModel license)
+        {
+            GetEndUserLicenseName(license);
+
+            string fileName = GenerateLicenseToPath(license);
+            string vrlDirectory = ControllerContext.HttpContext.Server.MapPath("~/licenses/");
+            string zipFileName = Path.GetFileNameWithoutExtension(fileName) + ".zip";
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+                {
+                    var demoFile = archive.CreateEntry(GetEndUserLicenseName(license) + "S.txt");
+
+                    using (var entryStream = demoFile.Open())
+                    using (Stream licenseStreamReader = new FileStream(vrlDirectory + fileName, FileMode.Open))
+                    {
+                        licenseStreamReader.CopyTo(entryStream);
+                    }
+                }
+
+                using (var fileStream = new FileStream(vrlDirectory + zipFileName, FileMode.Create))
+                {
+                    memoryStream.Seek(0, SeekOrigin.Begin);
+                    memoryStream.CopyTo(fileStream);
+                }
+            }
+
+            return Json("licenses/" + zipFileName);
+        }
+
+        private string GetEndUserLicenseName(LicenseViewModel license)
+        {
+            var licenseName = license.Name + "_" + license.Nip;
+
+            if (license.PartnerNip != null)
+            {
+                licenseName += "_" + license.PartnerNip;
+            }
+
+            return licenseName;
         }
 
         public ActionResult History()
