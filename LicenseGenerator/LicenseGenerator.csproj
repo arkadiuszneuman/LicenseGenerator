@@ -131,9 +131,12 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\Utilities\About\IVersionGetter.cs" />
     <Compile Include="Controllers\Utilities\About\ProgramVersionGetter.cs" />
     <Compile Include="Controllers\Utilities\HistoryLicenseCreator.cs" />
     <Compile Include="Controllers\Utilities\HistoryLicenseSaver.cs" />
+    <Compile Include="Controllers\Utilities\Home\IPatternCustomersLoader.cs" />
+    <Compile Include="Controllers\Utilities\Home\CountCustomersLoader.cs" />
     <Compile Include="Controllers\Utilities\InvalidNipException.cs" />
     <Compile Include="Controllers\Utilities\LicenseCreator.cs" />
     <Compile Include="Controllers\Utilities\LicenseLoader.cs" />

@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using LicenseGenerator.Controllers.Utilities.Home;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -21,8 +22,17 @@ namespace LicenseGenerator.Controllers
     public class HomeController : Controller
     {
         private readonly LicenseCreator licenseCreator = new LicenseCreator();
-        //
-        // GET: /Home/
+        private readonly IPatternCustomersLoader patternCustomersLoader;
+
+        public HomeController()
+            : this(new CountPatternCustomersLoader(10))
+        {
+        }
+
+        public HomeController(IPatternCustomersLoader patternCustomersLoader)
+        {
+            this.patternCustomersLoader = patternCustomersLoader;
+        }
 
         public ActionResult Index()
         {
@@ -31,13 +41,10 @@ namespace LicenseGenerator.Controllers
 
         public JsonResult LoadClients(string clientValue)
         {
-            using (LicenseGeneratorContext context = new LicenseGeneratorContext())
-            {
-                IEnumerable<Customer> vrlCustomers = context.Companies.Where(c => c.Name.Contains(clientValue) || c.Symbol.Contains(clientValue)).Take(10).ToList();
-                IEnumerable<CustomerViewModel> vrlCustomerViewModels = AutoMapper.Mapper.Map<IEnumerable<CustomerViewModel>>(vrlCustomers);
+            IEnumerable<Customer> vrlCustomers = patternCustomersLoader.LoadCustomers(clientValue);
+            IEnumerable<CustomerViewModel> vrlCustomerViewModels = AutoMapper.Mapper.Map<IEnumerable<CustomerViewModel>>(vrlCustomers);
 
-                return Json(vrlCustomerViewModels);
-            }
+            return Json(vrlCustomerViewModels);
         }
 
         [HttpPost]
