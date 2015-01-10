@@ -1,5 +1,6 @@
 ﻿using System;
 using LicenseGenerator.Controllers.Utilities;
+using LicenseGenerator.Controllers.Utilities.Home;
 using LicenseGenerator.ViewModels;
 using Xunit;
 

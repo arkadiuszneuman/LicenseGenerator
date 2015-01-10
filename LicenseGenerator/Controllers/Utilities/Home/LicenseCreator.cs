@@ -1,11 +1,10 @@
 using System;
-using System.Diagnostics;
 using System.Text;
 using LicenseGenerator.ViewModels;
 
-namespace LicenseGenerator.Controllers.Utilities
+namespace LicenseGenerator.Controllers.Utilities.Home
 {
-    public class LicenseCreator
+    public class LicenseCreator : ILicenseCreator
     {
         public string CreateLicenseFromVM(LicenseViewModel license)
         {

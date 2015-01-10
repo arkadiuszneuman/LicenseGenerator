@@ -21,17 +21,18 @@ namespace LicenseGenerator.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly LicenseCreator licenseCreator = new LicenseCreator();
+        private readonly ILicenseCreator licenseCreator;
         private readonly IPatternCustomersLoader patternCustomersLoader;
 
         public HomeController()
-            : this(new CountPatternCustomersLoader(10))
+            : this(new CountPatternCustomersLoader(10), new LicenseCreator())
         {
         }
 
-        public HomeController(IPatternCustomersLoader patternCustomersLoader)
+        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicenseCreator licenseCreator)
         {
             this.patternCustomersLoader = patternCustomersLoader;
+            this.licenseCreator = licenseCreator;
         }
 
         public ActionResult Index()
