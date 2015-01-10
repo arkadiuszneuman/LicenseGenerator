@@ -155,11 +155,6 @@ namespace LicenseGenerator.Controllers
             return licenseName;
         }
 
-        public ActionResult About()
-        {
-            return View();
-        }
-
         [HttpPost]
         public ContentResult LoadLicense(HttpPostedFileBase objectToUpload)
         {
