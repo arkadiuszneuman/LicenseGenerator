@@ -155,15 +155,6 @@ namespace LicenseGenerator.Controllers
             return licenseName;
         }
 
-        public ActionResult History()
-        {
-            using (LicenseGeneratorContext ctx = new LicenseGeneratorContext())
-            {
-                IEnumerable<GeneratedLicense> vrlGeneratedLicenses = ctx.GeneratedLicensesHistory.OrderByDescending(l => l.GenerationDate).ToList();
-                return View(vrlGeneratedLicenses);
-            }
-        }
-
         public ActionResult About()
         {
             return View();
@@ -174,10 +165,9 @@ namespace LicenseGenerator.Controllers
         {
             try
             {
-                LicenseViewModel vrlLicenseViewModel = null;
-
                 if (objectToUpload != null && objectToUpload.ContentLength > 0 && objectToUpload.ContentType == "text/plain")
                 {
+                    LicenseViewModel vrlLicenseViewModel = null;
                     using (StreamReader reader = new StreamReader(objectToUpload.InputStream, Encoding.GetEncoding(1250)))
                     {
                         string license = reader.ReadToEnd();

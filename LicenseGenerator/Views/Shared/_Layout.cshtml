@@ -12,8 +12,6 @@
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/filesaver")
     @Scripts.Render("~/bundles/other")
-    @*<script data-require="angular.js@1.2.x" src="https://code.angularjs.org/1.2.22/angular.js" data-semver="1.2.22"></script>
-    <script src="http://angular-file-upload.appspot.com/js/angular-file-upload.js"></script>*@
     @Scripts.Render("~/bundles/insolutions")
 
     <script>
@@ -26,42 +24,12 @@
             <nav>
                 <ul class="nav nav-pills pull-right">
                     <li role="presentation" class="@(ViewBag.Module == "Generator" ? "active" : "noactive")">@Html.ActionLink("Generator", "Index", "Home")</li>
-                    <li role="presentation" class="@(ViewBag.Module == "History" ? "active" : "noactive")">@Html.ActionLink("Historia licencji", "History", "Home")</li>
+                    <li role="presentation" class="@(ViewBag.Module == "History" ? "active" : "noactive")">@Html.ActionLink("Historia licencji", "Index", "History")</li>
                     <li role="presentation" class="@(ViewBag.Module == "About" ? "active" : "noactive")">@Html.ActionLink("O programie", "About", "Home")</li>
                 </ul>
             </nav>
             <h3 class="text-muted">Generator licencji</h3>
         </div>
-
-        @*<div class="jumbotron">
-                <h1>Jumbotron heading</h1>
-                <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-            </div>
-
-            <div class="row marketing">
-                <div class="col-lg-6">
-                    <h4>Subheading</h4>
-                    <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-                    <h4>Subheading</h4>
-                    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-                    <h4>Subheading</h4>
-                    <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </div>
-
-                <div class="col-lg-6">
-                    <h4>Subheading</h4>
-                    <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-                    <h4>Subheading</h4>
-                    <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-                    <h4>Subheading</h4>
-                    <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-                </div>
-            </div>*@
 
         @RenderBody()
 
