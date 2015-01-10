@@ -77,9 +77,9 @@ app.controller('LicenseGeneratorController', [
                 file: file
             }).success(function (data, status, headers, config) {
                 if (data.success === true) {
-                    $scope.lic = data.license;
+                    $scope.lic = data.object;
                 } else {
-                    $scope.message = data.message;
+                    $scope.message = data.object;
                     $('#alertModal').modal('show');
                 }
             });

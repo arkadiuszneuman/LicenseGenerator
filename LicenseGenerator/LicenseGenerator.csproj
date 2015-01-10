@@ -138,9 +138,14 @@
     <Compile Include="Controllers\Utilities\Home\ILicenseCreator.cs" />
     <Compile Include="Controllers\Utilities\Home\IPatternCustomersLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\CountCustomersLoader.cs" />
+    <Compile Include="Controllers\Utilities\Home\LicenseLoader\ILicenseToViewModelConverter.cs" />
+    <Compile Include="Controllers\Utilities\Home\LicenseLoader\LicenseLoader.cs" />
     <Compile Include="Controllers\Utilities\InvalidNipException.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseCreator.cs" />
-    <Compile Include="Controllers\Utilities\LicenseLoader.cs" />
+    <Compile Include="Controllers\Utilities\Home\LicenseLoader\LicenseToViewModelConverter.cs" />
+    <Compile Include="Controllers\Utilities\JsonConverter\IJsonConverter.cs" />
+    <Compile Include="Controllers\Utilities\JsonConverter\JsonConverter.cs" />
+    <Compile Include="Controllers\Utilities\JsonConverter\SuccessObject.cs" />
     <Compile Include="DAL\LicenseGeneratorContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

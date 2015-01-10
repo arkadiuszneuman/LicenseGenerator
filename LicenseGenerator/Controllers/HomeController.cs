@@ -1,38 +1,41 @@
-﻿using System.Reflection.Emit;
-using inSolutions.Utilities.Security;
-using LicenseGenerator.Controllers.Utilities;
-using LicenseGenerator.DAL;
-using LicenseGenerator.Models;
-using LicenseGenerator.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
+using inSolutions.Utilities.Security;
+using LicenseGenerator.Controllers.Utilities;
 using LicenseGenerator.Controllers.Utilities.Home;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using LicenseGenerator.Controllers.Utilities.Home.LicenseLoader;
+using LicenseGenerator.Controllers.Utilities.JsonConverter;
+using LicenseGenerator.Models;
+using LicenseGenerator.ViewModels;
 
 namespace LicenseGenerator.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILicenseCreator licenseCreator;
+        private readonly ILicenseLoader licenseLoader;
+        private readonly IJsonConverter jsonConverter;
         private readonly IPatternCustomersLoader patternCustomersLoader;
 
         public HomeController()
-            : this(new CountPatternCustomersLoader(10), new LicenseCreator())
+            : this(new CountPatternCustomersLoader(10), new LicenseCreator(),
+            new LicenseLoader(new LicenseToViewModelConverter(), new StreamLicenseLoader()), new JsonJavascriptConverter())
         {
         }
 
-        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicenseCreator licenseCreator)
+        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicenseCreator licenseCreator, ILicenseLoader licenseLoader, IJsonConverter jsonConverter)
         {
             this.patternCustomersLoader = patternCustomersLoader;
             this.licenseCreator = licenseCreator;
+            this.licenseLoader = licenseLoader;
+            this.jsonConverter = jsonConverter;
         }
 
         public ActionResult Index()
@@ -43,7 +46,7 @@ namespace LicenseGenerator.Controllers
         public JsonResult LoadClients(string clientValue)
         {
             IEnumerable<Customer> vrlCustomers = patternCustomersLoader.LoadCustomers(clientValue);
-            IEnumerable<CustomerViewModel> vrlCustomerViewModels = AutoMapper.Mapper.Map<IEnumerable<CustomerViewModel>>(vrlCustomers);
+            IEnumerable<CustomerViewModel> vrlCustomerViewModels = Mapper.Map<IEnumerable<CustomerViewModel>>(vrlCustomers);
 
             return Json(vrlCustomerViewModels);
         }
@@ -166,74 +169,10 @@ namespace LicenseGenerator.Controllers
         [HttpPost]
         public ContentResult LoadLicense(HttpPostedFileBase objectToUpload)
         {
-            try
-            {
-                if (objectToUpload != null && objectToUpload.ContentLength > 0 && objectToUpload.ContentType == "text/plain")
-                {
-                    LicenseViewModel vrlLicenseViewModel = null;
-                    using (StreamReader reader = new StreamReader(objectToUpload.InputStream, Encoding.GetEncoding(1250)))
-                    {
-                        string license = reader.ReadToEnd();
-                        try
-                        {
-                            license = Cl_DataEncryption.DecryptText(license);
-                        }
-                        catch (CryptographicException)
-                        {
-                        }
+            SuccessObject successObject = licenseLoader.LoadLicense(objectToUpload);
+            string json = jsonConverter.ConvertToJson(successObject);
 
-                        LicenseLoader licenseLoader = new LicenseLoader();
-                        vrlLicenseViewModel = licenseLoader.CreateVMFromLicense(license);
-                    }
-
-                    var returnObject = new
-                    {
-                        success = true,
-                        license = vrlLicenseViewModel
-                    };
-
-                    string json =
-                          JsonConvert.SerializeObject(
-                            returnObject,
-                            Formatting.Indented,
-                            new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }
-                          );
-
-                    return this.Content(json, "application/json");
-                }
-
-                var returnObject2 = new
-                {
-                    success = false,
-                    message = "Nieprawidłowy typ pliku."
-                };
-
-                string json2 =
-                     JsonConvert.SerializeObject(
-                       returnObject2,
-                       Formatting.Indented,
-                       new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }
-                     );
-
-                return this.Content(json2, "application/json");
-            }
-            catch (Exception e)
-            {
-                var returnObject = new
-                {
-                    success = false,
-                    message = e.Message
-                };
-
-                string json =
-                     JsonConvert.SerializeObject(
-                       returnObject,
-                       Formatting.Indented,
-                       new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() }
-                     );
-
-                return this.Content(json, "application/json");
-            }
+            return Content(json, "application/json");
         }
     }
 }

@@ -1,9 +1,9 @@
 using System;
 using LicenseGenerator.ViewModels;
 
-namespace LicenseGenerator.Controllers.Utilities
+namespace LicenseGenerator.Controllers.Utilities.Home.LicenseLoader
 {
-    public class LicenseLoader
+    public class LicenseToViewModelConverter : ILicenseToViewModelConverter
     {
         public LicenseViewModel CreateVMFromLicense(string vrpLicense)
         {
