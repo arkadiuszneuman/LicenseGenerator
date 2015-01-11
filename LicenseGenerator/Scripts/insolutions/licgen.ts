@@ -32,16 +32,9 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
         $scope.lic = {};
         $scope.lic.company2 = undefined;
 
-        //$scope.lic.name = "Program";
-        //$scope.lic.nip = "648-255-92-51";
-        //$scope.lic.company1 = "Firma";
-
         new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
         new LicenseGeneratorButtonsCreator().configureButtons($scope, $http);
         createDefaultLicense($scope, $filter);
-        //new DropFileConfigurator().configureDropFiles($scope);
-
-        //$scope.lic = { name: 'Arek' };
 
         $scope.getClients = function (val) {
             return $http.post(siteUrl + "Home/LoadClients", { clientValue: val })

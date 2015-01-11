@@ -6,8 +6,6 @@ namespace LicenseGenerator.Controllers.Utilities
 {
     public class JsonNetResult : JsonResult
     {
-        //public object Result { get; set; }
-
         public JsonNetResult(object data)
         {
             Data = data;

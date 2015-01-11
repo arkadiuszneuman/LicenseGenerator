@@ -21,16 +21,6 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
                         params.total(data.count); // set total for recalc pagination
                         $defer.resolve($scope.licenses);
                     });
-
-                // use build-in angular filter
-                //var orderedData = params.filter() ?
-                //    $filter('filter')(data, params.filter()) :
-                //    data;
-                //var orderedData = $scope.licenses;
-                //$scope.licenses = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
-
-                //params.total(orderedData.length); // set total for recalc pagination
-                //$defer.resolve($scope.licenses);
             }
         });
 
@@ -38,5 +28,4 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
         $scope.filter = filter;
         $scope.tableParams.reload();
     }
-
 }]);
