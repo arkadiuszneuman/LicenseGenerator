@@ -16,17 +16,20 @@ namespace LicenseGenerator.Controllers
         }
 
         [HttpPost]
-        public JsonResult LoadLicenses(int page, int countPerPage)
+        public JsonResult LoadLicenses(string filter, int page, int countPerPage)
         {
             using (LicenseGeneratorContext ctx = new LicenseGeneratorContext())
             {
-                IEnumerable<GeneratedLicense> generatedLicenses = ctx.GeneratedLicensesHistory
+                IQueryable<GeneratedLicense> foundedLicenses = ctx.GeneratedLicensesHistory
+                    .Where(l => filter == "" || l.NIP.Contains(filter) || l.ProgramName.Contains(filter) || l.Company.Contains(filter) || l.PartnerNIP.Contains(filter));
+
+                IEnumerable<GeneratedLicense> generatedLicenses = foundedLicenses
                     .OrderByDescending(l => l.GenerationDate)
                     .Skip((page - 1) * countPerPage)
                     .Take(countPerPage)
                     .ToList();
 
-                int licensesCount = ctx.GeneratedLicensesHistory.Count();
+                int licensesCount = foundedLicenses.Count();
 
                 var returnObject = new
                 {

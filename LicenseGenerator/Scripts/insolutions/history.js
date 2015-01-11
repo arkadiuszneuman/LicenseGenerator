@@ -1,11 +1,9 @@
-﻿var app = angular.module('licensegenerator', ['ngTable']);
+﻿var app = angular.module('licensegenerator', ['ui.bootstrap', 'ngTable']);
 
 app.controller('HistoryController', [
     '$scope', '$http', '$filter', 'ngTableParams', function ($scope, $http, $filter, ngTableParams) {
-        //$http.post(siteUrl + 'History/LoadLicenses').
-        //    success(function (data, status, headers, config) {
-        //$scope.licenses = data;
-        //$scope.licenses = [{ ProgramName: "asdasd" }];
+        $scope.filter = "";
+
         $scope.tableParams = new ngTableParams({
             page: 1,
             count: 15
@@ -13,7 +11,7 @@ app.controller('HistoryController', [
             total: $scope.licenses,
             counts: [],
             getData: function ($defer, params) {
-                $http.post(siteUrl + 'History/LoadLicenses', { page: params.page(), countPerPage: params.count() }).success(function (data, status, headers, config) {
+                $http.post(siteUrl + 'History/LoadLicenses', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).success(function (data, status, headers, config) {
                     $scope.licenses = data.licenses;
 
                     params.total(data.count); // set total for recalc pagination
@@ -29,6 +27,10 @@ app.controller('HistoryController', [
                 //$defer.resolve($scope.licenses);
             }
         });
-        //});
+
+        $scope.filterChanged = function (filter) {
+            $scope.filter = filter;
+            $scope.tableParams.reload();
+        };
     }]);
 //# sourceMappingURL=history.js.map

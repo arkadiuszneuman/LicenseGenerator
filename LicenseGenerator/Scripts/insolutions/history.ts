@@ -1,12 +1,10 @@
 ﻿declare var siteUrl;
 
-var app = angular.module('licensegenerator', ['ngTable']);
+var app = angular.module('licensegenerator', ['ui.bootstrap', 'ngTable']);
 
 app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParams', function ($scope, $http, $filter, ngTableParams) {
-    //$http.post(siteUrl + 'History/LoadLicenses').
-    //    success(function (data, status, headers, config) {
-    //$scope.licenses = data;
-    //$scope.licenses = [{ ProgramName: "asdasd" }];
+
+    $scope.filter = "";
 
     $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
@@ -16,7 +14,7 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
             counts: [],
             getData: function ($defer, params) {
 
-                $http.post(siteUrl + 'History/LoadLicenses', { page: params.page(), countPerPage: params.count() }).
+                $http.post(siteUrl + 'History/LoadLicenses', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).
                     success(function (data, status, headers, config) {
                         $scope.licenses = data.licenses;
 
@@ -35,5 +33,10 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
                 //$defer.resolve($scope.licenses);
             }
         });
-    //});
+
+    $scope.filterChanged = function (filter) {
+        $scope.filter = filter;
+        $scope.tableParams.reload();
+    }
+
 }]);
