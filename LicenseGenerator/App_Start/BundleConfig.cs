@@ -53,10 +53,12 @@ namespace LicenseGenerator
                          //"~/Scripts/angular*",
                          "~/Scripts/angular.js",
                          "~/Scripts/angular-file-upload.js",
+                         "~/Scripts/ng-table.js",
 
                          "~/Scripts/i18n/angular-locale_pl-pl.js",
                          "~/Scripts/angular-ui/ui-bootstrap.js",
                          "~/Scripts/angular-ui/ui-bootstrap-tpls.js"
+
                          ));
 
             bundles.Add(new ScriptBundle("~/bundles/filesaver").Include(

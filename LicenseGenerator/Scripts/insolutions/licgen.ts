@@ -2,6 +2,9 @@
 declare function saveAs(blob, text);
 declare function saveToDisk(fileURL, fileName);
 
+declare var ngTableParams;
+declare var data;
+
 var secretEmptyKey = '[$empty$]';
 var app = angular.module('licensegenerator', ['ui.bootstrap', 'angularFileUpload']);
 
@@ -60,7 +63,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
                 "Licencja z abonamentem ważnym do " + date];
         }
 
-    $scope.onAddionalInfoFocus = function (e) {
+        $scope.onAddionalInfoFocus = function (e) {
             $timeout(function () {
                 $(e.target).trigger('input');
                 $(e.target).trigger('change'); // for IE
@@ -95,6 +98,32 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
                     }
                 });
         }
+
+        $http.post(siteUrl + '/History/LoadLicenses').
+            success(function (data, status, headers, config) {
+                $scope.licenses = data;
+            });
+
+        //$scope.tableParams = new ngTableParams({
+        //    page: 1,            // show first page
+        //    count: 10,          // count per page
+        //    filter: {
+        //        name: 'M'       // initial filter
+        //    }
+        //}, {
+        //        total: data.length, // length of data
+        //        getData: function ($defer, params) {
+        //            // use build-in angular filter
+        //            var orderedData = params.filter() ?
+        //                $filter('filter')(data, params.filter()) :
+        //                data;
+
+        //            $scope.users = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+
+        //            params.total(orderedData.length); // set total for recalc pagination
+        //            $defer.resolve($scope.users);
+        //        }
+        //    });
 }]);
 
 function createDefaultLicense($scope, $filter) {

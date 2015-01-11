@@ -138,8 +138,11 @@
     <Compile Include="Controllers\Utilities\Home\ILicenseCreator.cs" />
     <Compile Include="Controllers\Utilities\Home\IPatternCustomersLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\CountCustomersLoader.cs" />
+    <Compile Include="Controllers\Utilities\Home\LicenseLoader\ILicenseLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseLoader\ILicenseToViewModelConverter.cs" />
+    <Compile Include="Controllers\Utilities\Home\LicenseLoader\IStreamLicenseLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseLoader\LicenseLoader.cs" />
+    <Compile Include="Controllers\Utilities\Home\LicenseLoader\StreamLicenseLoader.cs" />
     <Compile Include="Controllers\Utilities\InvalidNipException.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseCreator.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseLoader\LicenseToViewModelConverter.cs" />
@@ -168,6 +171,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\jumbotron-narrow.css" />
+    <Content Include="Content\ng-table.css" />
+    <Content Include="Content\ng-table.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -944,6 +949,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\ng-table.less" />
     <None Include="Properties\PublishProfiles\LicenseGenerator.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
@@ -957,6 +963,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\ng-table.js" />
+    <Content Include="Scripts\ng-table.min.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\thirdparty\ng-flow\ng-flow-standalone.js" />
     <Content Include="Scripts\thirdparty\ng-flow\ng-flow-standalone.min.js" />
@@ -973,6 +981,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\ng-table.map" />
     <None Include="Views\About\Index.cshtml" />
     <None Include="Views\History\Index.cshtml" />
   </ItemGroup>
@@ -983,6 +992,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Scripts\insolutions\history.ts" />
     <TypeScriptCompile Include="Scripts\insolutions\licgen.ts" />
     <TypeScriptCompile Include="Scripts\typings\angular-file-upload\angular-file-upload.d.ts" />
     <TypeScriptCompile Include="Scripts\typings\angularjs\angular-animate.d.ts" />

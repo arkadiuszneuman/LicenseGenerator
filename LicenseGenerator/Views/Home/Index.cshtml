@@ -50,7 +50,7 @@
                     @*<div class="input-group date">*@
                     <input type="text" id="licdate" placeholder="Data wygaśniecia licencji (niewymagane)" ng-click="open($event)" class="form-control" datepicker-popup="{{format}}" is-open="opened" min-date="minDate"
                            datepicker-options="dateOptions" ng-required="false" ng-model="lic.date"
-                           tooltip="Data ważności licencji. Puste pole oznacza licencję z nieograniczoną ważnością" tooltip-trigger="focus" tooltip-placement="right" />
+                           tooltip="Data ważności licencji. Puste pole oznacza licencję z nieograniczoną ważnością" tooltip-trigger="focus" tooltip-placement="right"/>
                     @*<span class="input-group-addon" ng-click="clearDate($event)">
                             <i class="glyphicon glyphicon-th"></i>
                         </span>*@
@@ -81,7 +81,7 @@
                            tooltip="Wersja programu (np. 1.0.3)" tooltip-trigger="focus" tooltip-placement="right">
                 </div>
             </div>
-            <hr />
+            <hr/>
             <div class="form-group">
                 <label for="partnernip" class="col-sm-4 control-label">NIP partnera:</label>
                 <div class="col-sm-8">
@@ -122,3 +122,8 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
+
+@section scripts
+{
+    <script type="text/javascript" src="@Url.Content("/Scripts/insolutions/licgen.js")"></script>
+}
