@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using LicenseGenerator.Controllers.Utilities;
 using LicenseGenerator.DAL;
 using LicenseGenerator.Models;
 
@@ -16,7 +17,7 @@ namespace LicenseGenerator.Controllers
         }
 
         [HttpPost]
-        public JsonResult LoadLicenses(string filter, int page, int countPerPage)
+        public JsonNetResult LoadLicenses(string filter, int page, int countPerPage)
         {
             using (LicenseGeneratorContext ctx = new LicenseGeneratorContext())
             {
@@ -37,7 +38,7 @@ namespace LicenseGenerator.Controllers
                     licenses = generatedLicenses
                 };
 
-                return Json(returnObject);
+                return new JsonNetResult(returnObject);
             }
         }
     }

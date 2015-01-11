@@ -11,7 +11,7 @@
     <div class="form-group">
         <label for="filter">Filtr</label>
         <div class="input-group">
-            <input type="text" class="form-control" id="filter" placeholder="Filtr przeszukuje nip klienta i partnera, nazwę programu oraz nazwę firmy" ng-model="filter"
+            <input type="text" class="form-control" id="filter" placeholder="Filtr przeszukuje NIP klienta i partnera, nazwę programu oraz nazwę firmy" ng-model="filter"
                    ng-change="filterChanged(filter)" ng-model-options="{ debounce: 300 }">
             <span class="input-group-btn">
                 <button class="btn btn-default" type="button" ng-click="filterChanged('')">Wyczyść</button>
@@ -41,24 +41,17 @@
                 <td>{{license.Company}}</td>
                 <td>{{license.NIP}}</td>
                 <td>{{license.Privileges}}</td>
-                <td>{{license.LicenseTermDate}}</td>
+                <td>{{(license.LicenseTermDate  | date:'longDate') || "Nieograniczona"}}</td>
                 <td>{{license.AddionalInformation}}</td>
                 <td>{{license.NumberOfStands}}</td>
                 <td>{{license.ProgramVersion}}</td>
                 <td>{{license.PartnerNIP}}</td>
                 <td class="text-center">
-                    @*@if (license.IsEncrypted)
-                        {
-                            <span class='glyphicon glyphicon-check'></span>
-                        }
-                        else
-                        {
-                            <span class='glyphicon glyphicon-unchecked'></span>
-                        }*@
+                    <span class="glyphicon" ng-class="{ 'glyphicon-check': license.IsEncrypted, 'glyphicon-unchecked': !license.IsEncrypted }"></span>
                 </td>
                 <td>{{license.GenerationDate | date:'medium'}}</td>
             </tr>
-            @*</tbody>*@
+        </tbody>
     </table>
 </div>
 

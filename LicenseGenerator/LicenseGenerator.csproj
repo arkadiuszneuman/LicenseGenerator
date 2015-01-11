@@ -149,6 +149,7 @@
     <Compile Include="Controllers\Utilities\JsonConverter\IJsonConverter.cs" />
     <Compile Include="Controllers\Utilities\JsonConverter\JsonConverter.cs" />
     <Compile Include="Controllers\Utilities\JsonConverter\SuccessObject.cs" />
+    <Compile Include="Controllers\Utilities\JsonNetResult.cs" />
     <Compile Include="DAL\LicenseGeneratorContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
