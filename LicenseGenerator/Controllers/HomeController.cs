@@ -77,12 +77,12 @@ namespace LicenseGenerator.Controllers
             {
                 var fileName = GenerateLicenseToPath(licenseViewModel);
                 SuccessObject successObject = new SuccessObject(true, "licenses/" + fileName);
-                return Json(successObject);
+                return new JsonNetResult(successObject);
             }
             catch (Exception e)
             {
                 SuccessObject successObject = new SuccessObject(false, e.Message);
-                return Json(successObject);
+                return new JsonNetResult(successObject);
             }
         }
 

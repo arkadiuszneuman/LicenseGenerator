@@ -160,6 +160,10 @@
     <Compile Include="Migrations\201501031546424_License history.Designer.cs">
       <DependentUpon>201501031546424_License history.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501151955352_Products.cs" />
+    <Compile Include="Migrations\201501151955352_Products.Designer.cs">
+      <DependentUpon>201501151955352_Products.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GeneratedLicense.cs" />
@@ -1019,6 +1023,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201501031546424_License history.resx">
       <DependentUpon>201501031546424_License history.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501151955352_Products.resx">
+      <DependentUpon>201501151955352_Products.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

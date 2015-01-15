@@ -43,6 +43,15 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
                 });
         };
 
+        $scope.getProducts = function (val) {
+            return $http.post(siteUrl + "Home/LoadProducts", { licenseName: val })
+                .then(function (response) {
+                    if (response.data.success === true) {
+                        return response.data.object;
+                    } 
+                });
+        };
+
         $scope.onClientSelected = function ($item, $model, $label) {
             $scope.lic.nip = $model.Nip;
             $scope.lic.company1 = $model.Name;
@@ -213,8 +222,8 @@ class LicenseGeneratorButtonsCreator {
             $("#btnGenerateLicense").button("loading");
             $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
                 $("#btnGenerateLicense").button("reset");
-                if (result.Success === true) {
-                    saveToDisk(siteUrl + result.Object, that.getLicenseName(license) + "S.txt");
+                if (result.success === true) {
+                    saveToDisk(siteUrl + result.object, that.getLicenseName(license) + "S.txt");
                 }
             });
         };

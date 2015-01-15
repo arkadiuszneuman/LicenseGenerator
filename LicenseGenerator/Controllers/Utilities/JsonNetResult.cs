@@ -1,6 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace LicenseGenerator.Controllers.Utilities
 {
@@ -20,7 +21,11 @@ namespace LicenseGenerator.Controllers.Utilities
             if (Data != null)
             {
                 JsonTextWriter writer = new JsonTextWriter(response.Output) { Formatting = Formatting.Indented };
-                JsonSerializer serializer = JsonSerializer.Create(new JsonSerializerSettings());
+                JsonSerializer serializer = JsonSerializer.Create(new JsonSerializerSettings()
+                {
+                    Formatting = Formatting.Indented,
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                });
                 serializer.Serialize(writer, Data);
                 writer.Flush();
             }

@@ -35,19 +35,19 @@
             </thead>
             <tbody>
                 <tr ng-repeat="license in licenses">
-                    <td>{{license.ProgramName}}</td>
-                    <td>{{license.Company}}</td>
-                    <td>{{license.NIP}}</td>
-                    <td>{{license.Privileges}}</td>
-                    <td>{{(license.LicenseTermDate  | date:'longDate') || "Nieograniczona"}}</td>
-                    <td>{{license.AddionalInformation}}</td>
-                    <td>{{license.NumberOfStands}}</td>
-                    <td>{{license.ProgramVersion}}</td>
-                    <td>{{license.PartnerNIP}}</td>
+                    <td>{{license.programName}}</td>
+                    <td>{{license.company}}</td>
+                    <td>{{license.nIP}}</td>
+                    <td>{{license.privileges}}</td>
+                    <td>{{(license.licenseTermDate  | date:'longDate') || "Nieograniczona"}}</td>
+                    <td>{{license.addionalInformation}}</td>
+                    <td>{{license.numberOfStands}}</td>
+                    <td>{{license.programVersion}}</td>
+                    <td>{{license.partnerNIP}}</td>
                     <td class="text-center">
-                        <span class="glyphicon" ng-class="{ 'glyphicon-check': license.IsEncrypted, 'glyphicon-unchecked': !license.IsEncrypted }"></span>
+                        <span class="glyphicon" ng-class="{ 'glyphicon-check': license.isEncrypted, 'glyphicon-unchecked': !license.isEncrypted }"></span>
                     </td>
-                    <td>{{license.GenerationDate | date:'medium'}}</td>
+                    <td>{{license.generationDate | date:'medium'}}</td>
                 </tr>
             </tbody>
         </table>

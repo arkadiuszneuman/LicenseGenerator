@@ -18,7 +18,8 @@ namespace LicenseGenerator.Controllers.Utilities.Home
         {
             using (LicenseGeneratorContext context = new LicenseGeneratorContext())
             {
-                return context.Products.Where(c => c.LicenseName.Contains(pattern) || c.Name.Contains(pattern)).Take(count).ToList();
+                return context.Products.Where(c => c.LicenseName.Contains(pattern) || c.Name.Contains(pattern))
+                    .Where(c => c.LicenseName != "").OrderBy(p => p.LicenseName).Take(count).ToList();
             }
         }
     }
