@@ -23,19 +23,21 @@ namespace LicenseGenerator.Controllers
         private readonly ILicenseLoader licenseLoader;
         private readonly IJsonConverter jsonConverter;
         private readonly IPatternCustomersLoader patternCustomersLoader;
+        private readonly IPatternProductsLoader patternProductsLoader;
 
         public HomeController()
             : this(new CountPatternCustomersLoader(10), new LicenseCreator(),
-            new LicenseLoader(new LicenseToViewModelConverter(), new StreamLicenseLoader()), new JsonJavascriptConverter())
+            new LicenseLoader(new LicenseToViewModelConverter(), new StreamLicenseLoader()), new JsonJavascriptConverter(), new CountPatternProductsLoader(10))
         {
         }
 
-        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicenseCreator licenseCreator, ILicenseLoader licenseLoader, IJsonConverter jsonConverter)
+        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicenseCreator licenseCreator, ILicenseLoader licenseLoader, IJsonConverter jsonConverter, IPatternProductsLoader patternProductsLoader)
         {
             this.patternCustomersLoader = patternCustomersLoader;
             this.licenseCreator = licenseCreator;
             this.licenseLoader = licenseLoader;
             this.jsonConverter = jsonConverter;
+            this.patternProductsLoader = patternProductsLoader;
         }
 
         public ActionResult Index()
@@ -43,12 +45,29 @@ namespace LicenseGenerator.Controllers
             return View();
         }
 
+        [HttpPost]
         public JsonResult LoadClients(string clientValue)
         {
             IEnumerable<Customer> vrlCustomers = patternCustomersLoader.LoadCustomers(clientValue);
             IEnumerable<CustomerViewModel> vrlCustomerViewModels = Mapper.Map<IEnumerable<CustomerViewModel>>(vrlCustomers);
 
             return Json(vrlCustomerViewModels);
+        }
+
+        [HttpPost]
+        public JsonNetResult LoadProducts(string licenseName)
+        {
+            try
+            {
+                IEnumerable<Product> products = patternProductsLoader.LoadProducts(licenseName);
+                IEnumerable<ProductViewModel> productsViewModels = Mapper.Map<IEnumerable<ProductViewModel>>(products);
+
+                return new JsonNetResult(new SuccessObject(true, productsViewModels));
+            }
+            catch (Exception exception)
+            {
+                return new JsonNetResult(new SuccessObject(false, exception.Message));
+            }
         }
 
         [HttpPost]

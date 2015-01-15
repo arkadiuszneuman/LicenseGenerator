@@ -135,9 +135,11 @@
     <Compile Include="Controllers\Utilities\About\ProgramVersionGetter.cs" />
     <Compile Include="Controllers\Utilities\HistoryLicenseCreator.cs" />
     <Compile Include="Controllers\Utilities\HistoryLicenseSaver.cs" />
+    <Compile Include="Controllers\Utilities\Home\CountPatternProductsLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\ILicenseCreator.cs" />
     <Compile Include="Controllers\Utilities\Home\IPatternCustomersLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\CountCustomersLoader.cs" />
+    <Compile Include="Controllers\Utilities\Home\IPatternProductsLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseLoader\ILicenseLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseLoader\ILicenseToViewModelConverter.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseLoader\IStreamLicenseLoader.cs" />
@@ -161,10 +163,12 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GeneratedLicense.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\About\VersionViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\LicenseViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

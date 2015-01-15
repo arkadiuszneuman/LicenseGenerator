@@ -53,6 +53,7 @@ namespace LicenseGenerator.DAL
         }
 
         public DbSet<Customer> Companies { get; set; }
+        public DbSet<Product> Products { get; set; }
         public DbSet<GeneratedLicense> GeneratedLicensesHistory { get; set; }
     }
 }
