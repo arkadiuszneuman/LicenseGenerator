@@ -12,7 +12,7 @@
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/filesaver")
     @Scripts.Render("~/bundles/other")
-    @*@Scripts.Render("~/bundles/insolutions")*@
+    @Scripts.Render("~/bundles/insolutions")
     @RenderSection("scripts", required: false)
     <script>
         var siteUrl = '@Url.Action("Index", "Home").Replace("/Home", "").Replace("/Index", "")';

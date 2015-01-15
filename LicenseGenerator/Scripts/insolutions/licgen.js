@@ -26,15 +26,10 @@ app.controller('LicenseGeneratorController', [
         $scope.lic = {};
         $scope.lic.company2 = undefined;
 
-        //$scope.lic.name = "Program";
-        //$scope.lic.nip = "648-255-92-51";
-        //$scope.lic.company1 = "Firma";
         new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
         new LicenseGeneratorButtonsCreator().configureButtons($scope, $http);
         createDefaultLicense($scope, $filter);
 
-        //new DropFileConfigurator().configureDropFiles($scope);
-        //$scope.lic = { name: 'Arek' };
         $scope.getClients = function (val) {
             return $http.post(siteUrl + "Home/LoadClients", { clientValue: val }).then(function (response) {
                 return response.data;
@@ -84,10 +79,6 @@ app.controller('LicenseGeneratorController', [
                 }
             });
         };
-
-        $http.post(siteUrl + '/History/LoadLicenses').success(function (data, status, headers, config) {
-            $scope.licenses = data;
-        });
     }]);
 
 function createDefaultLicense($scope, $filter) {
@@ -199,7 +190,7 @@ var LicenseGeneratorButtonsCreator = (function () {
         $scope.generateLicense = function (lic) {
             var license = that.createValidLicense(lic);
 
-            $.post(siteUrl + "Home/GenerateLicense", { license: license }, function (result) {
+            $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
                 //var blob = new Blob([result], { type: "example/binary" });
                 saveToDisk(siteUrl + result, that.getLicenseName(license) + ".lic");
             });
@@ -209,9 +200,11 @@ var LicenseGeneratorButtonsCreator = (function () {
             var license = that.createValidLicense(lic);
 
             $("#btnGenerateLicense").button("loading");
-            $.post(siteUrl + "Home/GenerateLicense", { license: license }, function (result) {
+            $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
                 $("#btnGenerateLicense").button("reset");
-                saveToDisk(siteUrl + result, that.getLicenseName(license) + "S.txt");
+                if (result.Success === true) {
+                    saveToDisk(siteUrl + result.Object, that.getLicenseName(license) + "S.txt");
+                }
             });
         };
 
@@ -219,7 +212,7 @@ var LicenseGeneratorButtonsCreator = (function () {
             var license = that.createValidLicense(lic);
 
             $("#btnGenerateLicense").button("loading");
-            $.post(siteUrl + "Home/GenerateDecryptedLicense", { license: license }, function (result) {
+            $.post(siteUrl + "Home/GenerateDecryptedLicense", { licenseViewModel: license }, function (result) {
                 $("#btnGenerateLicense").button("reset");
                 var blob = new Blob([result], { type: "text/plain;charset=utf-8" });
                 saveAs(blob, that.getLicenseName(license) + ".txt");
@@ -230,7 +223,7 @@ var LicenseGeneratorButtonsCreator = (function () {
             var license = that.createValidLicense(lic);
 
             $("#btnGenerateLicense").button("loading");
-            $.post(siteUrl + "Home/GenerateZippedLicense", { license: license }, function (result) {
+            $.post(siteUrl + "Home/GenerateZippedLicense", { licenseViewModel: license }, function (result) {
                 $("#btnGenerateLicense").button("reset");
                 saveToDisk(siteUrl + result, that.getLicenseName(license) + ".zip");
             });

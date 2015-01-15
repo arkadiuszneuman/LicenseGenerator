@@ -16,43 +16,44 @@
         </div>
     </div>
 
-    <table class="table table-striped table-hover" ng-table="tableParams">
-        <thead>
-            <tr>
-                <th>Program</th>
-                <th>Firma</th>
-                <th>NIP</th>
-                <th>Uprawnienia</th>
-                <th>Licencja do</th>
-                <th>Dodatkowe informacje</th>
-                <th>Liczba stanowisk</th>
-                <th>Wersja programu</th>
-                <th>NIP partnera</th>
-                <th>Zaszyfrowana</th>
-                <th>Data wygenerowania</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="license in licenses">
-                <td>{{license.ProgramName}}</td>
-                <td>{{license.Company}}</td>
-                <td>{{license.NIP}}</td>
-                <td>{{license.Privileges}}</td>
-                <td>{{(license.LicenseTermDate  | date:'longDate') || "Nieograniczona"}}</td>
-                <td>{{license.AddionalInformation}}</td>
-                <td>{{license.NumberOfStands}}</td>
-                <td>{{license.ProgramVersion}}</td>
-                <td>{{license.PartnerNIP}}</td>
-                <td class="text-center">
-                    <span class="glyphicon" ng-class="{ 'glyphicon-check': license.IsEncrypted, 'glyphicon-unchecked': !license.IsEncrypted }"></span>
-                </td>
-                <td>{{license.GenerationDate | date:'medium'}}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div loading-container="tableParams.settings().$loading">
+        <table class="table table-striped table-hover" ng-table="tableParams">
+            <thead>
+                <tr>
+                    <th>Program</th>
+                    <th>Firma</th>
+                    <th>NIP</th>
+                    <th>Uprawnienia</th>
+                    <th>Licencja do</th>
+                    <th>Dodatkowe informacje</th>
+                    <th>Liczba stanowisk</th>
+                    <th>Wersja programu</th>
+                    <th>NIP partnera</th>
+                    <th>Zaszyfrowana</th>
+                    <th>Data wygenerowania</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="license in licenses">
+                    <td>{{license.ProgramName}}</td>
+                    <td>{{license.Company}}</td>
+                    <td>{{license.NIP}}</td>
+                    <td>{{license.Privileges}}</td>
+                    <td>{{(license.LicenseTermDate  | date:'longDate') || "Nieograniczona"}}</td>
+                    <td>{{license.AddionalInformation}}</td>
+                    <td>{{license.NumberOfStands}}</td>
+                    <td>{{license.ProgramVersion}}</td>
+                    <td>{{license.PartnerNIP}}</td>
+                    <td class="text-center">
+                        <span class="glyphicon" ng-class="{ 'glyphicon-check': license.IsEncrypted, 'glyphicon-unchecked': !license.IsEncrypted }"></span>
+                    </td>
+                    <td>{{license.GenerationDate | date:'medium'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
-
 @section scripts
 {
-    <script type="text/javascript" src="@Url.Content("/Scripts/insolutions/history.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/insolutions/history.js")"></script>
 }

@@ -91,11 +91,6 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
                     }
                 });
         }
-
-        $http.post(siteUrl + '/History/LoadLicenses').
-            success(function (data, status, headers, config) {
-                $scope.licenses = data;
-            });
     }]);
 
 function createDefaultLicense($scope, $filter) {
@@ -206,7 +201,7 @@ class LicenseGeneratorButtonsCreator {
 
             var license = that.createValidLicense(lic);
 
-            $.post(siteUrl + "Home/GenerateLicense", { license: license }, function (result) {
+            $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
                 //var blob = new Blob([result], { type: "example/binary" });
                 saveToDisk(siteUrl + result, that.getLicenseName(license) + ".lic");
             });
@@ -216,9 +211,11 @@ class LicenseGeneratorButtonsCreator {
             var license = that.createValidLicense(lic);
 
             $("#btnGenerateLicense").button("loading");
-            $.post(siteUrl + "Home/GenerateLicense", { license: license }, function (result) {
+            $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
                 $("#btnGenerateLicense").button("reset");
-                saveToDisk(siteUrl + result, that.getLicenseName(license) + "S.txt");
+                if (result.Success === true) {
+                    saveToDisk(siteUrl + result.Object, that.getLicenseName(license) + "S.txt");
+                }
             });
         };
 
@@ -226,7 +223,7 @@ class LicenseGeneratorButtonsCreator {
             var license = that.createValidLicense(lic);
 
             $("#btnGenerateLicense").button("loading");
-            $.post(siteUrl + "Home/GenerateDecryptedLicense", { license: license }, function (result) {
+            $.post(siteUrl + "Home/GenerateDecryptedLicense", { licenseViewModel: license }, function (result) {
                 $("#btnGenerateLicense").button("reset");
                 var blob = new Blob([result], { type: "text/plain;charset=utf-8" });
                 saveAs(blob, that.getLicenseName(license) + ".txt");
@@ -237,7 +234,7 @@ class LicenseGeneratorButtonsCreator {
             var license = that.createValidLicense(lic);
 
             $("#btnGenerateLicense").button("loading");
-            $.post(siteUrl + "Home/GenerateZippedLicense", { license: license }, function (result) {
+            $.post(siteUrl + "Home/GenerateZippedLicense", { licenseViewModel: license }, function (result) {
                 $("#btnGenerateLicense").button("reset");
                 saveToDisk(siteUrl + result, that.getLicenseName(license) + ".zip");
             });

@@ -10,7 +10,6 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
         page: 1,            // show first page
         count: 15          // count per page
     }, {
-            total: $scope.licenses, // length of data
             counts: [],
             getData: function ($defer, params) {
 

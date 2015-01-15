@@ -52,11 +52,19 @@ namespace LicenseGenerator.Controllers
         }
 
         [HttpPost]
-        public JsonResult GenerateLicense(LicenseViewModel license)
+        public JsonResult GenerateLicense(LicenseViewModel licenseViewModel)
         {
-            var fileName = GenerateLicenseToPath(license);
-
-            return Json("licenses/" + fileName);
+            try
+            {
+                var fileName = GenerateLicenseToPath(licenseViewModel);
+                SuccessObject successObject = new SuccessObject(true, "licenses/" + fileName);
+                return Json(successObject);
+            }
+            catch (Exception e)
+            {
+                SuccessObject successObject = new SuccessObject(false, e.Message);
+                return Json(successObject);
+            }
         }
 
         private string GenerateLicenseToPath(LicenseViewModel license)
@@ -100,42 +108,44 @@ namespace LicenseGenerator.Controllers
             }
             else
             {
-                for (int i = 1; i < 9999; ++i)
-                {
-                    string vrlNewFilePath = filePath.Insert(filePath.Count() - 4, "_" + i);
-                    if (!System.IO.File.Exists(vrlNewFilePath))
-                    {
-                        return vrlNewFilePath;
-                    }
-                }
+                System.IO.File.Delete(filePath);
+                return filePath;
+                //for (int i = 1; i < 9999; ++i)
+                //{
+                //    string vrlNewFilePath = filePath.Insert(filePath.Count() - 4, "_" + i);
+                //    if (!System.IO.File.Exists(vrlNewFilePath))
+                //    {
+                //        return vrlNewFilePath;
+                //    }
+                //}
             }
 
             throw new InvalidOperationException("Nie można wygenerować licencji");
         }
 
         [HttpPost]
-        public JsonResult GenerateDecryptedLicense(LicenseViewModel license)
+        public JsonResult GenerateDecryptedLicense(LicenseViewModel licenseViewModel)
         {
-            string decryptedLicense = licenseCreator.CreateLicenseFromVM(license);
+            string decryptedLicense = licenseCreator.CreateLicenseFromVM(licenseViewModel);
 
-            SaveLicenseHistory(license, false);
+            SaveLicenseHistory(licenseViewModel, false);
 
             return Json(decryptedLicense);
         }
 
         [HttpPost]
-        public JsonResult GenerateZippedLicense(LicenseViewModel license)
+        public JsonResult GenerateZippedLicense(LicenseViewModel licenseViewModel)
         {
-            GetEndUserLicenseName(license);
+            GetEndUserLicenseName(licenseViewModel);
 
-            string fileName = GenerateLicenseToPath(license);
+            string fileName = GenerateLicenseToPath(licenseViewModel);
             string vrlDirectory = ControllerContext.HttpContext.Server.MapPath("~/licenses/");
             string zipFileName = Path.GetFileNameWithoutExtension(fileName) + ".zip";
             using (var memoryStream = new MemoryStream())
             {
                 using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
                 {
-                    var demoFile = archive.CreateEntry(GetEndUserLicenseName(license) + "S.txt");
+                    var demoFile = archive.CreateEntry(GetEndUserLicenseName(licenseViewModel) + "S.txt");
 
                     using (var entryStream = demoFile.Open())
                     using (Stream licenseStreamReader = new FileStream(vrlDirectory + fileName, FileMode.Open))

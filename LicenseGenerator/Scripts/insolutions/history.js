@@ -8,7 +8,6 @@ app.controller('HistoryController', [
             page: 1,
             count: 15
         }, {
-            total: $scope.licenses,
             counts: [],
             getData: function ($defer, params) {
                 $http.post(siteUrl + 'History/LoadLicenses', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).success(function (data, status, headers, config) {
