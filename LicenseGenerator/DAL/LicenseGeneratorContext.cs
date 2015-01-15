@@ -13,10 +13,11 @@ namespace LicenseGenerator.DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             CreateCustomerModel(modelBuilder);
+            CreateProductModel(modelBuilder);
             CreateLicenseHistoryModel(modelBuilder);
         }
 
-        private static void CreateCustomerModel(DbModelBuilder modelBuilder)
+        private void CreateCustomerModel(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Customer>().HasKey(p => p.Id);
             modelBuilder.Entity<Customer>().Map(m =>
@@ -26,6 +27,19 @@ namespace LicenseGenerator.DAL
                 m.Property(p => p.Symbol).HasColumnName("kh_Symbol");
                 m.Property(p => p.Name).HasColumnName("adr_Nazwa");
                 m.Property(p => p.Nip).HasColumnName("adr_Nip");
+            });
+        }
+
+        private void CreateProductModel(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Product>().HasKey(p => p.Id);
+            modelBuilder.Entity<Product>().Map(m =>
+            {
+                m.ToTable("vw_lg_Product");
+                m.Property(p => p.Id).HasColumnName("tw_Id");
+                m.Property(p => p.Symbol).HasColumnName("tw_Symbol");
+                m.Property(p => p.Name).HasColumnName("tw_Nazwa");
+                m.Property(p => p.LicenseName).HasColumnName("tw_Pole1");
             });
         }
 
