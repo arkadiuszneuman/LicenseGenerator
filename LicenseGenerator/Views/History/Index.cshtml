@@ -24,20 +24,21 @@
                     <th>Firma</th>
                     <th>NIP</th>
                     <th>Uprawnienia</th>
-                    <th>Licencja do</th>
-                    <th>Dodatkowe informacje</th>
-                    <th>Liczba stanowisk</th>
-                    <th>Wersja programu</th>
-                    <th>NIP partnera</th>
-                    <th>Zaszyfrowana</th>
+                    <th>Licencja<br/>do</th>
+                    <th>Dodatkowe<br/>informacje</th>
+                    <th>Liczba<br/>stanowisk</th>
+                    <th>Wersja<br/>programu</th>
+                    <th>NIP<br/>partnera</th>
+                    <th>Szyfr.</th>
                     <th>Data wygenerowania</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="license in licenses">
                     <td>{{license.programName}}</td>
                     <td>{{license.company}}</td>
-                    <td>{{license.nIP}}</td>
+                    <td>{{license.nip}}</td>
                     <td>{{license.privileges}}</td>
                     <td>{{(license.licenseTermDate  | date:'longDate') || "Nieograniczona"}}</td>
                     <td>{{license.addionalInformation}}</td>
@@ -48,6 +49,7 @@
                         <span class="glyphicon" ng-class="{ 'glyphicon-check': license.isEncrypted, 'glyphicon-unchecked': !license.isEncrypted }"></span>
                     </td>
                     <td>{{license.generationDate | date:'medium'}}</td>
+                    <td>a</td>
                 </tr>
             </tbody>
         </table>
