@@ -23,5 +23,9 @@ app.controller('HistoryController', [
             $scope.filter = filter;
             $scope.tableParams.reload();
         };
+
+        $scope.licenseClicked = function (license) {
+            alert(license);
+        };
     }]);
 //# sourceMappingURL=history.js.map

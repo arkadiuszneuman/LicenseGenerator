@@ -27,4 +27,8 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
         $scope.filter = filter;
         $scope.tableParams.reload();
     }
+
+    $scope.licenseClicked = function (license) {
+        alert(license);
+    }
 }]);

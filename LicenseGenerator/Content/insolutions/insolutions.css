@@ -22,3 +22,14 @@
     -ms-opacity: 0.5;
     opacity: 0.5;
 }
+
+.editableElement {
+    color: rgb(77, 77, 77);
+    cursor: pointer;
+    transition: color 0.5s;
+}
+
+.editableElement:hover {
+    color: rgb(220, 0, 0);
+    
+}
