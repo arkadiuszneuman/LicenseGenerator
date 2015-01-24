@@ -87,6 +87,12 @@ app.controller('LicenseGeneratorController', [
                 }
             });
         };
+
+        $scope.init = function (license) {
+            if (!angular.isUndefined(license)) {
+                $scope.lic = license;
+            }
+        };
     }]);
 
 function createDefaultLicense($scope, $filter) {

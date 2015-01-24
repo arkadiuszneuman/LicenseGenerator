@@ -25,7 +25,7 @@ app.controller('HistoryController', [
         };
 
         $scope.licenseClicked = function (license) {
-            alert(license);
+            window.location.href = siteUrl + 'Home/HistoryLicense/' + license.id;
         };
     }]);
 //# sourceMappingURL=history.js.map

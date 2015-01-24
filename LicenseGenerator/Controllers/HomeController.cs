@@ -12,6 +12,7 @@ using LicenseGenerator.Controllers.Utilities;
 using LicenseGenerator.Controllers.Utilities.Home;
 using LicenseGenerator.Controllers.Utilities.Home.LicenseLoader;
 using LicenseGenerator.Controllers.Utilities.JsonConverter;
+using LicenseGenerator.DAL;
 using LicenseGenerator.Models;
 using LicenseGenerator.ViewModels;
 
@@ -43,6 +44,17 @@ namespace LicenseGenerator.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult HistoryLicense(int id)
+        {
+            using (LicenseGeneratorContext context = new LicenseGeneratorContext())
+            {
+                GeneratedLicense license = context.GeneratedLicensesHistory.SingleOrDefault(l => l.Id == id);
+                HistoryLicenseCreator historyLicenseCreator = new HistoryLicenseCreator();
+                LicenseViewModel licenseViewModel = historyLicenseCreator.GenerateViewModel(license);
+                return View("Index", licenseViewModel);
+            }
         }
 
         [HttpPost]

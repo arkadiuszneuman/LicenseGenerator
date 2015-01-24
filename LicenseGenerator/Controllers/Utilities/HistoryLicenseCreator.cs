@@ -29,5 +29,23 @@ namespace LicenseGenerator.Controllers.Utilities
 
             return vrlGeneratedLicense;
         }
+
+        public LicenseViewModel GenerateViewModel(GeneratedLicense generatedLicense)
+        {
+            var licenseViewModel = new LicenseViewModel
+            {
+                Company2 = generatedLicense.AddionalInformation,
+                Company1 = generatedLicense.Company,
+                Date = generatedLicense.LicenseTermDate,
+                Nip = generatedLicense.NIP,
+                LicenseNumbers = generatedLicense.NumberOfStands,
+                PartnerNip = generatedLicense.PartnerNIP,
+                Privileges = generatedLicense.Privileges,
+                Name = generatedLicense.ProgramName,
+                ProgramVersion = generatedLicense.ProgramVersion
+            };
+
+            return licenseViewModel;
+        }
     }
 }

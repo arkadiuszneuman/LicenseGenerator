@@ -1,10 +1,19 @@
-﻿@{
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@model LicenseGenerator.ViewModels.LicenseViewModel
+
+@{
     ViewBag.Title = "Generator licencji";
     ViewBag.Module = "Generator";
 }
 
 
-<div class="container" ng-controller="LicenseGeneratorController">
+<div class="container" ng-controller="LicenseGeneratorController" ng-init="init(@JsonConvert.SerializeObject(Model, Formatting.Indented,
+                                                                                    new JsonSerializerSettings
+                                                                                    {
+                                                                                        ContractResolver = new CamelCasePropertyNamesContractResolver()
+                                                                                    }))">
+    
     @*<div id="drop_zone">asdasd</div>*@
     <div class="jumbotron">
         <h1>Informacje o licencji</h1>
@@ -71,14 +80,14 @@
             <div class="form-group">
                 <label for="licensenumbers" class="col-sm-4 control-label">Liczba stanowisk:</label>
                 <div class="col-sm-8">
-                    <input type="text" only-digits class="form-control" id="licensenumbers" placeholder="Wpisz liczbę stanowisk (niewymagane)" integer ng-model="lic.licensenumbers"
+                    <input type="text" only-digits class="form-control" id="licensenumbers" placeholder="Wpisz liczbę stanowisk (niewymagane)" integer ng-model="lic.licenseNumbers"
                            tooltip="Liczba stanowisk, na jakiej ma działać program" tooltip-trigger="focus" tooltip-placement="right">
                 </div>
             </div>
             <div class="form-group">
                 <label for="programversion" class="col-sm-4 control-label">Wersja programu:</label>
                 <div class="col-sm-8">
-                    <input type="text" only-digits class="form-control" id="programversion" placeholder="Wpisz wersję programu (niewymagane)" ng-model="lic.programversion"
+                    <input type="text" only-digits class="form-control" id="programversion" placeholder="Wpisz wersję programu (niewymagane)" ng-model="lic.programVersion"
                            tooltip="Wersja programu (np. 1.0.3)" tooltip-trigger="focus" tooltip-placement="right">
                 </div>
             </div>
