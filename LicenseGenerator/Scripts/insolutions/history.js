@@ -2,6 +2,7 @@
 
 app.controller('HistoryController', [
     '$scope', '$http', '$filter', 'ngTableParams', function ($scope, $http, $filter, ngTableParams) {
+        $scope.isLoading = true;
         $scope.filter = "";
 
         $scope.tableParams = new ngTableParams({
@@ -15,6 +16,8 @@ app.controller('HistoryController', [
 
                     params.total(data.count); // set total for recalc pagination
                     $defer.resolve($scope.licenses);
+
+                    $scope.isLoading = false;
                 });
             }
         });
