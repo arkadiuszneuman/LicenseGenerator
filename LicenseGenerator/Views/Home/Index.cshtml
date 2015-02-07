@@ -13,7 +13,6 @@
                                                                                     {
                                                                                         ContractResolver = new CamelCasePropertyNamesContractResolver()
                                                                                     }))">
-    
     @*<div id="drop_zone">asdasd</div>*@
     <div class="jumbotron">
         <h1>Informacje o licencji</h1>
@@ -58,9 +57,11 @@
                 <label for="licdate" class="col-sm-4 control-label">Licencja aktualna do:</label>
                 <div class="col-sm-8">
                     @*<div class="input-group date">*@
-                    <input type="text" id="licdate" placeholder="Data wygaśniecia licencji (niewymagane)" ng-click="open($event)" class="form-control" datepicker-popup="{{format}}" is-open="opened" min-date="minDate"
-                           datepicker-options="dateOptions" ng-required="false" ng-model="lic.date"
-                           tooltip="Data ważności licencji. Puste pole oznacza licencję z nieograniczoną ważnością" tooltip-trigger="focus" tooltip-placement="right"/>
+                    <input type="text" id="licdate" placeholder="Data wygaśniecia licencji (niewymagane)" class="form-control"
+                           datepicker-popup="{{format}}" is-open="opened" min-date="minDate" ng-click="open($event)"
+                           datepicker-options="dateOptions"
+                           ng-required="false" ng-model="lic.date"
+                           tooltip="Data ważności licencji. Puste pole oznacza licencję z nieograniczoną ważnością" tooltip-trigger="focus" tooltip-placement="right" />
                     @*<span class="input-group-addon" ng-click="clearDate($event)">
                             <i class="glyphicon glyphicon-th"></i>
                         </span>*@

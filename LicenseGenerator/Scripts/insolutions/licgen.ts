@@ -102,7 +102,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
         }
 
         $scope.init = function (license) {
-            if (!angular.isUndefined(license)) {
+            if (!angular.isUndefined(license) && license != null) {
                 $scope.lic = license;
             }
         }
@@ -110,8 +110,8 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
 
 function createDefaultLicense($scope, $filter) {
     var date = new Date();
-    date.setMonth(date.getMonth() + 1);
 
+    date.setMonth(date.getMonth() + 1);
     $scope.lic.date = $filter('date')(date, 'yyyy-MM-dd');
 };
 
@@ -264,7 +264,6 @@ class DatePickerCreator {
         $scope.clear = function () {
             $scope.lic.date = null;
         };
-
         $scope.toggleMin = function () {
             $scope.minDate = $scope.minDate ? null : new Date();
         };
