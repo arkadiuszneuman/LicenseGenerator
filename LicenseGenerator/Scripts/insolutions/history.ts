@@ -12,8 +12,9 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
         count: 15          // count per page
     }, {
             counts: [],
-            getData: function ($defer, params) {
+        getData: function ($defer, params) {
 
+                $scope.isLoading = true;
                 $http.post(siteUrl + 'History/LoadLicenses', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).
                     success(function (data, status, headers, config) {
                         $scope.licenses = data.licenses;
