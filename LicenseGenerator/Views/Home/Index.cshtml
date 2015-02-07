@@ -42,7 +42,7 @@
                 <label for="nip" class="col-sm-4 control-label">NIP:</label>
                 <div class="col-sm-8">
                     <input type="text" only-digits class="form-control" id="nip" placeholder="Wpisz NIP klienta" required nip
-                           ng-model="lic.nip"
+                           ng-model="lic.nip" ng-blur="onNipLostFocus()"
                            tooltip="NIP firmy, dla której wystawiana jest licencja" tooltip-trigger="focus" tooltip-placement="right">
                 </div>
             </div>
