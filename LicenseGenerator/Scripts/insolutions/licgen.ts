@@ -31,7 +31,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
     function ($scope, datepickerPopupConfig, $filter, $http, $timeout, $upload) {
         $scope.lic = {};
         $scope.lic.company2 = undefined;
-        $scope.lic.isNipLikeCompany = false;
+        $scope.lic.isNipLikeCompany = true;
 
         new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
         new LicenseGeneratorButtonsCreator().configureButtons($scope, $http);
@@ -56,11 +56,11 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
         $scope.onClientSelected = function ($item, $model, $label) {
             $scope.lic.nip = $model.Nip;
             $scope.lic.company1 = $model.Name;
-            $scope.lic.isNipLikeCompany = true;
+            $scope.lic.isNipLikeCompany = false;
         };
 
         $scope.onNipLostFocus = function () {
-            if (!angular.isUndefined($scope.lic.nip) && !$scope.lic.isNipLikeCompany) {
+            if (!angular.isUndefined($scope.lic.nip) && $scope.lic.isNipLikeCompany) {
                 $scope.lic.company1 = $scope.lic.nip;
             }
         }
@@ -112,6 +112,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
         $scope.init = function (license) {
             if (!angular.isUndefined(license) && license != null) {
                 $scope.lic = license;
+                $scope.lic.isNipLikeCompany = $scope.lic.company1 == $scope.lic.nip;
             }
         }
     }]);

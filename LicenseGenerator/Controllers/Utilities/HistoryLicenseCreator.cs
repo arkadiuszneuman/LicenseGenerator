@@ -1,6 +1,8 @@
 ﻿using System;
 using LicenseGenerator.Models;
 using LicenseGenerator.ViewModels;
+using System.Web;
+using System.Security.Principal;
 
 namespace LicenseGenerator.Controllers.Utilities
 {
@@ -19,7 +21,8 @@ namespace LicenseGenerator.Controllers.Utilities
                 PartnerNIP = licenseViewModel.PartnerNip,
                 Privileges = licenseViewModel.Privileges,
                 ProgramName = licenseViewModel.Name,
-                ProgramVersion = licenseViewModel.ProgramVersion
+                ProgramVersion = licenseViewModel.ProgramVersion,
+                UserName = ((WindowsIdentity)HttpContext.Current.User.Identity).Name
             };
 
             if (vrlGeneratedLicense.LicenseTermDate != null)
