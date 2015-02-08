@@ -172,6 +172,10 @@
     <Compile Include="Migrations\201502081432493_GeneratedLicenseUserName.Designer.cs">
       <DependentUpon>201502081432493_GeneratedLicenseUserName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502081520192_ProductNewestVersion.cs" />
+    <Compile Include="Migrations\201502081520192_ProductNewestVersion.Designer.cs">
+      <DependentUpon>201502081520192_ProductNewestVersion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GeneratedLicense.cs" />
@@ -1040,6 +1044,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502081432493_GeneratedLicenseUserName.resx">
       <DependentUpon>201502081432493_GeneratedLicenseUserName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502081520192_ProductNewestVersion.resx">
+      <DependentUpon>201502081520192_ProductNewestVersion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
