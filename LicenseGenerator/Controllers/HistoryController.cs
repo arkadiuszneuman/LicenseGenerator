@@ -22,7 +22,8 @@ namespace LicenseGenerator.Controllers
             using (LicenseGeneratorContext ctx = new LicenseGeneratorContext())
             {
                 IQueryable<GeneratedLicense> foundedLicenses = ctx.GeneratedLicensesHistory
-                    .Where(l => filter == "" || l.NIP.Contains(filter) || l.ProgramName.Contains(filter) || l.Company.Contains(filter) || l.PartnerNIP.Contains(filter));
+                    .Where(l => filter == "" || l.NIP.Contains(filter) || l.ProgramName.Contains(filter) || l.Company.Contains(filter) || l.PartnerNIP.Contains(filter)
+                    || l.UserName.Contains(filter));
 
                 IEnumerable<GeneratedLicense> generatedLicenses = foundedLicenses
                     .OrderByDescending(l => l.GenerationDate)
@@ -31,6 +32,11 @@ namespace LicenseGenerator.Controllers
                     .ToList();
 
                 int licensesCount = foundedLicenses.Count();
+
+                foreach (var license in generatedLicenses)
+                {
+                    license.UserName = license.UserName.Replace(@"INSOLUTIONS\", "");
+                }
 
                 var returnObject = new
                 {

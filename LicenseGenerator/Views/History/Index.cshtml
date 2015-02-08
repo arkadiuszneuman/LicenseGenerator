@@ -29,6 +29,7 @@
                     <th>NIP<br />partnera</th>
                     <th>Szyfr.</th>
                     <th>Data wygenerowania</th>
+                    <th>Użytkownik</th>
                     <th></th>
                 </tr>
             </thead>
@@ -47,6 +48,7 @@
                         <span class="glyphicon" ng-class="{ 'glyphicon-check': license.isEncrypted, 'glyphicon-unchecked': !license.isEncrypted }"></span>
                     </td>
                     <td>{{license.generationDate | date:'medium'}}</td>
+                    <td>{{license.userName}}</td>
                     <td style="width: 30px">
                         <span class="glyphicon glyphicon-pencil editableElement" ng-show="license.hover" ng-click="licenseClicked(license)"></span>
                     </td>
