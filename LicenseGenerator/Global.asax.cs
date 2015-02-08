@@ -28,7 +28,7 @@ namespace LicenseGenerator
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             AutoMapper.Mapper.CreateMap<Customer, CustomerViewModel>();
-            AutoMapper.Mapper.CreateMap<Product, ProductViewModel>();
+            //AutoMapper.Mapper.CreateMap<Product, ProductViewModel>();
 
             var formatters = GlobalConfiguration.Configuration.Formatters;
             var jsonFormatter = formatters.JsonFormatter;

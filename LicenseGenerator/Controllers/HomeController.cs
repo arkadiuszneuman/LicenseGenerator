@@ -25,20 +25,24 @@ namespace LicenseGenerator.Controllers
         private readonly IJsonConverter jsonConverter;
         private readonly IPatternCustomersLoader patternCustomersLoader;
         private readonly IPatternProductsLoader patternProductsLoader;
+        private readonly INewestVersionLoader newestVersionLoader;
 
         public HomeController()
             : this(new CountPatternCustomersLoader(10), new LicenseCreator(),
-            new LicenseLoader(new LicenseToViewModelConverter(), new StreamLicenseLoader()), new JsonJavascriptConverter(), new CountPatternProductsLoader(10))
+            new LicenseLoader(new LicenseToViewModelConverter(), new StreamLicenseLoader()), new JsonJavascriptConverter(), new CountPatternProductsLoader(10),
+            new ProductNewestVersionLoader())
         {
         }
 
-        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicenseCreator licenseCreator, ILicenseLoader licenseLoader, IJsonConverter jsonConverter, IPatternProductsLoader patternProductsLoader)
+        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicenseCreator licenseCreator, ILicenseLoader licenseLoader, 
+            IJsonConverter jsonConverter, IPatternProductsLoader patternProductsLoader, INewestVersionLoader newestVersionLoader)
         {
             this.patternCustomersLoader = patternCustomersLoader;
             this.licenseCreator = licenseCreator;
             this.licenseLoader = licenseLoader;
             this.jsonConverter = jsonConverter;
             this.patternProductsLoader = patternProductsLoader;
+            this.newestVersionLoader = newestVersionLoader;
         }
 
         public ActionResult Index()
@@ -71,10 +75,37 @@ namespace LicenseGenerator.Controllers
         {
             try
             {
-                IEnumerable<Product> products = patternProductsLoader.LoadProducts(licenseName);
-                IEnumerable<ProductViewModel> productsViewModels = Mapper.Map<IEnumerable<ProductViewModel>>(products);
+                IEnumerable<string> products = patternProductsLoader.LoadProducts(licenseName);
+
+                List<ProductViewModel> productsViewModels = new List<ProductViewModel>();
+                foreach (string product in products)
+                {
+                    productsViewModels.Add(new ProductViewModel() { LicenseName = product });
+                }
 
                 return new JsonNetResult(new SuccessObject(true, productsViewModels));
+            }
+            catch (Exception exception)
+            {
+                return new JsonNetResult(new SuccessObject(false, exception.Message));
+            }
+        }
+
+        [HttpPost]
+        public JsonNetResult GetProductNewestVersion(string programName)
+        {
+            try
+            {
+                string newestVersion = newestVersionLoader.LoadNewestVersion(programName);
+
+                if (!string.IsNullOrEmpty(newestVersion))
+                {
+                    return new JsonNetResult(new SuccessObject(true, newestVersion));
+                }
+                else
+                {
+                    return new JsonNetResult(new SuccessObject(false, null));
+                }
             }
             catch (Exception exception)
             {

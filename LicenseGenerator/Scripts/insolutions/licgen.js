@@ -24,6 +24,7 @@ app.controller('LicenseGeneratorController', [
         $scope.lic = {};
         $scope.lic.company2 = undefined;
         $scope.lic.isNipLikeCompany = true;
+        $scope.newestVersion = "";
 
         new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
         new LicenseGeneratorButtonsCreator().configureButtons($scope, $http);
@@ -92,13 +93,29 @@ app.controller('LicenseGeneratorController', [
         };
 
         $scope.assignNewestVersion = function () {
-            $scope.lic.programVersion = $scope.lic.newestVersion;
+            $scope.lic.programVersion = $scope.newestVersion;
+        };
+
+        $scope.productChanged = function (handler) {
+            $http.post(siteUrl + "Home/GetProductNewestVersion", { programName: $scope.lic.name }).then(function (response) {
+                if (response.data.success) {
+                    $scope.newestVersion = response.data.object;
+                    $scope.lic.programVersion = "";
+                    handler();
+                } else {
+                    $scope.newestVersion = "";
+                }
+            });
         };
 
         $scope.init = function (license) {
             if (!angular.isUndefined(license) && license != null) {
+                var rememberedNewestVersion = license.programVersion;
                 $scope.lic = license;
                 $scope.lic.isNipLikeCompany = $scope.lic.company1 == $scope.lic.nip;
+                $scope.productChanged(function () {
+                    $scope.lic.programVersion = rememberedNewestVersion;
+                });
             }
         };
     }]);

@@ -5,6 +5,6 @@ namespace LicenseGenerator.Controllers.Utilities.Home
 {
     public interface IPatternProductsLoader
     {
-        IEnumerable<Product> LoadProducts(string pattern);
+        IEnumerable<string> LoadProducts(string pattern);
     }
 }

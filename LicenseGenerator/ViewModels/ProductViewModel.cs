@@ -2,7 +2,7 @@
 {
     public class ProductViewModel
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string LicenseName { get; set; } 
     }
 }

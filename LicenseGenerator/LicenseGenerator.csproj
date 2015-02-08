@@ -137,6 +137,7 @@
     <Compile Include="Controllers\Utilities\HistoryLicenseSaver.cs" />
     <Compile Include="Controllers\Utilities\Home\CountPatternProductsLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\ILicenseCreator.cs" />
+    <Compile Include="Controllers\Utilities\Home\INewestVersionLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\IPatternCustomersLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\CountCustomersLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\IPatternProductsLoader.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Controllers\Utilities\Home\LicenseLoader\IStreamLicenseLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseLoader\LicenseLoader.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseLoader\StreamLicenseLoader.cs" />
+    <Compile Include="Controllers\Utilities\Home\ProductNewestVersionLoader.cs" />
     <Compile Include="Controllers\Utilities\InvalidNipException.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseCreator.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseLoader\LicenseToViewModelConverter.cs" />
