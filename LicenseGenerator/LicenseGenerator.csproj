@@ -18,8 +18,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>disabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
@@ -167,6 +167,10 @@
     <Compile Include="Migrations\201501270845529_ProgramNameLongerText.cs" />
     <Compile Include="Migrations\201501270845529_ProgramNameLongerText.Designer.cs">
       <DependentUpon>201501270845529_ProgramNameLongerText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502081432493_GeneratedLicenseUserName.cs" />
+    <Compile Include="Migrations\201502081432493_GeneratedLicenseUserName.Designer.cs">
+      <DependentUpon>201502081432493_GeneratedLicenseUserName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -1033,6 +1037,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501270845529_ProgramNameLongerText.resx">
       <DependentUpon>201501270845529_ProgramNameLongerText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502081432493_GeneratedLicenseUserName.resx">
+      <DependentUpon>201502081432493_GeneratedLicenseUserName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,5 +16,6 @@ namespace LicenseGenerator.Models
         public string PartnerNIP { get; set; }
         public bool IsEncrypted { get; set; }
         public DateTime GenerationDate { get; set; }
+        public string UserName { get; set; }
     }
 }
