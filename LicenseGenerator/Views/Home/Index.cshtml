@@ -94,7 +94,9 @@
                             <input type="text" only-digits class="form-control" id="programversion" placeholder="Wpisz wersję programu (niewymagane)" ng-model="lic.programVersion"
                                    tooltip="Wersja programu (np. 1.0.3)" tooltip-trigger="focus" tooltip-placement="right">
                             <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button" tooltip="Wstaw najnowszą wersję"><span class="glyphicon glyphicon-export"></span></button>
+                                <button class="btn btn-primary" type="button" tooltip="Wstaw najnowszą wersję" ng-click="assignNewestVersion()">
+                                    <span class="glyphicon glyphicon-export"></span>
+                                </button>
                             </span>
                         </div>
                     </div>

@@ -109,6 +109,10 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
                 });
         }
 
+        $scope.assignNewestVersion = function () {
+            $scope.lic.programVersion = $scope.lic.newestVersion;
+        }
+
         $scope.init = function (license) {
             if (!angular.isUndefined(license) && license != null) {
                 $scope.lic = license;
