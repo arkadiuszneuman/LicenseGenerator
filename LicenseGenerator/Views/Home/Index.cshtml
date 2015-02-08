@@ -90,8 +90,13 @@
                 <div class="form-group">
                     <label for="programversion" class="col-sm-4 control-label">Wersja programu:</label>
                     <div class="col-sm-8">
-                        <input type="text" only-digits class="form-control" id="programversion" placeholder="Wpisz wersję programu (niewymagane)" ng-model="lic.programVersion"
-                               tooltip="Wersja programu (np. 1.0.3)" tooltip-trigger="focus" tooltip-placement="right">
+                        <div class="input-group">
+                            <input type="text" only-digits class="form-control" id="programversion" placeholder="Wpisz wersję programu (niewymagane)" ng-model="lic.programVersion"
+                                   tooltip="Wersja programu (np. 1.0.3)" tooltip-trigger="focus" tooltip-placement="right">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" tooltip="Wstaw najnowszą wersję"><span class="glyphicon glyphicon-export"></span></button>
+                            </span>
+                        </div>
                     </div>
                 </div>
                 <hr />
@@ -107,7 +112,9 @@
                 <div class="pull-right">
                     <div class="btn-group">
                         <button type="button" id="btnGenerateLicense" class="btn btn-lg btn-primary" ng-click="generateTxtLicense(lic)" ng-disabled="licform.$invalid"
-                                data-loading-text="Generowanie licencji...">Generuj licencję</button>
+                                data-loading-text="Generowanie licencji...">
+                            Generuj licencję
+                        </button>
                         <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-disabled="licform.$invalid">
                             <span class="caret"></span>
                             <span class="sr-only">Pokaż podmenu</span>
