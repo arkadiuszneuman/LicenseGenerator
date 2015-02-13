@@ -5,12 +5,14 @@ app.directive('emptyTypeahead', function () {
     return {
         require: 'ngModel',
         link: function (scope, element, attrs, modelCtrl) {
+            // this parser run before typeahead's parser
             modelCtrl.$parsers.unshift(function (inputValue) {
                 var value = (inputValue ? inputValue : secretEmptyKey);
-                modelCtrl.$viewValue = value;
+                modelCtrl.$viewValue = value; // this $viewValue must match the inputValue pass to typehead directive
                 return value;
             });
 
+            // this parser run after typeahead's parser
             modelCtrl.$parsers.push(function (inputValue) {
                 return inputValue === secretEmptyKey ? '' : inputValue;
             });
@@ -68,7 +70,7 @@ app.controller('LicenseGeneratorController', [
         $scope.onAddionalInfoFocus = function (e) {
             $timeout(function () {
                 $(e.target).trigger('input');
-                $(e.target).trigger('change');
+                $(e.target).trigger('change'); // for IE
             });
         };
 
@@ -80,6 +82,9 @@ app.controller('LicenseGeneratorController', [
             var file = $files[0];
             $scope.upload = $upload.upload({
                 url: siteUrl + 'Home/LoadLicense',
+                //method: 'POST' or 'PUT',
+                //headers: {'Authorization': 'xxx'}, // only for html5
+                //withCredentials: true,
                 data: { objectToUpload: file },
                 file: file
             }).success(function (data, status, headers, config) {
@@ -148,12 +153,21 @@ var DropFileConfigurator = (function () {
         })(file);
 
         reader.readAsText(file);
+        //// files is a FileList of File objects. List some properties.
+        //var output = [];
+        //for (var i = 0, f; f = files[i]; i++) {
+        //    output.push('<li><strong>', f.name, '</strong> (', f.type || 'n/a', ') - ',
+        //        f.size, ' bytes, last modified: ',
+        //        f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+        //        '</li>');
+        //}
+        //document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
     };
 
     DropFileConfigurator.prototype.handleDragOver = function (evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        evt.dataTransfer.dropEffect = 'move';
+        evt.dataTransfer.dropEffect = 'move'; // Explicitly show this is a copy.
     };
 
     DropFileConfigurator.prototype.configureDropFiles = function ($scope) {
@@ -221,6 +235,7 @@ var LicenseGeneratorButtonsCreator = (function () {
             var license = that.createValidLicense(lic);
 
             $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
+                //var blob = new Blob([result], { type: "example/binary" });
                 saveToDisk(siteUrl + result, that.getLicenseName(license) + ".lic");
             });
         };
@@ -287,6 +302,7 @@ var DatePickerCreator = (function () {
             startingDay: 1
         };
 
+        // TRANSLATION
         datepickerPopupConfig.currentText = 'Dzisiaj';
         datepickerPopupConfig.clearText = 'Licencja nieograniczona';
         datepickerPopupConfig.closeText = 'Zamknij';
@@ -301,13 +317,16 @@ app.directive('integer', function () {
         link: function (scope, elm, attrs, ctrl) {
             ctrl.$validators.integer = function (modelValue, viewValue) {
                 if (ctrl.$isEmpty(modelValue)) {
+                    // consider empty models to be valid
                     return true;
                 }
 
                 if (INTEGER_REGEXP.test(viewValue)) {
+                    // it is valid
                     return true;
                 }
 
+                // it is invalid
                 return false;
             };
         }
@@ -322,19 +341,24 @@ app.directive('nip', function () {
         link: function (scope, elm, attrs, ctrl) {
             ctrl.$validators.integer = function (modelValue, viewValue) {
                 if (ctrl.$isEmpty(modelValue)) {
+                    // consider empty models to be valid
                     return true;
                 }
 
                 if (NIP_REGEXP.test(viewValue)) {
+                    // it is valid
                     return true;
                 }
 
                 if (viewValue.length == 10 && INTEGER_REGEXP.test(viewValue)) {
+                    // it is valid
                     return true;
                 }
 
+                // it is invalid
                 return false;
             };
         }
     };
 });
+//# sourceMappingURL=licgen.js.map
