@@ -14,12 +14,12 @@ namespace LicenseGenerator.Controllers.Utilities.Home
             this.count = count;
         }
 
-        public IEnumerable<string> LoadProducts(string pattern)
+        public IEnumerable<Product> LoadProducts(string pattern)
         {
             using (LicenseGeneratorContext context = new LicenseGeneratorContext())
             {
                 return context.Products.Where(c => c.LicenseName.Contains(pattern) || c.Name.Contains(pattern))
-                    .Where(c => c.LicenseName != "").Select(p => p.LicenseName).Distinct().OrderBy(p => p).Take(count).ToList();
+                    .Where(c => c.LicenseName != "" && !c.IsInStore).Distinct().OrderBy(p => p.LicenseName).Take(count).ToList();
             }
         }
     }

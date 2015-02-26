@@ -7,5 +7,6 @@
         public string Name { get; set; }
         public string LicenseName { get; set; }
         public string NewestVersion { get; set; }
+        public bool IsInStore { get; set; }
     }
 }

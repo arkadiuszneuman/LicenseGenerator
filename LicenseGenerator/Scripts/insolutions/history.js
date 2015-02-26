@@ -15,7 +15,7 @@ app.controller('HistoryController', [
                 $http.post(siteUrl + 'History/LoadLicenses', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).success(function (data, status, headers, config) {
                     $scope.licenses = data.licenses;
 
-                    params.total(data.count); // set total for recalc pagination
+                    params.total(data.count);
                     $defer.resolve($scope.licenses);
 
                     $scope.isLoading = false;
@@ -32,4 +32,3 @@ app.controller('HistoryController', [
             window.location.href = siteUrl + 'Home/HistoryLicense/' + license.id;
         };
     }]);
-//# sourceMappingURL=history.js.map

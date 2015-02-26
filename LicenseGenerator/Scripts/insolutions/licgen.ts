@@ -60,6 +60,12 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
             $scope.lic.isNipLikeCompany = false;
         };
 
+        $scope.onProductSelected = function ($item, $model, $label) {
+            $scope.newestVersion = $model.version;
+            $scope.lic.programName = $model.programName;
+            $scope.lic.programVersion = "";
+        };
+
         $scope.onNipLostFocus = function () {
             if (!angular.isUndefined($scope.lic.nip) && $scope.lic.isNipLikeCompany) {
                 $scope.lic.company1 = $scope.lic.nip;

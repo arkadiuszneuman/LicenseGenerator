@@ -13,131 +13,137 @@
                                                                                     {
                                                                                         ContractResolver = new CamelCasePropertyNamesContractResolver()
                                                                                     }))">
-    @*<div id="drop_zone">asdasd</div>*@
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h3 class="text-center">Informacje o licencji</h3>
-        </div>
-        <div class="panel-body">
-            <form role="form" class="form-horizontal css-form" name="licform">
-                <div class="form-group">
-                    <label for="name" class="col-sm-4 control-label">Nazwa programu:</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="name" placeholder="Wpisz nazwę identyfikującą program" required
-                               ng-model="lic.name" tooltip-placement="right" tooltip="Nazwa licencji, identyfikująca program (np. ProdukcjaNAV)" tooltip-trigger="focus"
-                               ng-maxlength="255" autocomplete="off"
-                               typeahead="product.licenseName for product in getProducts($viewValue)"
-                               typeahead-on-select='productChanged()'
-                               ng-change="productChanged()" ng-model-options="{ debounce: 200 }">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="company1" class="col-sm-4 control-label">Firma:</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="company1" placeholder="Wpisz nazwę firmy" required ng-model="lic.company1"
-                               typeahead="client as client.Name for client in getClients($viewValue)" typeahead-loading="loadingClients"
-                               typeahead-on-select='onClientSelected($item, $model, $label)'
-                               tooltip="Firma, dla której wystawiana jest licencja" tooltip-trigger="focus" tooltip-placement="right"
-                               ng-maxlength="255" autocomplete="off">
-                        @*<i ng-show="loadingClients" class="glyphicon glyphicon-refresh"></i>*@
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="nip" class="col-sm-4 control-label">NIP:</label>
-                    <div class="col-sm-8">
-                        <input type="text" only-digits class="form-control" id="nip" placeholder="Wpisz NIP klienta" required nip
-                               ng-model="lic.nip" ng-blur="onNipLostFocus()"
-                               tooltip="NIP firmy, dla której wystawiana jest licencja" tooltip-trigger="focus" tooltip-placement="right">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="privileges" class="col-sm-4 control-label">Uprawnienia:</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="privileges" placeholder="Wpisz uprawnienia dla klienta (niewymagane)" ng-model="lic.privileges"
-                               tooltip="Uprawnienia programu (sprawdź dokumentację programu)" tooltip-trigger="focus" tooltip-placement="right">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="licdate" class="col-sm-4 control-label">Licencja aktualna do:</label>
-                    <div class="col-sm-8">
-                        @*<div class="input-group date">*@
-                        <input type="text" id="licdate" placeholder="Data wygaśniecia licencji (niewymagane)" class="form-control"
-                               datepicker-popup="{{format}}" is-open="opened" min-date="minDate" ng-click="open($event)"
-                               datepicker-options="dateOptions"
-                               ng-required="false" ng-model="lic.date"
-                               tooltip="Data ważności licencji. Puste pole oznacza licencję z nieograniczoną ważnością" tooltip-trigger="focus" tooltip-placement="right" />
-                        @*<span class="input-group-addon" ng-click="clearDate($event)">
-                                <i class="glyphicon glyphicon-th"></i>
-                            </span>*@
-                        @*</div>*@
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="company2" class="col-sm-4 control-label">Dodatkowe informacje:</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" id="company2" placeholder="Wpisz dodatkowe informacje klienta" ng-model="lic.company2"
-                               typeahead="addionalInfo for addionalInfo in getAddionalInfos() | filter:$viewValue:stateComparator"
-                               ng-focus="onAddionalInfoFocus($event)" empty-typeahead
-                               tooltip="Dodatkowe informacje wyświetlane podczas uruchamiania programu (np. licencja ważna do @DateTime.Now.Date.ToShortDateString())"
-                               tooltip-trigger="focus" tooltip-placement="right">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="licensenumbers" class="col-sm-4 control-label">Liczba stanowisk:</label>
-                    <div class="col-sm-8">
-                        <input type="text" only-digits class="form-control" id="licensenumbers" placeholder="Wpisz liczbę stanowisk (niewymagane)" integer ng-model="lic.licenseNumbers"
-                               tooltip="Liczba stanowisk, na jakiej ma działać program" tooltip-trigger="focus" tooltip-placement="right">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="programversion" class="col-sm-4 control-label">Wersja programu:</label>
-                    <div class="col-sm-8">
-                        <div class="input-group">
-                            <input type="text" only-digits class="form-control" id="programversion" placeholder="Wpisz wersję programu (niewymagane)" ng-model="lic.programVersion"
-                                   tooltip="Wersja programu (np. 1.0.3)" tooltip-trigger="focus" tooltip-placement="right">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button" tooltip="Wstaw najnowszą wersję" ng-click="assignNewestVersion()">
-                                    <span class="glyphicon glyphicon-export"></span>
-                                </button>
-                            </span>
+    <div ng-controller="MailController">
+        @*<div id="drop_zone">asdasd</div>*@
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="text-center">Informacje o licencji</h3>
+            </div>
+            <div class="panel-body">
+                <form role="form" class="form-horizontal css-form" name="licform">
+                    <div class="form-group">
+                        <label for="name" class="col-sm-4 control-label">Nazwa programu:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="name" placeholder="Wpisz nazwę identyfikującą program" required
+                                   ng-model="lic.name" tooltip-placement="right" tooltip="Nazwa licencji, identyfikująca program (np. ProdukcjaNAV)" tooltip-trigger="focus"
+                                   ng-maxlength="255" autocomplete="off"
+                                   typeahead="product as product.licenseName for product in getProducts($viewValue)"
+                                   typeahead-on-select='onProductSelected($item, $model, $label)'
+                                   ng-change="productChanged()" ng-model-options="{ debounce: 200 }">
                         </div>
                     </div>
-                </div>
-                <hr />
-                <div class="form-group">
-                    <label for="partnernip" class="col-sm-4 control-label">NIP partnera:</label>
-                    <div class="col-sm-8">
-                        <input type="text" only-digits class="form-control" id="partnernip" placeholder="Wpisz NIP partnera" nip
-                               ng-model="lic.partnernip" typeahead="client.Nip as client.Name for client in getClients($viewValue)"
-                               tooltip="Dodatkowy NIP partnera - wpisywany jest on automatycznie do nazwy licencji" tooltip-trigger="focus" tooltip-placement="right">
+                    <div class="form-group">
+                        <label for="company1" class="col-sm-4 control-label">Firma:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="company1" placeholder="Wpisz nazwę firmy" required ng-model="lic.company1"
+                                   typeahead="client as client.Name for client in getClients($viewValue)" typeahead-loading="loadingClients"
+                                   typeahead-on-select='onClientSelected($item, $model, $label)'
+                                   tooltip="Firma, dla której wystawiana jest licencja" tooltip-trigger="focus" tooltip-placement="right"
+                                   ng-maxlength="255" autocomplete="off">
+                            @*<i ng-show="loadingClients" class="glyphicon glyphicon-refresh"></i>*@
+                        </div>
                     </div>
-                </div>
-                <hr />
-                <div class="pull-right">
-                    <div class="btn-group">
-                        <button type="button" id="btnGenerateLicense" class="btn btn-lg btn-primary" ng-click="generateTxtLicense(lic)" ng-disabled="licform.$invalid"
-                                data-loading-text="Generowanie licencji...">
-                            Generuj licencję
-                        </button>
-                        <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-disabled="licform.$invalid">
-                            <span class="caret"></span>
-                            <span class="sr-only">Pokaż podmenu</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            @*<li><a href="" ng-click="generateTxtLicense(lic)">Generuj licencję zaszyfrowaną jako *.txt</a></li>*@
-                            <li><a href="" ng-click="generateDecryptedLicense(lic)">Generuj licencję niezaszyfrowaną</a></li>
-                            <li><a href="" ng-click="generateZippedLicense(lic)">Generuj licencję zaszyfrowaną w pliku zip</a></li>
-                        </ul>
+                    <div class="form-group">
+                        <label for="nip" class="col-sm-4 control-label">NIP:</label>
+                        <div class="col-sm-8">
+                            <input type="text" only-digits class="form-control" id="nip" placeholder="Wpisz NIP klienta" required nip
+                                   ng-model="lic.nip" ng-blur="onNipLostFocus()"
+                                   tooltip="NIP firmy, dla której wystawiana jest licencja" tooltip-trigger="focus" tooltip-placement="right">
+                        </div>
                     </div>
-                    <button class="btn btn-lg btn-warning" ng-file-select ng-model="file"
-                            ng-file-change="fileSelected($files, $event)" multiple="false">
-                        Wczytaj licencję
-                    </button>
-                </div>
-            </form>
+                    <div class="form-group">
+                        <label for="privileges" class="col-sm-4 control-label">Uprawnienia:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="privileges" placeholder="Wpisz uprawnienia dla klienta (niewymagane)" ng-model="lic.privileges"
+                                   tooltip="Uprawnienia programu (sprawdź dokumentację programu)" tooltip-trigger="focus" tooltip-placement="right">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="licdate" class="col-sm-4 control-label">Licencja aktualna do:</label>
+                        <div class="col-sm-8">
+                            @*<div class="input-group date">*@
+                            <input type="text" id="licdate" placeholder="Data wygaśniecia licencji (niewymagane)" class="form-control"
+                                   datepicker-popup="{{format}}" is-open="opened" min-date="minDate" ng-click="open($event)"
+                                   datepicker-options="dateOptions"
+                                   ng-required="false" ng-model="lic.date"
+                                   tooltip="Data ważności licencji. Puste pole oznacza licencję z nieograniczoną ważnością" tooltip-trigger="focus" tooltip-placement="right" />
+                            @*<span class="input-group-addon" ng-click="clearDate($event)">
+                                    <i class="glyphicon glyphicon-th"></i>
+                                </span>*@
+                            @*</div>*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="company2" class="col-sm-4 control-label">Dodatkowe informacje:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="company2" placeholder="Wpisz dodatkowe informacje klienta" ng-model="lic.company2"
+                                   typeahead="addionalInfo for addionalInfo in getAddionalInfos() | filter:$viewValue:stateComparator"
+                                   ng-focus="onAddionalInfoFocus($event)" empty-typeahead
+                                   tooltip="Dodatkowe informacje wyświetlane podczas uruchamiania programu (np. licencja ważna do @DateTime.Now.Date.ToShortDateString())"
+                                   tooltip-trigger="focus" tooltip-placement="right">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="licensenumbers" class="col-sm-4 control-label">Liczba stanowisk:</label>
+                        <div class="col-sm-8">
+                            <input type="text" only-digits class="form-control" id="licensenumbers" placeholder="Wpisz liczbę stanowisk (niewymagane)" integer ng-model="lic.licenseNumbers"
+                                   tooltip="Liczba stanowisk, na jakiej ma działać program" tooltip-trigger="focus" tooltip-placement="right">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="programversion" class="col-sm-4 control-label">Wersja programu:</label>
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <input type="text" only-digits class="form-control" id="programversion" placeholder="Wpisz wersję programu (niewymagane)" ng-model="lic.programVersion"
+                                       tooltip="Wersja programu (np. 1.0.3)" tooltip-trigger="focus" tooltip-placement="right">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="button" tooltip="Wstaw najnowszą wersję" ng-click="assignNewestVersion()">
+                                        <span class="glyphicon glyphicon-export"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label for="partnernip" class="col-sm-4 control-label">NIP partnera:</label>
+                        <div class="col-sm-8">
+                            <input type="text" only-digits class="form-control" id="partnernip" placeholder="Wpisz NIP partnera" nip
+                                   ng-model="lic.partnernip" typeahead="client.Nip as client.Name for client in getClients($viewValue)"
+                                   tooltip="Dodatkowy NIP partnera - wpisywany jest on automatycznie do nazwy licencji" tooltip-trigger="focus" tooltip-placement="right">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" id="btnGenerateLicense" class="btn btn-lg btn-primary" ng-click="generateTxtLicense(lic)" ng-disabled="licform.$invalid"
+                                    data-loading-text="Generowanie licencji...">
+                                Generuj licencję
+                            </button>
+                            <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown" aria-expanded="false" ng-disabled="licform.$invalid">
+                                <span class="caret"></span>
+                                <span class="sr-only">Pokaż podmenu</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                @*<li><a href="" ng-click="generateTxtLicense(lic)">Generuj licencję zaszyfrowaną jako *.txt</a></li>*@
+                                <li><a href="" ng-click="generateDecryptedLicense(lic)">Generuj licencję niezaszyfrowaną</a></li>
+                                <li><a href="" ng-click="generateZippedLicense(lic)">Generuj licencję zaszyfrowaną w pliku zip</a></li>
+                            </ul>
+                        </div>
+                        <button class="btn btn-lg btn-warning" ng-file-select ng-model="file"
+                                ng-file-change="fileSelected($files, $event)" multiple="false">
+                            Wczytaj licencję
+                        </button>
+                        <button class="btn btn-lg btn-warning" ng-click="initMail()">
+                            Modla
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
+        @{ Html.RenderPartial(@"~/Views/Mail/MailSender.cshtml");  }
+    </div>
     <div class="modal fade" id="alertModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -155,4 +161,5 @@
 @section scripts
 {
     <script type="text/javascript" src="@Url.Content("~/Scripts/insolutions/licgen.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/insolutions/mailsender.js")"></script>
 }

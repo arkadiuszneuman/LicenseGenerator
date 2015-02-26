@@ -75,12 +75,17 @@ namespace LicenseGenerator.Controllers
         {
             try
             {
-                IEnumerable<string> products = patternProductsLoader.LoadProducts(licenseName);
+                IEnumerable<Product> products = patternProductsLoader.LoadProducts(licenseName);
 
                 List<ProductViewModel> productsViewModels = new List<ProductViewModel>();
-                foreach (string product in products)
+                foreach (var product in products)
                 {
-                    productsViewModels.Add(new ProductViewModel() { LicenseName = product });
+                    productsViewModels.Add(new ProductViewModel() 
+                    {
+                        LicenseName = product.LicenseName, 
+                        ProgramName = product.Name,
+                        Version = product.NewestVersion
+                    });
                 }
 
                 return new JsonNetResult(new SuccessObject(true, productsViewModels));

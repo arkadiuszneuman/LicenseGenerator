@@ -180,6 +180,10 @@
     <Compile Include="Migrations\201502081520192_ProductNewestVersion.Designer.cs">
       <DependentUpon>201502081520192_ProductNewestVersion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502262025017_updatedProduct.cs" />
+    <Compile Include="Migrations\201502262025017_updatedProduct.Designer.cs">
+      <DependentUpon>201502262025017_updatedProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GeneratedLicense.cs" />
@@ -965,6 +969,7 @@
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <Content Include="Scripts\insolutions\common.js" />
+    <Content Include="Scripts\insolutions\mailsender.js" />
     <Content Include="Scripts\jquery-1.11.1.min.map" />
     <Content Include="Scripts\FileSaver.min.js.map">
       <DependentUpon>FileSaver.min.js</DependentUpon>
@@ -1015,6 +1020,7 @@
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
     <Content Include="Scripts\ng-table.min.js.map" />
+    <Content Include="Views\Mail\MailSender.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1057,6 +1063,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502081520192_ProductNewestVersion.resx">
       <DependentUpon>201502081520192_ProductNewestVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502262025017_updatedProduct.resx">
+      <DependentUpon>201502262025017_updatedProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

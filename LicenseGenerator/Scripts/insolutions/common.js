@@ -1,4 +1,6 @@
-﻿function saveToDisk(fileURL, fileName) {
+﻿var app = angular.module('licensegenerator', ['ui.bootstrap', 'angularFileUpload']);
+
+function saveToDisk(fileURL, fileName) {
     // for non-IE
     if (!window.ActiveXObject) {
         var save = document.createElement('a');

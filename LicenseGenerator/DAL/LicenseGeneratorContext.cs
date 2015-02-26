@@ -41,6 +41,7 @@ namespace LicenseGenerator.DAL
                 m.Property(p => p.Name).HasColumnName("tw_Nazwa");
                 m.Property(p => p.LicenseName).HasColumnName("tw_Pole1");
                 m.Property(p => p.NewestVersion).HasColumnName("tw_Pole2");
+                m.Property(p => p.IsInStore).HasColumnName("tw_SklepInternet");
             });
         }
 
