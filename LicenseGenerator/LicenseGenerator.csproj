@@ -216,6 +216,7 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
+    <None Include="Scripts\angular.intellisense.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\Blob.js" />
@@ -969,6 +970,7 @@
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <Content Include="Scripts\insolutions\common.js" />
+    <Content Include="Scripts\insolutions\directives.js" />
     <Content Include="Scripts\insolutions\mailsender.js" />
     <Content Include="Scripts\jquery-1.11.1.min.map" />
     <Content Include="Scripts\FileSaver.min.js.map">
@@ -1005,6 +1007,7 @@
     <Content Include="Scripts\thirdparty\ng-flow\ng-flow-standalone.js" />
     <Content Include="Scripts\thirdparty\ng-flow\ng-flow-standalone.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Static\MailSender.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

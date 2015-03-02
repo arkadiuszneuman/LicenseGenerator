@@ -23,6 +23,13 @@ function saveToDisk(fileURL, fileName) {
     }
 }
 
+$(function () {
+    var loader = $(".loader2");
+    var width = loader.parent().width();
+    var height = loader.parent().height();
+    load.
+});
+
 //angular.module('licensegenerator').directive('loadingContainer', function () {
 //    return {
 //        restrict: 'A',

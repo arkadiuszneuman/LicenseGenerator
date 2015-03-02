@@ -1,8 +1,6 @@
 ﻿app.controller('MailController', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
     
-    $('#mailsender').on('shown.bs.modal', function () {
-        $('#emails').focus();
-    })
+    
 
     $scope.initMail = function () {
         $scope.mail = {};
@@ -16,6 +14,7 @@
         }
         $scope.mail.title = "Licencja dla programu " + programName;
         $scope.mail.message = "Dzień dobry,\r\n\r\nw załączniku przesyłamy licencję dla programu " + programName + ".\r\n\r\nPozdrawiamy,\r\nzespół inSolutions.";
+        $scope.mail.adresses = "arkadiusz.neuman@gmail.com";
 
         $("#mailsender").modal();
     }

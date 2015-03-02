@@ -1,22 +1,4 @@
 ﻿var secretEmptyKey = '[$empty$]';
-var app = angular.module('licensegenerator', ['ui.bootstrap', 'angularFileUpload']);
-
-app.directive('emptyTypeahead', function () {
-    return {
-        require: 'ngModel',
-        link: function (scope, element, attrs, modelCtrl) {
-            modelCtrl.$parsers.unshift(function (inputValue) {
-                var value = (inputValue ? inputValue : secretEmptyKey);
-                modelCtrl.$viewValue = value;
-                return value;
-            });
-
-            modelCtrl.$parsers.push(function (inputValue) {
-                return inputValue === secretEmptyKey ? '' : inputValue;
-            });
-        }
-    };
-});
 
 app.controller('LicenseGeneratorController', [
     '$scope', 'datepickerPopupConfig', '$filter', '$http', '$timeout', '$upload',
