@@ -1004,6 +1004,7 @@
     <Content Include="Scripts\ng-table.js" />
     <Content Include="Scripts\ng-table.min.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\thirdparty\jquerycenter\jquery.center.min.js" />
     <Content Include="Scripts\thirdparty\ng-flow\ng-flow-standalone.js" />
     <Content Include="Scripts\thirdparty\ng-flow\ng-flow-standalone.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -1023,7 +1024,7 @@
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
     <Content Include="Scripts\ng-table.min.js.map" />
-    <Content Include="Views\Mail\MailSender.cshtml" />
+    <Content Include="Scripts\thirdparty\jquerycenter\jquery.center.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,7 +14,7 @@ function saveToDisk(fileURL, fileName) {
         (window.URL || window.webkitURL).revokeObjectURL(save.href);
     }
 
-    // for IE
+        // for IE
     else if (!!window.ActiveXObject && document.execCommand) {
         var _window = window.open(fileURL, "_blank");
         _window.document.close();
@@ -24,10 +24,8 @@ function saveToDisk(fileURL, fileName) {
 }
 
 $(function () {
-    var loader = $(".loader2");
-    var width = loader.parent().width();
-    var height = loader.parent().height();
-    load.
+    
+    //load.
 });
 
 //angular.module('licensegenerator').directive('loadingContainer', function () {

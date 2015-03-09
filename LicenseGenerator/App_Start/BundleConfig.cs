@@ -67,7 +67,8 @@ namespace LicenseGenerator
                          ));
 
             bundles.Add(new ScriptBundle("~/bundles/other").Include(
-                         "~/Scripts/thirdparty/ng-flow/ng-flow-standalone.js"
+                         "~/Scripts/thirdparty/ng-flow/ng-flow-standalone.js",
+                         "~/Scripts/thirdparty/jquerycenter/jquery.center.js"
                          ));
 
             bundles.Add(new ScriptBundle("~/bundles/insolutions").Include(
