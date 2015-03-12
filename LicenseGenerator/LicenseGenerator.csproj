@@ -133,6 +133,7 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailSendController.cs" />
     <Compile Include="Controllers\Utilities\About\IVersionGetter.cs" />
     <Compile Include="Controllers\Utilities\About\ProgramVersionGetter.cs" />
     <Compile Include="Controllers\Utilities\HistoryLicenseCreator.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="ViewModels\About\VersionViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\LicenseViewModel.cs" />
+    <Compile Include="ViewModels\MailSend\MailViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

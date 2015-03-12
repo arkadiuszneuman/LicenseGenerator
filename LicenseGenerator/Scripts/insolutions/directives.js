@@ -17,7 +17,8 @@
     }
 });
 
-app.directive('inMailSenderWindow', function () {
+app.directive('inMailSenderWindow', ['$http', function ($http) {
+
     return {
         restrict: 'E',
         templateUrl: siteUrl + '/Static/MailSender.html',
@@ -28,12 +29,20 @@ app.directive('inMailSenderWindow', function () {
 
             scope.loadervisible = false;
 
-            scope.click = function () {
+            scope.sendMail = function (mail) {
                 scope.loadervisible = true;
+
+                $http.post(siteUrl + "MailSend/Send", { mail: mail })
+                      .then(function (response) {
+                          if (response.data.success) {
+                              $('#mailsender').modal('hide');
+                              scope.loadervisible = false;
+                          }
+                      });
             };
         }
     };
-});
+}]);
 
 app.directive('inLoaderVisible', function () {
 
@@ -48,7 +57,7 @@ app.directive('inLoaderVisible', function () {
         link: function (scope, element, attrs) {
 
             scope.inLoaderBackground = true;
-            
+
             var setLoaderPosition = function () {
                 var loader = $(".loader2");
 
@@ -68,7 +77,7 @@ app.directive('inLoaderVisible', function () {
                 //var leftToSet = left + (width / 2) - ((loader.width() + 20) / 2);
                 //loader.css({ "top": topToSet + "px", "left": leftToSet + "px" });
             }
-            
+
             scope.$watch('inLoaderVisible', function (newVal, oldVal) {
                 if (newVal) {
                     setLoaderPosition();
