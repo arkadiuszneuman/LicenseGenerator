@@ -204,6 +204,7 @@ class LicenseGeneratorButtonsCreator {
 
     private createValidLicense(lic) {
         var license = angular.copy(lic);
+        license.name = license.name.licenseName;
         if (license.date != null) {
             license.date = this.customFormatDate(new Date(lic.date), "#YYYY#-#MM#-#DD# #hh#:#mm#:#ss#");
         }

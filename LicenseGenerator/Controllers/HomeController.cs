@@ -177,17 +177,7 @@ namespace LicenseGenerator.Controllers
             {
                 System.IO.File.Delete(filePath);
                 return filePath;
-                //for (int i = 1; i < 9999; ++i)
-                //{
-                //    string vrlNewFilePath = filePath.Insert(filePath.Count() - 4, "_" + i);
-                //    if (!System.IO.File.Exists(vrlNewFilePath))
-                //    {
-                //        return vrlNewFilePath;
-                //    }
-                //}
             }
-
-            throw new InvalidOperationException("Nie można wygenerować licencji");
         }
 
         [HttpPost]

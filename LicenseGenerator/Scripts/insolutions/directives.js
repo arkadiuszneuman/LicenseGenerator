@@ -48,7 +48,7 @@ app.directive('inLoaderVisible', function () {
         link: function (scope, element, attrs) {
 
             scope.inLoaderBackground = true;
-
+            
             var setLoaderPosition = function () {
                 var loader = $(".loader2");
 
@@ -68,7 +68,7 @@ app.directive('inLoaderVisible', function () {
                 //var leftToSet = left + (width / 2) - ((loader.width() + 20) / 2);
                 //loader.css({ "top": topToSet + "px", "left": leftToSet + "px" });
             }
-
+            
             scope.$watch('inLoaderVisible', function (newVal, oldVal) {
                 if (newVal) {
                     setLoaderPosition();

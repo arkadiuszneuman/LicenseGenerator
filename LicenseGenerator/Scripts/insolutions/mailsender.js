@@ -15,7 +15,7 @@
         $scope.mail.title = "Licencja dla programu " + programName;
         $scope.mail.message = "Dzień dobry,\r\n\r\nw załączniku przesyłamy licencję dla programu " + programName + ".\r\n\r\nPozdrawiamy,\r\nzespół inSolutions.";
         $scope.mail.adresses = "arkadiusz.neuman@gmail.com";
-
+        
         $("#mailsender").modal({
             backdrop: 'static',
             keyboard: false
