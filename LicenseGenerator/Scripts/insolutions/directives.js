@@ -1,4 +1,56 @@
-﻿app.directive('emptyTypeahead', function () {
+﻿var INTEGER_REGEXP = /^\-?\d+$/;
+app.directive('integer', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ctrl) {
+            ctrl.$validators.integer = function (modelValue, viewValue) {
+                if (ctrl.$isEmpty(modelValue)) {
+                    // consider empty models to be valid
+                    return true;
+                }
+
+                if (INTEGER_REGEXP.test(viewValue)) {
+                    // it is valid
+                    return true;
+                }
+
+                // it is invalid
+                return false;
+            };
+        }
+    };
+});
+
+var NIP_REGEXP = /^((\d{3}[- ]\d{3}[- ]\d{2}[- ]\d{2})|(\d{3}[- ]\d{2}[- ]\d{2}[- ]\d{3}))$/;
+app.directive('nip', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ctrl) {
+            ctrl.$validators.integer = function (modelValue, viewValue) {
+                if (ctrl.$isEmpty(modelValue)) {
+                    // consider empty models to be valid
+                    return true;
+                }
+
+
+                if (NIP_REGEXP.test(viewValue)) {
+                    // it is valid
+                    return true;
+                }
+
+                if (viewValue.length == 10 && INTEGER_REGEXP.test(viewValue)) {
+                    // it is valid
+                    return true;
+                }
+
+                // it is invalid
+                return false;
+            };
+        }
+    };
+});
+
+app.directive('emptyTypeahead', function () {
     return {
         require: 'ngModel',
         link: function (scope, element, attrs, modelCtrl) {
@@ -66,16 +118,8 @@ app.directive('inLoaderVisible', function () {
                     'left': '50%',
                     'top': '50%',
                     'margin-left': -loader.outerWidth() / 2,
-                    'margin-top': -loader.outerHeight() / 2,
+                    'margin-top': -loader.outerHeight() / 2
                 });
-                //var width = loader.parent().width();
-                //var height = loader.parent().height();
-                //var top = loader.parent().position().top;
-                //var left = loader.parent().position().left;
-
-                //var topToSet = top + (height / 2) - ((loader.height() + 20) / 2);
-                //var leftToSet = left + (width / 2) - ((loader.width() + 20) / 2);
-                //loader.css({ "top": topToSet + "px", "left": leftToSet + "px" });
             }
 
             scope.$watch('inLoaderVisible', function (newVal, oldVal) {
