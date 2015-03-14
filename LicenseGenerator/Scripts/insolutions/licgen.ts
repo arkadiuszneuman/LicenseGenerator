@@ -7,15 +7,15 @@ declare var data;
 
 var secretEmptyKey = '[$empty$]';
 
-app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig', '$filter', '$http', '$timeout', '$upload', 'inDateFormatter',
-    function ($scope, datepickerPopupConfig, $filter, $http, $timeout, $upload, inDateFormatter) {
+app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig', '$filter', '$http', '$timeout', '$upload', 'inDateFormatter', 'inCreateLicense',
+    function ($scope, datepickerPopupConfig, $filter, $http, $timeout, $upload, inDateFormatter, inCreateLicense) {
         $scope.lic = {};
         $scope.lic.company2 = undefined;
         $scope.lic.isNipLikeCompany = true;
         $scope.newestVersion = "";
 
         new DatePickerCreator().configureDatePicker($scope, datepickerPopupConfig);
-        new LicenseGeneratorButtonsCreator().configureButtons($scope, $http);
+        new LicenseGeneratorButtonsCreator().configureButtons($scope, $http, inCreateLicense);
         createDefaultLicense($scope, $filter);
 
         $scope.getClients = function (val) {
@@ -180,21 +180,6 @@ class DropFileConfigurator {
 
 class LicenseGeneratorButtonsCreator {
 
-    private createValidLicense(lic) {
-        var license = angular.copy(lic);
-        license.name = license.name.licenseName;
-        if (license.date != null) {
-            //license.date = this.customFormatDate(new Date(lic.date), "#YYYY#-#MM#-#DD# #hh#:#mm#:#ss#");
-        }
-
-        license.nip = license.nip.split("-").join("").split(" ").join("");
-        if (!angular.isUndefined(license.partnernip)) {
-            license.partnernip = license.partnernip.split("-").join("").split(" ").join("");
-        }
-
-        return license;
-    }
-
     private getLicenseName(license) {
         var licenseName = license.name + "_" + license.nip;
 
@@ -205,12 +190,12 @@ class LicenseGeneratorButtonsCreator {
         return licenseName;
     }
 
-    public configureButtons($scope, $http) {
+    public configureButtons($scope, $http, inCreateLicense) {
         var that = this;
 
         $scope.generateLicense = function (lic) {
 
-            var license = that.createValidLicense(lic);
+            var license = inCreateLicense(lic);
 
             $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
                 //var blob = new Blob([result], { type: "example/binary" });
@@ -219,7 +204,7 @@ class LicenseGeneratorButtonsCreator {
         };
 
         $scope.generateTxtLicense = function (lic) {
-            var license = that.createValidLicense(lic);
+            var license = inCreateLicense(lic);
 
             $("#btnGenerateLicense").button("loading");
             $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
@@ -231,7 +216,7 @@ class LicenseGeneratorButtonsCreator {
         };
 
         $scope.generateDecryptedLicense = function (lic) {
-            var license = that.createValidLicense(lic);
+            var license = inCreateLicense(lic);
 
             $("#btnGenerateLicense").button("loading");
             $.post(siteUrl + "Home/GenerateDecryptedLicense", { licenseViewModel: license }, function (result) {
@@ -242,7 +227,7 @@ class LicenseGeneratorButtonsCreator {
         };
 
         $scope.generateZippedLicense = function (lic) {
-            var license = that.createValidLicense(lic);
+            var license = inCreateLicense(lic);
 
             $("#btnGenerateLicense").button("loading");
             $.post(siteUrl + "Home/GenerateZippedLicense", { licenseViewModel: license }, function (result) {
