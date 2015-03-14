@@ -1,8 +1,8 @@
 ﻿var secretEmptyKey = '[$empty$]';
 
 app.controller('LicenseGeneratorController', [
-    '$scope', 'datepickerPopupConfig', '$filter', '$http', '$timeout', '$upload',
-    function ($scope, datepickerPopupConfig, $filter, $http, $timeout, $upload) {
+    '$scope', 'datepickerPopupConfig', '$filter', '$http', '$timeout', '$upload', 'inDateFormatter',
+    function ($scope, datepickerPopupConfig, $filter, $http, $timeout, $upload, inDateFormatter) {
         $scope.lic = {};
         $scope.lic.company2 = undefined;
         $scope.lic.isNipLikeCompany = true;
@@ -45,8 +45,7 @@ app.controller('LicenseGeneratorController', [
         };
 
         $scope.getAddionalInfos = function () {
-            var licenseGenerator = new LicenseGeneratorButtonsCreator();
-            var date = licenseGenerator.customFormatDate(new Date($scope.lic.date), "#YYYY#-#MM#-#DD#");
+            var date = inDateFormatter.customFormatDate(new Date($scope.lic.date), "#YYYY#-#MM#-#DD#");
             return [
                 "Licencja testowa ważna do " + date,
                 "Licencja bezterminowa",
@@ -56,7 +55,7 @@ app.controller('LicenseGeneratorController', [
         $scope.onAddionalInfoFocus = function (e) {
             $timeout(function () {
                 $(e.target).trigger('input');
-                $(e.target).trigger('change'); // for IE
+                $(e.target).trigger('change');
             });
         };
 
@@ -68,9 +67,6 @@ app.controller('LicenseGeneratorController', [
             var file = $files[0];
             $scope.upload = $upload.upload({
                 url: siteUrl + 'Home/LoadLicense',
-                //method: 'POST' or 'PUT',
-                //headers: {'Authorization': 'xxx'}, // only for html5
-                //withCredentials: true,
                 data: { objectToUpload: file },
                 file: file
             }).success(function (data, status, headers, config) {
@@ -139,21 +135,12 @@ var DropFileConfigurator = (function () {
         })(file);
 
         reader.readAsText(file);
-        //// files is a FileList of File objects. List some properties.
-        //var output = [];
-        //for (var i = 0, f; f = files[i]; i++) {
-        //    output.push('<li><strong>', f.name, '</strong> (', f.type || 'n/a', ') - ',
-        //        f.size, ' bytes, last modified: ',
-        //        f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-        //        '</li>');
-        //}
-        //document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
     };
 
     DropFileConfigurator.prototype.handleDragOver = function (evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        evt.dataTransfer.dropEffect = 'move'; // Explicitly show this is a copy.
+        evt.dataTransfer.dropEffect = 'move';
     };
 
     DropFileConfigurator.prototype.configureDropFiles = function ($scope) {
@@ -168,33 +155,10 @@ var DropFileConfigurator = (function () {
 var LicenseGeneratorButtonsCreator = (function () {
     function LicenseGeneratorButtonsCreator() {
     }
-    LicenseGeneratorButtonsCreator.prototype.customFormatDate = function (dateObject, formatString) {
-        var YYYY, YY, MMMM, MMM, MM, M, DDDD, DDD, DD, D, hhh, hh, h, mm, m, ss, s, ampm, AMPM, dMod, th;
-        YY = ((YYYY = dateObject.getFullYear()) + "").slice(-2);
-        MM = (M = dateObject.getMonth() + 1) < 10 ? ('0' + M) : M;
-        MMM = (MMMM = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][M - 1]).substring(0, 3);
-        DD = (D = dateObject.getDate()) < 10 ? ('0' + D) : D;
-        DDD = (DDDD = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dateObject.getDay()]).substring(0, 3);
-        th = (D >= 10 && D <= 20) ? 'th' : ((dMod = D % 10) == 1) ? 'st' : (dMod == 2) ? 'nd' : (dMod == 3) ? 'rd' : 'th';
-        formatString = formatString.replace("#YYYY#", YYYY).replace("#YY#", YY).replace("#MMMM#", MMMM).replace("#MMM#", MMM).replace("#MM#", MM).replace("#M#", M).replace("#DDDD#", DDDD).replace("#DDD#", DDD).replace("#DD#", DD).replace("#D#", D).replace("#th#", th);
-
-        h = (hhh = dateObject.getHours());
-        if (h == 0)
-            h = 24;
-        if (h > 12)
-            h -= 12;
-        hh = h < 10 ? ('0' + h) : h;
-        AMPM = (ampm = hhh < 12 ? 'am' : 'pm').toUpperCase();
-        mm = (m = dateObject.getMinutes()) < 10 ? ('0' + m) : m;
-        ss = (s = dateObject.getSeconds()) < 10 ? ('0' + s) : s;
-        return formatString.replace("#hhh#", hhh).replace("#hh#", hh).replace("#h#", h).replace("#mm#", mm).replace("#m#", m).replace("#ss#", ss).replace("#s#", s).replace("#ampm#", ampm).replace("#AMPM#", AMPM);
-    };
-
     LicenseGeneratorButtonsCreator.prototype.createValidLicense = function (lic) {
         var license = angular.copy(lic);
         license.name = license.name.licenseName;
         if (license.date != null) {
-            license.date = this.customFormatDate(new Date(lic.date), "#YYYY#-#MM#-#DD# #hh#:#mm#:#ss#");
         }
 
         license.nip = license.nip.split("-").join("").split(" ").join("");
@@ -222,7 +186,6 @@ var LicenseGeneratorButtonsCreator = (function () {
             var license = that.createValidLicense(lic);
 
             $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
-                //var blob = new Blob([result], { type: "example/binary" });
                 saveToDisk(siteUrl + result, that.getLicenseName(license) + ".lic");
             });
         };
@@ -289,7 +252,6 @@ var DatePickerCreator = (function () {
             startingDay: 1
         };
 
-        // TRANSLATION
         datepickerPopupConfig.currentText = 'Dzisiaj';
         datepickerPopupConfig.clearText = 'Licencja nieograniczona';
         datepickerPopupConfig.closeText = 'Zamknij';
@@ -304,16 +266,13 @@ app.directive('integer', function () {
         link: function (scope, elm, attrs, ctrl) {
             ctrl.$validators.integer = function (modelValue, viewValue) {
                 if (ctrl.$isEmpty(modelValue)) {
-                    // consider empty models to be valid
                     return true;
                 }
 
                 if (INTEGER_REGEXP.test(viewValue)) {
-                    // it is valid
                     return true;
                 }
 
-                // it is invalid
                 return false;
             };
         }
@@ -328,24 +287,19 @@ app.directive('nip', function () {
         link: function (scope, elm, attrs, ctrl) {
             ctrl.$validators.integer = function (modelValue, viewValue) {
                 if (ctrl.$isEmpty(modelValue)) {
-                    // consider empty models to be valid
                     return true;
                 }
 
                 if (NIP_REGEXP.test(viewValue)) {
-                    // it is valid
                     return true;
                 }
 
                 if (viewValue.length == 10 && INTEGER_REGEXP.test(viewValue)) {
-                    // it is valid
                     return true;
                 }
 
-                // it is invalid
                 return false;
             };
         }
     };
 });
-//# sourceMappingURL=licgen.js.map

@@ -73,7 +73,8 @@ namespace LicenseGenerator
 
             bundles.Add(new ScriptBundle("~/bundles/insolutions").Include(
                          "~/Scripts/insolutions/common.js",
-                         "~/Scripts/insolutions/directives.js"
+                         "~/Scripts/insolutions/directives.js",
+                         "~/Scripts/insolutions/services.js"
                          ));
 
             BundleTable.EnableOptimizations = false;
