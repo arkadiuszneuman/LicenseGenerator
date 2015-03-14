@@ -69,7 +69,7 @@ app.directive('emptyTypeahead', function () {
     }
 });
 
-app.directive('inMailSenderWindow', ['$http', function ($http) {
+app.directive('inMailSenderWindow', ['$http', 'inCreateLicense', function ($http, inCreateLicense) {
 
     return {
         restrict: 'E',
@@ -83,6 +83,7 @@ app.directive('inMailSenderWindow', ['$http', function ($http) {
 
             scope.sendMail = function (mail, lic) {
                 scope.loadervisible = true;
+                lic = inCreateLicense(lic);
 
                 $http.post(siteUrl + "MailSend/Send", { mail: mail, license: lic })
                       .then(function (response) {

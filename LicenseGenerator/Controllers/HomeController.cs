@@ -10,6 +10,7 @@ using AutoMapper;
 using inSolutions.Utilities.Security;
 using LicenseGenerator.Controllers.Utilities;
 using LicenseGenerator.Controllers.Utilities.Home;
+using LicenseGenerator.Controllers.Utilities.Home.LicenseGenerator;
 using LicenseGenerator.Controllers.Utilities.Home.LicenseLoader;
 using LicenseGenerator.Controllers.Utilities.JsonConverter;
 using LicenseGenerator.DAL;
@@ -20,24 +21,27 @@ namespace LicenseGenerator.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILicenseCreator licenseCreator;
         private readonly ILicenseLoader licenseLoader;
         private readonly IJsonConverter jsonConverter;
         private readonly IPatternCustomersLoader patternCustomersLoader;
+        private readonly ILicensePathGenerator licenseGenerator;
+        private readonly ILicenseCreator licenseCreator;
         private readonly IPatternProductsLoader patternProductsLoader;
         private readonly INewestVersionLoader newestVersionLoader;
 
         public HomeController()
-            : this(new CountPatternCustomersLoader(10), new LicenseCreator(),
+            : this(new CountPatternCustomersLoader(10), new LicensePathGenerator(new LicenseCreator()), new LicenseCreator(),  
             new LicenseLoader(new LicenseToViewModelConverter(), new StreamLicenseLoader()), new JsonJavascriptConverter(), new CountPatternProductsLoader(10),
             new ProductNewestVersionLoader())
         {
         }
 
-        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicenseCreator licenseCreator, ILicenseLoader licenseLoader, 
+        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicensePathGenerator licenseGenerator, 
+            ILicenseCreator licenseCreator, ILicenseLoader licenseLoader, 
             IJsonConverter jsonConverter, IPatternProductsLoader patternProductsLoader, INewestVersionLoader newestVersionLoader)
         {
             this.patternCustomersLoader = patternCustomersLoader;
+            this.licenseGenerator = licenseGenerator;
             this.licenseCreator = licenseCreator;
             this.licenseLoader = licenseLoader;
             this.jsonConverter = jsonConverter;
@@ -123,7 +127,7 @@ namespace LicenseGenerator.Controllers
         {
             try
             {
-                var fileName = GenerateLicenseToPath(licenseViewModel);
+                var fileName = licenseGenerator.GenerateLicenseToPath(licenseViewModel);
                 SuccessObject successObject = new SuccessObject(true, "licenses/" + fileName);
                 return new JsonNetResult(successObject);
             }
@@ -134,58 +138,12 @@ namespace LicenseGenerator.Controllers
             }
         }
 
-        private string GenerateLicenseToPath(LicenseViewModel license)
-        {
-            string oneFileLicense = licenseCreator.CreateLicenseFromVM(license);
-            string encryptedLicense = Cl_DataEncryption.EncryptText(oneFileLicense);
-
-            string vrlDirectory = ControllerContext.HttpContext.Server.MapPath("~/licenses/");
-            if (!Directory.Exists(vrlDirectory))
-            {
-                Directory.CreateDirectory(vrlDirectory);
-            }
-
-            string fileName = GetFileName(license);
-
-            using (StreamWriter vrlWriter = new StreamWriter(vrlDirectory + fileName, false, Encoding.GetEncoding(1250)))
-            {
-                vrlWriter.Write(encryptedLicense);
-            }
-
-            SaveLicenseHistory(license, true);
-            return fileName;
-        }
-
-        private static void SaveLicenseHistory(LicenseViewModel license, bool isEncrypted)
-        {
-            HistoryLicenseCreator vrlHistoryLicenseCreator = new HistoryLicenseCreator();
-            var vrlGeneratedLicense = vrlHistoryLicenseCreator.GenerateLicense(license);
-            HistoryLicenseSaver vrlHistoryLicenseSaver = new HistoryLicenseSaver(isEncrypted);
-            vrlHistoryLicenseSaver.SaveLicenseHistory(vrlGeneratedLicense);
-        }
-
-        private static string GetFileName(LicenseViewModel license)
-        {
-            string filePath = license.Name + DateTime.Now.ToString()
-                            .Replace(" ", "").Replace(":", "").Replace("-", "") + "S.txt";
-
-            if (!System.IO.File.Exists(filePath))
-            {
-                return filePath;
-            }
-            else
-            {
-                System.IO.File.Delete(filePath);
-                return filePath;
-            }
-        }
-
         [HttpPost]
         public JsonResult GenerateDecryptedLicense(LicenseViewModel licenseViewModel)
         {
             string decryptedLicense = licenseCreator.CreateLicenseFromVM(licenseViewModel);
 
-            SaveLicenseHistory(licenseViewModel, false);
+            licenseGenerator.SaveLicenseHistory(licenseViewModel, false);
 
             return Json(decryptedLicense);
         }
@@ -195,7 +153,7 @@ namespace LicenseGenerator.Controllers
         {
             GetEndUserLicenseName(licenseViewModel);
 
-            string fileName = GenerateLicenseToPath(licenseViewModel);
+            string fileName = licenseGenerator.GenerateLicenseToPath(licenseViewModel);
             string vrlDirectory = ControllerContext.HttpContext.Server.MapPath("~/licenses/");
             string zipFileName = Path.GetFileNameWithoutExtension(fileName) + ".zip";
             using (var memoryStream = new MemoryStream())
