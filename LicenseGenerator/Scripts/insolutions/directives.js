@@ -29,10 +29,10 @@ app.directive('inMailSenderWindow', ['$http', function ($http) {
 
             scope.loadervisible = false;
 
-            scope.sendMail = function (mail) {
+            scope.sendMail = function (mail, lic) {
                 scope.loadervisible = true;
 
-                $http.post(siteUrl + "MailSend/Send", { mail: mail })
+                $http.post(siteUrl + "MailSend/Send", { mail: mail, license: lic })
                       .then(function (response) {
                           if (response.data.success) {
                               $('#mailsender').modal('hide');
