@@ -25,3 +25,4 @@
 /// <reference path="thirdparty/ng-flow/ng-flow-standalone.js" />
 /// <reference path="thirdparty/jquerycenter/jquery.center.js" />
 /// <reference path="insolutions/services.js" />
+/// <reference path="angular-toastr.min.js" />
