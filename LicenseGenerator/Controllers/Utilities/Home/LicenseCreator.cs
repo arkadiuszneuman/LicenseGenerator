@@ -33,30 +33,30 @@ namespace LicenseGenerator.Controllers.Utilities.Home
             return builder.ToString().Trim();
         }
 
-        private void CheckLicense(LicenseViewModel vrpLicense)
+        private void CheckLicense(LicenseViewModel license)
         {
-            if (string.IsNullOrEmpty(vrpLicense.Name))
+            if (string.IsNullOrEmpty(license.Name))
             {
-                throw new ArgumentNullException("vrpLicense.Name");
+                throw new ArgumentNullException("license.Name");
             }
 
-            if (string.IsNullOrEmpty(vrpLicense.Company1))
+            if (string.IsNullOrEmpty(license.Company1))
             {
-                throw new ArgumentNullException("vrpLicense.Company1");
+                throw new ArgumentNullException("license.Company1");
             }
 
-            if (string.IsNullOrEmpty(vrpLicense.Nip))
+            if (string.IsNullOrEmpty(license.Nip))
             {
-                throw new ArgumentNullException("vrpLicense.Nip");
+                throw new ArgumentNullException("license.Nip");
             }
 
-            if (vrpLicense.Nip.Length != 10)
+            if (license.Nip.Length != 10)
             {
                 throw new InvalidNipException();
             }
 
             long number;
-            bool isNumeric = long.TryParse(vrpLicense.Nip, out number);
+            bool isNumeric = long.TryParse(license.Nip, out number);
 
             if (!isNumeric)
             {

@@ -66,12 +66,12 @@ namespace LicenseGenerator.Controllers
         }
 
         [HttpPost]
-        public JsonResult LoadClients(string clientValue)
+        public JsonNetResult LoadClients(string clientValue)
         {
             IEnumerable<Customer> vrlCustomers = patternCustomersLoader.LoadCustomers(clientValue);
             IEnumerable<CustomerViewModel> vrlCustomerViewModels = Mapper.Map<IEnumerable<CustomerViewModel>>(vrlCustomers);
 
-            return Json(vrlCustomerViewModels);
+            return new JsonNetResult(new SuccessObject(true, vrlCustomerViewModels));
         }
 
         [HttpPost]

@@ -36,7 +36,7 @@
                         <label for="company1" class="col-sm-4 control-label">Firma:</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="company1" placeholder="Wpisz nazwę firmy" required ng-model="lic.company1"
-                                   typeahead="client as client.Name for client in getClients($viewValue)" typeahead-loading="loadingClients"
+                                   typeahead="client as client.name for client in getClients($viewValue)" typeahead-loading="loadingClients"
                                    typeahead-on-select='onClientSelected($item, $model, $label)'
                                    tooltip="Firma, dla której wystawiana jest licencja" tooltip-trigger="focus" tooltip-placement="right"
                                    ng-maxlength="255" autocomplete="off">

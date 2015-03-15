@@ -14,21 +14,23 @@ app.controller('LicenseGeneratorController', [
 
         $scope.getClients = function (val) {
             return $http.post(siteUrl + "Home/LoadClients", { clientValue: val }).then(function (response) {
-                return response.data;
+                if (response.data.success) {
+                    return response.data.object;
+                }
             });
         };
 
         $scope.getProducts = function (val) {
             return $http.post(siteUrl + "Home/LoadProducts", { licenseName: val }).then(function (response) {
-                if (response.data.success === true) {
+                if (response.data.success) {
                     return response.data.object;
                 }
             });
         };
 
         $scope.onClientSelected = function ($item, $model, $label) {
-            $scope.lic.nip = $model.Nip;
-            $scope.lic.company1 = $model.Name;
+            $scope.lic.nip = $model.nip;
+            $scope.lic.company1 = $model.name;
             $scope.lic.isNipLikeCompany = false;
         };
 
