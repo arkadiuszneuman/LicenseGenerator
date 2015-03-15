@@ -15,12 +15,14 @@ namespace LicenseGenerator.Controllers.Utilities
 
         public void SaveLicenseHistory(GeneratedLicense license)
         {
+#if !DEBUG
             license.IsEncrypted = isEncrypted;
             using (LicenseGeneratorContext ctx = new LicenseGeneratorContext())
             {
                 ctx.GeneratedLicensesHistory.Add(license);
                 ctx.SaveChanges();
             }
+#endif
         }
     }
 }
