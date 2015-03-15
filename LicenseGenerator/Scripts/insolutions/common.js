@@ -1,4 +1,4 @@
-﻿var app = angular.module('licensegenerator', ['ui.bootstrap', 'angularFileUpload']);
+﻿var app = angular.module('licensegenerator', ['ui.bootstrap', 'angularFileUpload', 'toastr']);
 
 function saveToDisk(fileURL, fileName) {
     // for non-IE
@@ -22,23 +22,3 @@ function saveToDisk(fileURL, fileName) {
         _window.close();
     }
 }
-
-$(function () {
-    
-    //load.
-});
-
-//angular.module('licensegenerator').directive('loadingContainer', function () {
-//    return {
-//        restrict: 'A',
-//        scope: false,
-//        link: function (scope, element, attrs) {
-//            var loadingLayer = angular.element('<div class="loading"></div>');
-//            element.append(loadingLayer);
-//            element.addClass('loading-container');
-//            scope.$watch(attrs.loadingContainer, function (value) {
-//                loadingLayer.toggleClass('ng-hide', !value);
-//            });
-//        }
-//    };
-//});

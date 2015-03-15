@@ -69,7 +69,7 @@ app.directive('emptyTypeahead', function () {
     }
 });
 
-app.directive('inMailSenderWindow', ['$http', 'inCreateLicense', function ($http, inCreateLicense) {
+app.directive('inMailSenderWindow', ['$http', 'inCreateLicense', 'toastr', function ($http, inCreateLicense, toastr) {
 
     return {
         restrict: 'E',
@@ -89,6 +89,10 @@ app.directive('inMailSenderWindow', ['$http', 'inCreateLicense', function ($http
                       .then(function (response) {
                           if (response.data.success) {
                               $('#mailsender').modal('hide');
+                              scope.loadervisible = false;
+                              toastr.success('E-mail został poprawnie wysłany.');
+                          } else {
+                              toastr.error(response.data.object, 'Błąd podczas próby wysłania e-maila.');
                               scope.loadervisible = false;
                           }
                       });
