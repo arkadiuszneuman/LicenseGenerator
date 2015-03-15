@@ -61,7 +61,17 @@ namespace LicenseGenerator.Controllers
                 GeneratedLicense license = context.GeneratedLicensesHistory.SingleOrDefault(l => l.Id == id);
                 HistoryLicenseCreator historyLicenseCreator = new HistoryLicenseCreator();
                 LicenseViewModel licenseViewModel = historyLicenseCreator.GenerateViewModel(license);
-                return View("Index", licenseViewModel);
+                Product product = patternProductsLoader.LoadProducts(licenseViewModel.Name).Single(p => p.LicenseName == licenseViewModel.Name);
+                return View("Index", new LicenseProductViewModel
+                {
+                    License = licenseViewModel,
+                    Product = new ProductViewModel
+                    {
+                        LicenseName = product.LicenseName,
+                        ProgramName = product.Name,
+                        Version = product.NewestVersion
+                    }
+                });
             }
         }
 

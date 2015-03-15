@@ -114,14 +114,13 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
                 });
         }
 
-        $scope.init = function (license) {
-            if (!angular.isUndefined(license) && license != null) {
-                var rememberedNewestVersion = license.programVersion;
-                $scope.lic = license;
+        $scope.init = function(licenseProduct) {
+            if (!angular.isUndefined(licenseProduct) && licenseProduct != null) {
+                $scope.lic = licenseProduct.license;
+                $scope.lic.name = licenseProduct.product;
+                $scope.lic.programName = licenseProduct.product.programName;
+                $scope.newestVersion = licenseProduct.product.version;
                 $scope.lic.isNipLikeCompany = $scope.lic.company1 == $scope.lic.nip;
-                $scope.productChanged(function () {
-                    $scope.lic.programVersion = rememberedNewestVersion;
-                });
             }
         }
     }]);
