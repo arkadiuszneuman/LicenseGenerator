@@ -69,7 +69,7 @@ app.directive('emptyTypeahead', function () {
     }
 });
 
-app.directive('inMailSenderWindow', ['$http', 'inCreateLicense', 'toastr', function ($http, inCreateLicense, toastr) {
+app.directive('inMailSenderWindow', ['$http', 'inLicenseFormatter', 'toastr', function ($http, inLicenseFormatter, toastr) {
 
     return {
         restrict: 'E',
@@ -83,7 +83,7 @@ app.directive('inMailSenderWindow', ['$http', 'inCreateLicense', 'toastr', funct
 
             scope.sendMail = function (mail, lic) {
                 scope.loadervisible = true;
-                lic = inCreateLicense(lic);
+                lic = inLicenseFormatter.FormatLicense(lic);
 
                 $http.post(siteUrl + "MailSend/Send", { mail: mail, license: lic })
                       .then(function (response) {

@@ -25,19 +25,21 @@
     return new DateFormatter();
 });
 
-app.factory('inCreateLicense', function (inDateFormatter) {
-    return function(lic) {
-        var license = angular.copy(lic);
-        license.name = license.name.licenseName;
-        if (license.date != null) {
-            license.date = inDateFormatter.customFormatDate(new Date(lic.date), "#YYYY#-#MM#-#DD# #hh#:#mm#:#ss#");
-        }
+app.factory('inLicenseFormatter', function (inDateFormatter) {
+    return {
+        FormatLicense: function(lic) {
+            var license = angular.copy(lic);
+            license.name = license.name.licenseName;
+            if (license.date != null) {
+                license.date = inDateFormatter.customFormatDate(new Date(lic.date), "#YYYY#-#MM#-#DD# #hh#:#mm#:#ss#");
+            }
 
-        license.nip = license.nip.split("-").join("").split(" ").join("");
-        if (!angular.isUndefined(license.partnernip)) {
-            license.partnernip = license.partnernip.split("-").join("").split(" ").join("");
-        }
+            license.nip = license.nip.split("-").join("").split(" ").join("");
+            if (!angular.isUndefined(license.partnernip)) {
+                license.partnernip = license.partnernip.split("-").join("").split(" ").join("");
+            }
 
-        return license;
+            return license;
+        }
     }
 });
