@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Security;
@@ -32,23 +33,30 @@ namespace LicenseGenerator.Controllers
 
         public ActionResult Send(MailViewModel mail, LicenseViewModel license)
         {
-            string licenseName = licensePathGenerator.GenerateLicenseToPath(license);
-            string licensePath = Path.Combine(licensePathGenerator.ServerLicensesDirectory, licenseName);
+            try
+            {
+                string licenseName = licensePathGenerator.GenerateZippedLicense(license);
+                string licensePath = Path.Combine(licensePathGenerator.ServerLicensesDirectory, licenseName);
 
-            MailboxConfig mailboxConfig = mailboxConfigLoader.LoadMailboxConfig();
+                MailboxConfig mailboxConfig = mailboxConfigLoader.LoadMailboxConfig();
 
-            MailMessage mailMessage = new MailMessage(mailboxConfig.From, mail.Addresses);
-            SmtpClient client = new SmtpClient();
-            client.Port = mailboxConfig.Port;
-            client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.Credentials = new NetworkCredential(mailboxConfig.CredentialsFrom, mailboxConfig.CredentialsPass);
-            client.Host = mailboxConfig.Host;
-            mailMessage.Subject = mail.Title;
-            mailMessage.Body = mail.Message;
-            mailMessage.Attachments.Add(new Attachment(licensePath));
-            client.Send(mailMessage);
+                MailMessage mailMessage = new MailMessage(mailboxConfig.From, mail.Addresses);
+                SmtpClient client = new SmtpClient();
+                client.Port = mailboxConfig.Port;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.Credentials = new NetworkCredential(mailboxConfig.CredentialsFrom, mailboxConfig.CredentialsPass);
+                client.Host = mailboxConfig.Host;
+                mailMessage.Subject = mail.Title;
+                mailMessage.Body = mail.Message;
+                mailMessage.Attachments.Add(new Attachment(licensePath));
+                client.Send(mailMessage);
 
-            return new JsonNetResult(new SuccessObject(true, null));
+                return new JsonNetResult(new SuccessObject(true, null));
+            }
+            catch (Exception ex)
+            {
+                return new JsonNetResult(new SuccessObject(false, ex.Message));
+            }
         }
     }
 }
