@@ -7,5 +7,6 @@ namespace LicenseGenerator.Controllers.Utilities.Home.LicenseGenerator
         string GenerateLicenseToPath(LicenseViewModel license);
         void SaveLicenseHistory(LicenseViewModel license, bool isEncrypted);
         string ServerLicensesDirectory { get; }
+        string GenerateZippedLicense(LicenseViewModel licenseViewModel);
     }
 }

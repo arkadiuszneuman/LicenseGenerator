@@ -151,44 +151,9 @@ namespace LicenseGenerator.Controllers
         [HttpPost]
         public JsonResult GenerateZippedLicense(LicenseViewModel licenseViewModel)
         {
-            GetEndUserLicenseName(licenseViewModel);
+            string zipPath = licenseGenerator.GenerateZippedLicense(licenseViewModel);
 
-            string fileName = licenseGenerator.GenerateLicenseToPath(licenseViewModel);
-            string vrlDirectory = ControllerContext.HttpContext.Server.MapPath("~/licenses/");
-            string zipFileName = Path.GetFileNameWithoutExtension(fileName) + ".zip";
-            using (var memoryStream = new MemoryStream())
-            {
-                using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
-                {
-                    var demoFile = archive.CreateEntry(GetEndUserLicenseName(licenseViewModel) + "S.txt");
-
-                    using (var entryStream = demoFile.Open())
-                    using (Stream licenseStreamReader = new FileStream(vrlDirectory + fileName, FileMode.Open))
-                    {
-                        licenseStreamReader.CopyTo(entryStream);
-                    }
-                }
-
-                using (var fileStream = new FileStream(vrlDirectory + zipFileName, FileMode.Create))
-                {
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    memoryStream.CopyTo(fileStream);
-                }
-            }
-
-            return Json("licenses/" + zipFileName);
-        }
-
-        private string GetEndUserLicenseName(LicenseViewModel license)
-        {
-            var licenseName = license.Name + "_" + license.Nip;
-
-            if (license.PartnerNip != null)
-            {
-                licenseName += "_" + license.PartnerNip;
-            }
-
-            return licenseName;
+            return Json("licenses/" + zipPath);
         }
 
         [HttpPost]
