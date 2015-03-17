@@ -4,6 +4,7 @@ app.controller('LicenseGeneratorController', [
     '$scope', 'datepickerPopupConfig', '$filter', '$http', '$timeout', '$upload', 'inDateFormatter', 'inLicenseFormatter',
     function ($scope, datepickerPopupConfig, $filter, $http, $timeout, $upload, inDateFormatter, inLicenseFormatter) {
         $scope.lic = {};
+        $scope.lic.isForClient = false;
         $scope.lic.company2 = undefined;
         $scope.lic.isNipLikeCompany = true;
         $scope.newestVersion = "";
@@ -46,18 +47,42 @@ app.controller('LicenseGeneratorController', [
             }
         };
 
+        function getDemoLicenseDescription() {
+            return "Licencja testowa ważna do ";
+        }
+
+        function getVersionLicenseDescription() {
+            return "Licencja bezterminowa";
+        }
+
+        function getDateLicenseDescription() {
+            return "Licencja z abonamentem ważnym do ";
+        }
+
         $scope.getAddionalInfos = function () {
             var date = inDateFormatter.customFormatDate(new Date($scope.lic.date), "#YYYY#-#MM#-#DD#");
             return [
-                "Licencja testowa ważna do " + date,
-                "Licencja bezterminowa",
-                "Licencja z abonamentem ważnym do " + date];
+                getDemoLicenseDescription() + date,
+                getVersionLicenseDescription(),
+                getDateLicenseDescription() + date];
         };
+
+        $scope.$watch('lic.date', function (newVal, OldVal) {
+            var date = inDateFormatter.customFormatDate(new Date(newVal), "#YYYY#-#MM#-#DD#");
+
+            if ($scope.lic.company2) {
+                if ($scope.lic.company2.indexOf(getDemoLicenseDescription()) == 0) {
+                    $scope.lic.company2 = getDemoLicenseDescription() + date;
+                } else if ($scope.lic.company2.indexOf(getDateLicenseDescription()) == 0) {
+                    $scope.lic.company2 = getDateLicenseDescription() + date;
+                }
+            }
+        });
 
         $scope.onAddionalInfoFocus = function (e) {
             $timeout(function () {
                 $(e.target).trigger('input');
-                $(e.target).trigger('change');
+                $(e.target).trigger('change'); // for IE
             });
         };
 
@@ -69,6 +94,9 @@ app.controller('LicenseGeneratorController', [
             var file = $files[0];
             $scope.upload = $upload.upload({
                 url: siteUrl + 'Home/LoadLicense',
+                //method: 'POST' or 'PUT',
+                //headers: {'Authorization': 'xxx'}, // only for html5
+                //withCredentials: true,
                 data: { objectToUpload: file },
                 file: file
             }).success(function (data, status, headers, config) {
@@ -136,12 +164,21 @@ var DropFileConfigurator = (function () {
         })(file);
 
         reader.readAsText(file);
+        //// files is a FileList of File objects. List some properties.
+        //var output = [];
+        //for (var i = 0, f; f = files[i]; i++) {
+        //    output.push('<li><strong>', f.name, '</strong> (', f.type || 'n/a', ') - ',
+        //        f.size, ' bytes, last modified: ',
+        //        f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+        //        '</li>');
+        //}
+        //document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
     };
 
     DropFileConfigurator.prototype.handleDragOver = function (evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        evt.dataTransfer.dropEffect = 'move';
+        evt.dataTransfer.dropEffect = 'move'; // Explicitly show this is a copy.
     };
 
     DropFileConfigurator.prototype.configureDropFiles = function ($scope) {
@@ -173,6 +210,7 @@ var LicenseGeneratorButtonsCreator = (function () {
             var license = inLicenseFormatter.FormatLicense(lic);
 
             $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
+                //var blob = new Blob([result], { type: "example/binary" });
                 saveToDisk(siteUrl + result, that.getLicenseName(license) + ".lic");
             });
         };
@@ -240,9 +278,11 @@ var DatePickerCreator = (function () {
             startingDay: 1
         };
 
+        // TRANSLATION
         datepickerPopupConfig.currentText = 'Dzisiaj';
         datepickerPopupConfig.clearText = 'Licencja nieograniczona';
         datepickerPopupConfig.closeText = 'Zamknij';
     };
     return DatePickerCreator;
 })();
+//# sourceMappingURL=licgen.js.map

@@ -10,6 +10,7 @@ var secretEmptyKey = '[$empty$]';
 app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig', '$filter', '$http', '$timeout', '$upload', 'inDateFormatter', 'inLicenseFormatter',
     function ($scope, datepickerPopupConfig, $filter, $http, $timeout, $upload, inDateFormatter, inLicenseFormatter) {
         $scope.lic = {};
+        $scope.lic.isForClient = false;
         $scope.lic.company2 = undefined;
         $scope.lic.isNipLikeCompany = true;
         $scope.newestVersion = "";
@@ -54,12 +55,36 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
             }
         }
 
+        function getDemoLicenseDescription() {
+            return "Licencja testowa ważna do ";
+        }
+
+        function getVersionLicenseDescription() {
+            return "Licencja bezterminowa";
+        }
+
+        function getDateLicenseDescription() {
+            return "Licencja z abonamentem ważnym do ";
+        }
+
         $scope.getAddionalInfos = function () {
             var date = inDateFormatter.customFormatDate(new Date($scope.lic.date), "#YYYY#-#MM#-#DD#");
-            return ["Licencja testowa ważna do " + date,
-                "Licencja bezterminowa",
-                "Licencja z abonamentem ważnym do " + date];
+            return [getDemoLicenseDescription() + date,
+                getVersionLicenseDescription(),
+                getDateLicenseDescription() + date];
         }
+
+        $scope.$watch('lic.date', function (newVal, OldVal) {
+            var date = inDateFormatter.customFormatDate(new Date(newVal), "#YYYY#-#MM#-#DD#");
+
+            if ($scope.lic.company2) {
+                if ($scope.lic.company2.indexOf(getDemoLicenseDescription()) == 0) {
+                    $scope.lic.company2 = getDemoLicenseDescription() + date;
+                } else if ($scope.lic.company2.indexOf(getDateLicenseDescription()) == 0) {
+                    $scope.lic.company2 = getDateLicenseDescription() + date;
+                }
+            }
+        });
 
         $scope.onAddionalInfoFocus = function (e) {
             $timeout(function () {
@@ -114,7 +139,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
                 });
         }
 
-        $scope.init = function(licenseProduct) {
+        $scope.init = function (licenseProduct) {
             if (!angular.isUndefined(licenseProduct) && licenseProduct != null) {
                 $scope.lic = licenseProduct.license;
                 $scope.lic.name = licenseProduct.product;

@@ -22,7 +22,9 @@ namespace LicenseGenerator.Controllers.Utilities
                 Privileges = licenseViewModel.Privileges,
                 ProgramName = licenseViewModel.Name,
                 ProgramVersion = licenseViewModel.ProgramVersion,
-                UserName = ((WindowsIdentity)HttpContext.Current.User.Identity).Name
+                UserName = ((WindowsIdentity)HttpContext.Current.User.Identity).Name,
+                IsForClient = licenseViewModel.IsForClient,
+                LicenseType = GetLicenseType(licenseViewModel)
             };
 
             if (vrlGeneratedLicense.LicenseTermDate != null)
@@ -31,6 +33,27 @@ namespace LicenseGenerator.Controllers.Utilities
             }
 
             return vrlGeneratedLicense;
+        }
+
+        private LicenseType? GetLicenseType(LicenseViewModel licenseViewModel)
+        {
+            if (licenseViewModel.IsForClient)
+            {
+                if (licenseViewModel.Company2.StartsWith("Licencja testowa ważna do "))
+                {
+                    return LicenseType.Demo;
+                }
+                else if (licenseViewModel.Company2 == "Licencja bezterminowa")
+                {
+                    return LicenseType.Version;
+                }
+                else if (licenseViewModel.Company2.StartsWith("Licencja z abonamentem ważnym do "))
+                {
+                    return LicenseType.Date;
+                }
+            }
+
+            return null;
         }
 
         public LicenseViewModel GenerateViewModel(GeneratedLicense generatedLicense)
@@ -45,7 +68,8 @@ namespace LicenseGenerator.Controllers.Utilities
                 PartnerNip = generatedLicense.PartnerNIP,
                 Privileges = generatedLicense.Privileges,
                 Name = generatedLicense.ProgramName,
-                ProgramVersion = generatedLicense.ProgramVersion
+                ProgramVersion = generatedLicense.ProgramVersion,
+                IsForClient = generatedLicense.IsForClient,
             };
 
             return licenseViewModel;

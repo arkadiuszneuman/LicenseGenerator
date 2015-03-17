@@ -43,7 +43,7 @@
                             @*<i ng-show="loadingClients" class="glyphicon glyphicon-refresh"></i>*@
                         </div>
                         <div class="col-sm-2">
-                            <input bs-switch ng-model="true" type="checkbox" switch-on-text="Klient" switch-off-text="Własna"
+                            <input bs-switch ng-model="lic.isForClient" type="checkbox" switch-on-text="Klient" switch-off-text="Własna"
                                    switch-handle-width="100">
                         </div>
                     </div>
@@ -132,7 +132,10 @@
                                 @*<li><a href="" ng-click="generateTxtLicense(lic)">Generuj licencję zaszyfrowaną jako *.txt</a></li>*@
                                 <li><a href="" ng-click="generateDecryptedLicense(lic)">Generuj licencję niezaszyfrowaną</a></li>
                                 <li><a href="" ng-click="generateZippedLicense(lic)">Generuj licencję zaszyfrowaną w pliku zip</a></li>
-                                <li><a href="" ng-click="initMail()">Wyślij licencję do klienta</a></li>
+                                <li><a href="">
+                                        <s ng-hide="lic.isForClient">Generuj i wyślij licencję do klienta</s>
+                                        <span ng-click="initMail()" ng-show="lic.isForClient">Generuj i wyślij licencję do klienta</span>
+                                </a></li>
                             </ul>
                         </div>
                         <button class="btn btn-lg btn-warning" ng-file-select ng-model="file"

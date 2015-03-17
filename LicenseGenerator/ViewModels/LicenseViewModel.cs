@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using LicenseGenerator.Models;
 
 namespace LicenseGenerator.ViewModels
 {
@@ -17,5 +18,6 @@ namespace LicenseGenerator.ViewModels
         public int? LicenseNumbers { get; set; }
         public string ProgramVersion { get; set; }
         public string PartnerNip { get; set; }
+        public bool IsForClient { get; set; }
     }
 }
