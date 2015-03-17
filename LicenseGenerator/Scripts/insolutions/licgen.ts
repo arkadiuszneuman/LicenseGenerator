@@ -255,6 +255,7 @@ class DatePickerCreator {
             $event.preventDefault();
             $event.stopPropagation();
 
+            $scope.opened = false;
             $scope.opened = true;
         };
 

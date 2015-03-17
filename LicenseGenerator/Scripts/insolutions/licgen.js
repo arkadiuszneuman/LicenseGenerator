@@ -231,6 +231,7 @@ var DatePickerCreator = (function () {
             $event.preventDefault();
             $event.stopPropagation();
 
+            $scope.opened = false;
             $scope.opened = true;
         };
 

@@ -17,5 +17,7 @@ namespace LicenseGenerator.Models
         public bool IsEncrypted { get; set; }
         public DateTime GenerationDate { get; set; }
         public string UserName { get; set; }
+
+        public LicenseType? LicenseType { get; set; }
     }
 }

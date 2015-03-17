@@ -192,9 +192,14 @@
     <Compile Include="Migrations\201502262025017_updatedProduct.Designer.cs">
       <DependentUpon>201502262025017_updatedProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503172017512_LicenseType.cs" />
+    <Compile Include="Migrations\201503172017512_LicenseType.Designer.cs">
+      <DependentUpon>201503172017512_LicenseType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GeneratedLicense.cs" />
+    <Compile Include="Models\LicenseType.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\About\VersionViewModel.cs" />
@@ -1084,6 +1089,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502262025017_updatedProduct.resx">
       <DependentUpon>201502262025017_updatedProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503172017512_LicenseType.resx">
+      <DependentUpon>201503172017512_LicenseType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
