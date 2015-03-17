@@ -196,6 +196,10 @@
     <Compile Include="Migrations\201503172017512_LicenseType.Designer.cs">
       <DependentUpon>201503172017512_LicenseType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503172058550_IsForClientLicense.cs" />
+    <Compile Include="Migrations\201503172058550_IsForClientLicense.Designer.cs">
+      <DependentUpon>201503172058550_IsForClientLicense.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GeneratedLicense.cs" />
@@ -1100,6 +1104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503172017512_LicenseType.resx">
       <DependentUpon>201503172017512_LicenseType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503172058550_IsForClientLicense.resx">
+      <DependentUpon>201503172058550_IsForClientLicense.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

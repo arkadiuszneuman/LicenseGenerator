@@ -19,5 +19,6 @@ namespace LicenseGenerator.Models
         public string UserName { get; set; }
 
         public LicenseType? LicenseType { get; set; }
+        public bool IsForClient { get; set; }
     }
 }
