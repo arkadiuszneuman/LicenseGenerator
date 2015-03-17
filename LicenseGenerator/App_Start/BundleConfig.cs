@@ -42,7 +42,8 @@ namespace LicenseGenerator
             bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
                         "~/Content/bootstrap.css",
                         "~/Content/bootstrap-theme.css",
-                        "~/Content/jumbotron-narrow.css"
+                        "~/Content/jumbotron-narrow.css",
+                        "~/Content/bootstrap-switch/bootstrap3/bootstrap-switch.css"
                         ));
 
             bundles.Add(new StyleBundle("~/Content/angular").Include(
@@ -50,7 +51,8 @@ namespace LicenseGenerator
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                        "~/Scripts/bootstrap.js"
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/bootstrap-switch.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
@@ -62,7 +64,8 @@ namespace LicenseGenerator
                          "~/Scripts/i18n/angular-locale_pl-pl.js",
                          "~/Scripts/angular-ui/ui-bootstrap.js",
                          "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
-                         "~/Scripts/angular-toastr.js"
+                         "~/Scripts/angular-toastr.js",
+                         "~/Scripts/angular-bootstrap-switch.js"
                          ));
 
             bundles.Add(new ScriptBundle("~/bundles/filesaver").Include(

@@ -212,6 +212,10 @@
   <ItemGroup>
     <Content Include="Content\angular-toastr.css" />
     <Content Include="Content\angular-toastr.min.css" />
+    <Content Include="Content\bootstrap-switch\bootstrap2\bootstrap-switch.css" />
+    <Content Include="Content\bootstrap-switch\bootstrap2\bootstrap-switch.min.css" />
+    <Content Include="Content\bootstrap-switch\bootstrap3\bootstrap-switch.css" />
+    <Content Include="Content\bootstrap-switch\bootstrap3\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -222,6 +226,8 @@
     <Content Include="Content\ng-table.min.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\angular-bootstrap-switch.js" />
+    <Content Include="Scripts\angular-bootstrap-switch.min.js" />
     <Content Include="Scripts\angular-file-upload-all.js" />
     <Content Include="Scripts\angular-file-upload-all.min.js" />
     <Content Include="Scripts\angular-file-upload-shim.js" />
@@ -236,10 +242,15 @@
     <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
     <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="App_Data\mailboxConf.json" />
+    <Content Include="Scripts\angular-bootstrap-switch.min.js.map">
+      <DependentUpon>angular-bootstrap-switch.min.js</DependentUpon>
+    </Content>
     <None Include="Scripts\angular.intellisense.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\Blob.js" />
+    <Content Include="Scripts\bootstrap-switch.js" />
+    <Content Include="Scripts\bootstrap-switch.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\FileAPI.flash.swf" />
@@ -993,7 +1004,6 @@
     <Content Include="Scripts\insolutions\directives.js" />
     <Content Include="Scripts\insolutions\mailsender.js" />
     <Content Include="Scripts\insolutions\services.js" />
-    <Content Include="Scripts\jquery-1.11.1.min.map" />
     <Content Include="Scripts\FileSaver.min.js.map">
       <DependentUpon>FileSaver.min.js</DependentUpon>
     </Content>
@@ -1006,12 +1016,10 @@
     <Content Include="Content\ng-table.less" />
     <None Include="Properties\PublishProfiles\LicenseGenerator.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
-    <Content Include="Scripts\jquery-1.11.1.js" />
-    <Content Include="Scripts\jquery-1.11.1.min.js" />
-    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.3.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.js" />
+    <Content Include="Scripts\jquery-2.1.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
