@@ -1,4 +1,4 @@
-﻿var app = angular.module('licensegenerator', ['ui.bootstrap', 'ngTable']);
+﻿var app = angular.module('licensegenerator');
 
 app.controller('HistoryController', [
     '$scope', '$http', '$filter', 'ngTableParams', function ($scope, $http, $filter, ngTableParams) {
@@ -15,7 +15,7 @@ app.controller('HistoryController', [
                 $http.post(siteUrl + 'History/LoadLicenses', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).success(function (data, status, headers, config) {
                     $scope.licenses = data.licenses;
 
-                    params.total(data.count); // set total for recalc pagination
+                    params.total(data.count);
                     $defer.resolve($scope.licenses);
 
                     $scope.isLoading = false;
@@ -27,9 +27,4 @@ app.controller('HistoryController', [
             $scope.filter = filter;
             $scope.tableParams.reload();
         };
-
-        $scope.licenseClicked = function (license) {
-            window.location.href = siteUrl + 'Home/HistoryLicense/' + license.id;
-        };
     }]);
-//# sourceMappingURL=history.js.map

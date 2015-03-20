@@ -1,6 +1,6 @@
 ﻿declare var siteUrl;
 
-var app = angular.module('licensegenerator', ['ui.bootstrap', 'ngTable']);
+var app = angular.module('licensegenerator');
 
 app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParams', function ($scope, $http, $filter, ngTableParams) {
 
@@ -30,9 +30,5 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
     $scope.filterChanged = function (filter) {
         $scope.filter = filter;
         $scope.tableParams.reload();
-    }
-
-    $scope.licenseClicked = function (license) {
-        window.location.href = siteUrl + 'Home/HistoryLicense/' + license.id;
     }
 }]);

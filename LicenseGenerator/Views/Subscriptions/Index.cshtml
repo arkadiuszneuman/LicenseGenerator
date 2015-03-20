@@ -1,0 +1,45 @@
+﻿@{
+    ViewBag.Title = "Generator licencji - abonamenty";
+    ViewBag.Module = "Subscriptions";
+}
+
+<div ng-controller="SubscriptionsController">
+    <div class="form-group">
+        <label for="filter">Filtr</label>
+        <div class="input-group">
+            <input type="text" class="form-control" id="filter" placeholder="Filtr przeszukuje NIP klienta i partnera, nazwę programu oraz nazwę firmy" ng-model="filter"
+                   ng-change="filterChanged(filter)" ng-model-options="{ debounce: 300 }">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" ng-click="filterChanged('')">Wyczyść</button>
+            </span>
+        </div>
+    </div>
+    <div loading-container="tableParams.settings().$loading" class="table-responsive">
+        <table class="table table-striped table-hover" ng-table="tableParams">
+            <thead>
+                <tr>
+                    <th>Program</th>
+                    <th>Firma</th>
+                    <th>Licencja<br />do</th>
+                    <th>NIP<br />partnera</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="license in licenses" ng-mouseover="license.hover = true" ng-mouseout="license.hover = false">
+                    <td>{{license.programName}}</td>
+                    <td>{{license.company}}</td>
+                    <td>{{(license.licenseTermDate | date:'longDate') || "Nieograniczona"}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-repeat="license in licenses | distinct:'licenseTermDate'" ng-mouseover="license.hover = true" ng-mouseout="license.hover = false">
+        {{license.licenseTermDate.getFullYear()}}
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/insolutions/subscriptions.js")"></script>
+}

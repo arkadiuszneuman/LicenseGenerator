@@ -133,6 +133,7 @@
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SubscriptionsController.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseGenerator\ILicensePathGenerator.cs" />
     <Compile Include="Controllers\Utilities\Home\LicenseGenerator\LicensePathGenerator.cs" />
     <Compile Include="Controllers\MailSendController.cs" />
@@ -1006,6 +1007,7 @@
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
     <Content Include="Scripts\insolutions\common.js" />
     <Content Include="Scripts\insolutions\directives.js" />
+    <Content Include="Scripts\insolutions\filters.js" />
     <Content Include="Scripts\insolutions\mailsender.js" />
     <Content Include="Scripts\insolutions\services.js" />
     <Content Include="Scripts\FileSaver.min.js.map">
@@ -1021,6 +1023,7 @@
     <None Include="Properties\PublishProfiles\LicenseGenerator.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
+    <Content Include="Scripts\insolutions\subscriptions.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
     <Content Include="Scripts\jquery-2.1.3.min.js" />
     <Content Include="Scripts\jquery-2.1.3.min.map" />
@@ -1058,6 +1061,7 @@
     <Content Include="Views\History\Index.cshtml" />
     <Content Include="Scripts\ng-table.min.js.map" />
     <Content Include="Scripts\thirdparty\jquerycenter\jquery.center.js" />
+    <Content Include="Views\Subscriptions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

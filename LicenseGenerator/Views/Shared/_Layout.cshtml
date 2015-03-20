@@ -25,6 +25,7 @@
             <nav>
                 <ul class="nav nav-pills pull-right">
                     <li role="presentation" class="@(ViewBag.Module == "Generator" ? "active" : "noactive")">@Html.ActionLink("Generator", "Index", "Home")</li>
+                    <li role="presentation" class="@(ViewBag.Module == "Subscriptions" ? "active" : "noactive")">@Html.ActionLink("Abonamenty", "Index", "Subscriptions")</li>
                     <li role="presentation" class="@(ViewBag.Module == "History" ? "active" : "noactive")">@Html.ActionLink("Historia licencji", "Index", "History")</li>
                     <li role="presentation" class="@(ViewBag.Module == "About" ? "active" : "noactive")">@Html.ActionLink("O programie", "Index", "About")</li>
                 </ul>

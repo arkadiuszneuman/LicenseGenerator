@@ -1,4 +1,4 @@
-﻿var app = angular.module('licensegenerator', ['ui.bootstrap', 'angularFileUpload', 'toastr', 'frapontillo.bootstrap-switch']);
+﻿var app = angular.module('licensegenerator', ['ui.bootstrap', 'angularFileUpload', 'toastr', 'frapontillo.bootstrap-switch', 'ngTable']);
 
 function saveToDisk(fileURL, fileName) {
     // for non-IE
