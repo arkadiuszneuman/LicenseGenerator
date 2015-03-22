@@ -4,6 +4,7 @@ app.controller('SubscriptionsController', ['$scope', '$http', '$filter', 'ngTabl
 
     $scope.isLoading = true;
     $scope.filter = "";
+    $scope.selectedYear = "Wszystkie lata";
 
     $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
@@ -13,9 +14,13 @@ app.controller('SubscriptionsController', ['$scope', '$http', '$filter', 'ngTabl
         getData: function ($defer, params) {
 
             $scope.isLoading = true;
-            $http.post(siteUrl + 'Subscriptions/LoadSubscriptions', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).
+            $http.post('Subscriptions/LoadSubscriptions', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).
                 success(function (data, status, headers, config) {
+
                     $scope.licenses = data.licenses;
+                    $scope.years = data.years;
+                    $scope.years.push("Wszystkie lata");
+                    $scope.months = data.months;
 
                     params.total(data.count); // set total for recalc pagination
                     $defer.resolve($scope.licenses);
@@ -30,7 +35,7 @@ app.controller('SubscriptionsController', ['$scope', '$http', '$filter', 'ngTabl
         $scope.tableParams.reload();
     }
 
-    $scope.licenseClicked = function (license) {
-        window.location.href = siteUrl + 'Home/HistoryLicense/' + license.id;
+    $scope.setYear = function (year) {
+        $scope.selectedYear = year;
     }
 }]);

@@ -26,6 +26,8 @@ namespace LicenseGenerator.Controllers
                         l.LicenseType != null &&
                         l.LicenseType.Value == LicenseType.Date);
 
+                IEnumerable<DateTime> dates = GetDates(foundedLicenses).ToList();
+
                 IEnumerable<GeneratedLicense> generatedLicenses = foundedLicenses
                     .OrderByDescending(l => l.LicenseTermDate)
                     .Skip((page - 1) * countPerPage)
@@ -42,11 +44,18 @@ namespace LicenseGenerator.Controllers
                 var returnObject = new
                 {
                     count = licensesCount,
-                    licenses = generatedLicenses
+                    licenses = generatedLicenses,
+                    years = dates.Select(d => d.Year),
+                    months = dates.Select(d => d.Month)
                 };
 
                 return new JsonNetResult(returnObject);
             }
+        }
+
+        private IQueryable<DateTime> GetDates(IQueryable<GeneratedLicense> foundedLicenses)
+        {
+            return foundedLicenses.Select(l => l.LicenseTermDate.Value);
         }
     }
 }

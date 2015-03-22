@@ -4,6 +4,16 @@
 }
 
 <div ng-controller="SubscriptionsController">
+    <div class="btn-group" dropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+            {{selectedYear}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="year in years">
+                <a href ng-click="setYear(year)">{{year}}</a>
+            </li>
+        </ul>
+    </div>
     <div class="form-group">
         <label for="filter">Filtr</label>
         <div class="input-group">
@@ -17,26 +27,27 @@
     <div loading-container="tableParams.settings().$loading" class="table-responsive">
         <table class="table table-striped table-hover" ng-table="tableParams">
             <thead>
-                <tr>
-                    <th>Program</th>
-                    <th>Firma</th>
-                    <th>Licencja<br />do</th>
-                    <th>NIP<br />partnera</th>
-                    <th></th>
-                </tr>
+            <tr>
+                <th>Program</th>
+                <th>Firma</th>
+                <th>Licencja<br/>do</th>
+                <th>NIP</th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="license in licenses" ng-mouseover="license.hover = true" ng-mouseout="license.hover = false">
-                    <td>{{license.programName}}</td>
-                    <td>{{license.company}}</td>
-                    <td>{{(license.licenseTermDate | date:'longDate') || "Nieograniczona"}}</td>
-                </tr>
+            <tr ng-repeat="license in licenses" ng-mouseover="license.hover = true" ng-mouseout="license.hover = false">
+                <td>{{license.programName}}</td>
+                <td>{{license.company}}</td>
+                <td>{{(license.licenseTermDate | date:'longDate') || "Nieograniczona"}}</td>
+                <td>{{license.nip}}</td>
+            </tr>
             </tbody>
         </table>
     </div>
 
-    <div ng-repeat="license in licenses | distinct:'licenseTermDate'" ng-mouseover="license.hover = true" ng-mouseout="license.hover = false">
-        {{license.licenseTermDate.getFullYear()}}
+    <div ng-repeat="year in years | orderBy:year:true">
+        {{year}}
     </div>
 </div>
 @section scripts
