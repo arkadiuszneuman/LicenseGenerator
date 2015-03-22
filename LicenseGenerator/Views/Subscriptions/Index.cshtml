@@ -6,11 +6,29 @@
 <div ng-controller="SubscriptionsController">
     <div class="btn-group" dropdown>
         <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
-            {{selectedYear}} <span class="caret"></span>
+            {{selectedYear || 'Wszystkie lata'}} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" role="menu">
             <li ng-repeat="year in years">
                 <a href ng-click="setYear(year)">{{year}}</a>
+            </li>
+            <li role="presentation" class="divider"></li>
+            <li>
+                <a href ng-click="setYear(null)">Wszystkie lata</a>
+            </li>
+        </ul>
+    </div>
+    <div class="btn-group" dropdown>
+        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+            {{selectedMonth || 'Wszystkie miesiące' | monthName}} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="month in months">
+                <a href ng-click="setMonth(month)">{{month | monthName}}</a>
+            </li>
+            <li role="presentation" class="divider"></li>
+            <li>
+                <a href ng-click="setMonth(null)">Wszystkie miesiące</a>
             </li>
         </ul>
     </div>
@@ -44,10 +62,6 @@
             </tr>
             </tbody>
         </table>
-    </div>
-
-    <div ng-repeat="year in years | orderBy:year:true">
-        {{year}}
     </div>
 </div>
 @section scripts

@@ -4,7 +4,8 @@ app.controller('SubscriptionsController', ['$scope', '$http', '$filter', 'ngTabl
 
     $scope.isLoading = true;
     $scope.filter = "";
-    $scope.selectedYear = "Wszystkie lata";
+    //$scope.selectedYear = "Wszystkie lata";
+    //$scope.selectedMonth = "Wszystkie miesiące";
 
     $scope.tableParams = new ngTableParams({
         page: 1,            // show first page
@@ -19,10 +20,9 @@ app.controller('SubscriptionsController', ['$scope', '$http', '$filter', 'ngTabl
 
                     $scope.licenses = data.licenses;
                     $scope.years = data.years;
-                    $scope.years.push("Wszystkie lata");
                     $scope.months = data.months;
 
-                    params.total(data.count); // set total for recalc pagination
+                    params.total(data.count);
                     $defer.resolve($scope.licenses);
 
                     $scope.isLoading = false;
@@ -37,5 +37,13 @@ app.controller('SubscriptionsController', ['$scope', '$http', '$filter', 'ngTabl
 
     $scope.setYear = function (year) {
         $scope.selectedYear = year;
+
+        if (year != null) {
+            $scope.selectedMonth = null;
+        }
+    }
+
+    $scope.setMonth = function (month) {
+        $scope.selectedMonth = month;
     }
 }]);

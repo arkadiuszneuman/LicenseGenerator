@@ -15,3 +15,17 @@
         }
     }
 });
+
+app.filter('monthName', [function () {
+    return function (monthNumber) {
+        if (angular.isNumber(monthNumber)) {
+            var monthNames = [
+                'Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec',
+                'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'
+            ];
+            return monthNames[monthNumber - 1];
+        } else {
+            return monthNumber;
+        }
+    }
+}]);
