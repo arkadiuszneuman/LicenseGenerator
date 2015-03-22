@@ -10,11 +10,11 @@
                 {{selectedYear || 'Wszystkie lata'}} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="year in years">
+                <li ng-repeat="year in years" ng-class="{'disabled': year == selectedYear}">
                     <a href ng-click="setYear(year)">{{year}}</a>
                 </li>
                 <li role="presentation" class="divider"></li>
-                <li>
+                <li ng-class="{'disabled': selectedYear == null}">
                     <a href ng-click="setYear(null)">Wszystkie lata</a>
                 </li>
             </ul>
@@ -24,11 +24,11 @@
                 {{selectedMonth || 'Wszystkie miesiące' | monthName}} <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="month in months">
+                <li ng-repeat="month in months" ng-class="{'disabled': month == selectedMonth}">
                     <a href ng-click="setMonth(month)">{{month | monthName}}</a>
                 </li>
                 <li role="presentation" class="divider"></li>
-                <li>
+                <li ng-class="{'disabled': selectedMonth == null}">
                     <a href ng-click="setMonth(null)">Wszystkie miesiące</a>
                 </li>
             </ul>

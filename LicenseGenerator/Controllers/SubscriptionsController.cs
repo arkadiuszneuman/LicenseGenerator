@@ -17,7 +17,7 @@ namespace LicenseGenerator.Controllers
         }
 
         [HttpPost]
-        public JsonNetResult LoadSubscriptions(string filter, int page, int countPerPage)
+        public JsonNetResult LoadSubscriptions(int? year, int? month, int page, int countPerPage)
         {
             using (LicenseGeneratorContext ctx = new LicenseGeneratorContext())
             {
@@ -28,7 +28,13 @@ namespace LicenseGenerator.Controllers
 
                 IEnumerable<DateTime> dates = GetDates(foundedLicenses).ToList();
 
-                IEnumerable<GeneratedLicense> generatedLicenses = foundedLicenses
+                IQueryable<GeneratedLicense> filterredLicenses = foundedLicenses;
+                if (year != null)
+                    filterredLicenses = filterredLicenses.Where(l => l.LicenseTermDate.Value.Year == year);
+                if (month != null)
+                    filterredLicenses = filterredLicenses.Where(l => l.LicenseTermDate.Value.Month == month);
+
+                IEnumerable<GeneratedLicense> generatedLicenses = filterredLicenses
                     .OrderByDescending(l => l.LicenseTermDate)
                     .Skip((page - 1) * countPerPage)
                     .Take(countPerPage)

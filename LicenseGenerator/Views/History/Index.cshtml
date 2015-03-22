@@ -4,62 +4,59 @@
 }
 
 <div ng-controller="HistoryController">
-    <div class="form-group">
-        <label for="filter">Filtr</label>
-        <div class="input-group">
-            <input type="text" class="form-control" id="filter" placeholder="Filtr przeszukuje NIP klienta i partnera, nazwę programu oraz nazwę firmy" ng-model="filter"
-                   ng-change="filterChanged(filter)" ng-model-options="{ debounce: 300 }">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button" ng-click="filterChanged('')">Wyczyść</button>
-            </span>
+    <div in-loader-visible="loadervisible" in-loader-background="true">
+        <div class="form-group">
+            <label for="filter">Filtr</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="filter" placeholder="Filtr przeszukuje NIP klienta i partnera, nazwę programu oraz nazwę firmy" ng-model="filter"
+                       ng-change="filterChanged(filter)" ng-model-options="{ debounce: 300 }">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="filterChanged('')">Wyczyść</button>
+                </span>
+            </div>
         </div>
-    </div>
-    <div loading-container="tableParams.settings().$loading" class="table-responsive">
-        <table class="table table-striped table-hover" ng-table="tableParams">
-            <thead>
-                <tr>
-                    <th>Program</th>
-                    <th>Firma</th>
-                    <th>NIP</th>
-                    <th>Uprawnienia</th>
-                    <th>Licencja<br />do</th>
-                    <th>Dodatkowe<br />informacje</th>
-                    <th>Liczba<br />stanowisk</th>
-                    <th>Wersja<br />programu</th>
-                    <th>NIP<br />partnera</th>
-                    <th>Szyfr.</th>
-                    <th>Data wygenerowania</th>
-                    <th>Użytkownik</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="license in licenses" ng-mouseover="license.hover = true" ng-mouseout="license.hover = false">
-                    <td>{{license.programName}}</td>
-                    <td>{{license.company}}</td>
-                    <td>{{license.nip}}</td>
-                    <td>{{license.privileges}}</td>
-                    <td>{{(license.licenseTermDate  | date:'longDate') || "Nieograniczona"}}</td>
-                    <td>{{license.addionalInformation}}</td>
-                    <td>{{license.numberOfStands}}</td>
-                    <td>{{license.programVersion}}</td>
-                    <td>{{license.partnerNIP}}</td>
-                    <td class="text-center">
-                        <span class="glyphicon" ng-class="{ 'glyphicon-check': license.isEncrypted, 'glyphicon-unchecked': !license.isEncrypted }"></span>
-                    </td>
-                    <td>{{license.generationDate | date:'medium'}}</td>
-                    <td>{{license.userName}}</td>
-                    <td style="width: 30px">
-                        <span class="glyphicon glyphicon-pencil editableElement" ng-show="license.hover" ng-click="licenseClicked(license)"></span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div ng-show="isLoading">
-        <div id="loader"></div>
-        <div id="loaderBackground"></div>
+        <div loading-container="tableParams.settings().$loading" class="table-responsive">
+            <table class="table table-striped table-hover" ng-table="tableParams">
+                <thead>
+                    <tr>
+                        <th>Program</th>
+                        <th>Firma</th>
+                        <th>NIP</th>
+                        <th>Uprawnienia</th>
+                        <th>Licencja<br />do</th>
+                        <th>Dodatkowe<br />informacje</th>
+                        <th>Liczba<br />stanowisk</th>
+                        <th>Wersja<br />programu</th>
+                        <th>NIP<br />partnera</th>
+                        <th>Szyfr.</th>
+                        <th>Data wygenerowania</th>
+                        <th>Użytkownik</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="license in licenses" ng-mouseover="license.hover = true" ng-mouseout="license.hover = false">
+                        <td>{{license.programName}}</td>
+                        <td>{{license.company}}</td>
+                        <td>{{license.nip}}</td>
+                        <td>{{license.privileges}}</td>
+                        <td>{{(license.licenseTermDate | date:'longDate') || "Nieograniczona"}}</td>
+                        <td>{{license.addionalInformation}}</td>
+                        <td>{{license.numberOfStands}}</td>
+                        <td>{{license.programVersion}}</td>
+                        <td>{{license.partnerNIP}}</td>
+                        <td class="text-center">
+                            <span class="glyphicon" ng-class="{ 'glyphicon-check': license.isEncrypted, 'glyphicon-unchecked': !license.isEncrypted }"></span>
+                        </td>
+                        <td>{{license.generationDate | date:'medium'}}</td>
+                        <td>{{license.userName}}</td>
+                        <td style="width: 30px">
+                            <span class="glyphicon glyphicon-pencil editableElement" ng-show="license.hover" ng-click="licenseClicked(license)"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @section scripts
