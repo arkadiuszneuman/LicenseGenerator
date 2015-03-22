@@ -2,7 +2,7 @@
 
 app.controller('SubscriptionsController', ['$scope', '$http', '$filter', 'ngTableParams', function ($scope, $http, $filter, ngTableParams) {
 
-    $scope.isLoading = true;
+    $scope.loadervisible = true;
     $scope.filter = "";
     //$scope.selectedYear = "Wszystkie lata";
     //$scope.selectedMonth = "Wszystkie miesiące";
@@ -14,7 +14,7 @@ app.controller('SubscriptionsController', ['$scope', '$http', '$filter', 'ngTabl
         counts: [],
         getData: function ($defer, params) {
 
-            $scope.isLoading = true;
+            $scope.loadervisible = true;
             $http.post('Subscriptions/LoadSubscriptions', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).
                 success(function (data, status, headers, config) {
 
@@ -25,15 +25,10 @@ app.controller('SubscriptionsController', ['$scope', '$http', '$filter', 'ngTabl
                     params.total(data.count);
                     $defer.resolve($scope.licenses);
 
-                    $scope.isLoading = false;
+                    $scope.loadervisible = false;
                 });
         }
     });
-
-    $scope.filterChanged = function (filter) {
-        $scope.filter = filter;
-        $scope.tableParams.reload();
-    }
 
     $scope.setYear = function (year) {
         $scope.selectedYear = year;
@@ -41,9 +36,12 @@ app.controller('SubscriptionsController', ['$scope', '$http', '$filter', 'ngTabl
         if (year != null) {
             $scope.selectedMonth = null;
         }
+
+        $scope.tableParams.reload();
     }
 
     $scope.setMonth = function (month) {
         $scope.selectedMonth = month;
+        $scope.tableParams.reload();
     }
 }]);

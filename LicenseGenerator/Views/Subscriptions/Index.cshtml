@@ -4,54 +4,55 @@
 }
 
 <div ng-controller="SubscriptionsController">
-    <div class="btn-group" dropdown>
-        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
-            {{selectedYear || 'Wszystkie lata'}} <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="year in years">
-                <a href ng-click="setYear(year)">{{year}}</a>
-            </li>
-            <li role="presentation" class="divider"></li>
-            <li>
-                <a href ng-click="setYear(null)">Wszystkie lata</a>
-            </li>
-        </ul>
-    </div>
-    <div class="btn-group" dropdown>
-        <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
-            {{selectedMonth || 'Wszystkie miesiące' | monthName}} <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            <li ng-repeat="month in months">
-                <a href ng-click="setMonth(month)">{{month | monthName}}</a>
-            </li>
-            <li role="presentation" class="divider"></li>
-            <li>
-                <a href ng-click="setMonth(null)">Wszystkie miesiące</a>
-            </li>
-        </ul>
-    </div>
-    <div loading-container="tableParams.settings().$loading" class="table-responsive">
-        <table class="table table-striped table-hover" ng-table="tableParams">
-            <thead>
-            <tr>
-                <th>Program</th>
-                <th>Firma</th>
-                <th>Licencja<br/>do</th>
-                <th>NIP</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="license in licenses" ng-mouseover="license.hover = true" ng-mouseout="license.hover = false">
-                <td>{{license.programName}}</td>
-                <td>{{license.company}}</td>
-                <td>{{(license.licenseTermDate | date:'longDate') || "Nieograniczona"}}</td>
-                <td>{{license.nip}}</td>
-            </tr>
-            </tbody>
-        </table>
+    <div in-loader-visible="loadervisible" in-loader-background="true">
+        <div class="btn-group" dropdown>
+            <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                {{selectedYear || 'Wszystkie lata'}} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="year in years">
+                    <a href ng-click="setYear(year)">{{year}}</a>
+                </li>
+                <li role="presentation" class="divider"></li>
+                <li>
+                    <a href ng-click="setYear(null)">Wszystkie lata</a>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group" dropdown>
+            <button type="button" class="btn btn-primary dropdown-toggle" dropdown-toggle>
+                {{selectedMonth || 'Wszystkie miesiące' | monthName}} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li ng-repeat="month in months">
+                    <a href ng-click="setMonth(month)">{{month | monthName}}</a>
+                </li>
+                <li role="presentation" class="divider"></li>
+                <li>
+                    <a href ng-click="setMonth(null)">Wszystkie miesiące</a>
+                </li>
+            </ul>
+        </div>
+        <div loading-container="tableParams.settings().$loading" class="table-responsive">
+            <table class="table table-striped table-hover" ng-table="tableParams">
+                <thead>
+                    <tr>
+                        <th>Program</th>
+                        <th>Firma</th>
+                        <th>Licencja<br />do</th>
+                        <th>NIP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="license in licenses" ng-mouseover="license.hover = true" ng-mouseout="license.hover = false">
+                        <td>{{license.programName}}</td>
+                        <td>{{license.company}}</td>
+                        <td>{{(license.licenseTermDate | date:'longDate') || "Nieograniczona"}}</td>
+                        <td>{{license.nip}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @section scripts
