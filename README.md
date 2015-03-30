@@ -1,4 +1,4 @@
 LicenseGenerator
 ================
 
-License Generator for inSolutions Company
+Simple license generator written in C#, ASP MVC, AngularJS
