@@ -1,6 +1,4 @@
-﻿var app = angular.module('licensegenerator');
-
-app.controller('HistoryController', [
+﻿app.controller('HistoryController', [
     '$scope', '$http', '$filter', 'ngTableParams', function ($scope, $http, $filter, ngTableParams) {
         $scope.loadervisible = true;
         $scope.filter = "";
@@ -15,7 +13,7 @@ app.controller('HistoryController', [
                 $http.post('History/LoadLicenses', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).success(function (data, status, headers, config) {
                     $scope.licenses = data.licenses;
 
-                    params.total(data.count);
+                    params.total(data.count); // set total for recalc pagination
                     $defer.resolve($scope.licenses);
 
                     $scope.loadervisible = false;
@@ -28,3 +26,4 @@ app.controller('HistoryController', [
             $scope.tableParams.reload();
         };
     }]);
+//# sourceMappingURL=history.js.map

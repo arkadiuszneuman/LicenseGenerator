@@ -1,6 +1,5 @@
 ﻿declare var siteUrl;
-
-var app = angular.module('licensegenerator');
+declare var app;
 
 app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParams', function ($scope, $http, $filter, ngTableParams) {
 
