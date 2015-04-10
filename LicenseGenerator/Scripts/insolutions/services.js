@@ -29,7 +29,9 @@ app.factory('inLicenseFormatter', function (inDateFormatter) {
     return {
         FormatLicense: function(lic) {
             var license = angular.copy(lic);
-            license.name = license.name.licenseName;
+            if (!angular.isUndefined(license.name.licenseName))
+                license.name = license.name.licenseName;
+
             if (license.date != null) {
                 license.date = inDateFormatter.customFormatDate(new Date(lic.date), "#YYYY#-#MM#-#DD# #hh#:#mm#:#ss#");
             }

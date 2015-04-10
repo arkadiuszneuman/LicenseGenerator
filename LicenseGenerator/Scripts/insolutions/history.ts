@@ -30,4 +30,8 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
         $scope.filter = filter;
         $scope.tableParams.reload();
     }
+
+    $scope.licenseClicked = function (license) {
+        window.location.href = siteUrl + 'Home/HistoryLicense/' + license.id;
+    }
 }]);
