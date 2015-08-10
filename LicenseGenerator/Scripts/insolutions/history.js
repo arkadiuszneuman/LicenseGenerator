@@ -13,7 +13,7 @@
                 $http.post('History/LoadLicenses', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).success(function (data, status, headers, config) {
                     $scope.licenses = data.licenses;
 
-                    params.total(data.count);
+                    params.total(data.count); // set total for recalc pagination
                     $defer.resolve($scope.licenses);
 
                     $scope.loadervisible = false;
@@ -30,3 +30,4 @@
             window.location.href = siteUrl + 'Home/HistoryLicense/' + license.id;
         };
     }]);
+//# sourceMappingURL=history.js.map
