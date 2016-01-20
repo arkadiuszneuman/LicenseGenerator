@@ -21,19 +21,23 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
 
         $scope.getClients = function (val) {
             return $http.post(siteUrl + "Home/LoadClients", { clientValue: val })
-                .then(function (response) {
-                    if (response.data.success) {
-                        return response.data.object;
+                .success(function (response) {
+                    if (response.success) {
+                        return response.object;
                     }
+                }).error(function (response) {
+                    console.log(response);
                 });
         };
 
         $scope.getProducts = function (val) {
             return $http.post(siteUrl + "Home/LoadProducts", { licenseName: val })
-                .then(function (response) {
-                    if (response.data.success) {
-                        return response.data.object;
+                .success(function (response) {
+                    if (response.success) {
+                        return response.object;
                     }
+                }).error(function(response) {
+                    console.log(response);
                 });
         };
 

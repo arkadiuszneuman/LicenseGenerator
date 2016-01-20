@@ -30,14 +30,14 @@ namespace LicenseGenerator.Controllers
         private readonly INewestVersionLoader newestVersionLoader;
 
         public HomeController()
-            : this(new CountPatternCustomersLoader(10), new LicensePathGenerator(new LicenseCreator()), new LicenseCreator(),  
+            : this(new CountPatternCustomersLoader(10), new LicensePathGenerator(new LicenseCreator()), new LicenseCreator(),
             new LicenseLoader(new LicenseToViewModelConverter(), new StreamLicenseLoader()), new JsonJavascriptConverter(), new CountPatternProductsLoader(10),
             new ProductNewestVersionLoader())
         {
         }
 
-        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicensePathGenerator licenseGenerator, 
-            ILicenseCreator licenseCreator, ILicenseLoader licenseLoader, 
+        public HomeController(IPatternCustomersLoader patternCustomersLoader, ILicensePathGenerator licenseGenerator,
+            ILicenseCreator licenseCreator, ILicenseLoader licenseLoader,
             IJsonConverter jsonConverter, IPatternProductsLoader patternProductsLoader, INewestVersionLoader newestVersionLoader)
         {
             this.patternCustomersLoader = patternCustomersLoader;
@@ -87,27 +87,20 @@ namespace LicenseGenerator.Controllers
         [HttpPost]
         public JsonNetResult LoadProducts(string licenseName)
         {
-            try
-            {
-                IEnumerable<Product> products = patternProductsLoader.LoadProducts(licenseName);
+            IEnumerable<Product> products = patternProductsLoader.LoadProducts(licenseName);
 
-                List<ProductViewModel> productsViewModels = new List<ProductViewModel>();
-                foreach (var product in products)
+            List<ProductViewModel> productsViewModels = new List<ProductViewModel>();
+            foreach (var product in products)
+            {
+                productsViewModels.Add(new ProductViewModel()
                 {
-                    productsViewModels.Add(new ProductViewModel() 
-                    {
-                        LicenseName = product.LicenseName, 
-                        ProgramName = product.Name,
-                        Version = product.NewestVersion
-                    });
-                }
+                    LicenseName = product.LicenseName,
+                    ProgramName = product.Name,
+                    Version = product.NewestVersion
+                });
+            }
 
-                return new JsonNetResult(new SuccessObject(true, productsViewModels));
-            }
-            catch (Exception exception)
-            {
-                return new JsonNetResult(new SuccessObject(false, exception.Message));
-            }
+            return new JsonNetResult(new SuccessObject(true, productsViewModels));
         }
 
         [HttpPost]

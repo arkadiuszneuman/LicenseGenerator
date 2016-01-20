@@ -73,7 +73,7 @@ app.directive('inMailSenderWindow', ['$http', 'inLicenseFormatter', 'toastr', fu
 
     return {
         restrict: 'E',
-        templateUrl: siteUrl + '/Static/MailSender.html',
+        templateUrl: siteUrl + 'Static/MailSender.html',
         link: function (scope, element, attrs) {
             $('#mailsender').on('shown.bs.modal', function () {
                 $('#emails').focus();
