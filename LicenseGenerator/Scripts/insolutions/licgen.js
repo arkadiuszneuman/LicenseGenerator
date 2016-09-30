@@ -123,7 +123,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
     }]);
 function createDefaultLicense($scope, $filter) {
     var date = new Date();
-    date.setMonth(date.getMonth() + 1);
+    date.setDate(date.getDate() + 14);
     $scope.lic.date = $filter('date')(date, 'yyyy-MM-dd');
 }
 ;
@@ -156,7 +156,7 @@ var DropFileConfigurator = (function () {
         dropZone.addEventListener('drop', this.handleFileSelect, false);
     };
     return DropFileConfigurator;
-})();
+}());
 var LicenseGeneratorButtonsCreator = (function () {
     function LicenseGeneratorButtonsCreator() {
     }
@@ -204,7 +204,7 @@ var LicenseGeneratorButtonsCreator = (function () {
         };
     };
     return LicenseGeneratorButtonsCreator;
-})();
+}());
 var DatePickerCreator = (function () {
     function DatePickerCreator() {
     }
@@ -232,4 +232,4 @@ var DatePickerCreator = (function () {
         datepickerPopupConfig.closeText = 'Zamknij';
     };
     return DatePickerCreator;
-})();
+}());

@@ -157,7 +157,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
 function createDefaultLicense($scope, $filter) {
     var date = new Date();
 
-    date.setMonth(date.getMonth() + 1);
+    date.setDate(date.getDate() + 14);
     $scope.lic.date = $filter('date')(date, 'yyyy-MM-dd');
 };
 
