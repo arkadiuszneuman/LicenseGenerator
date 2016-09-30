@@ -51,6 +51,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
             $scope.newestVersion = $model.version;
             $scope.lic.programName = $model.programName;
             $scope.lic.programVersion = "";
+            $scope.lic.privileges = $model.privileges;
         };
 
         $scope.onNipLostFocus = function () {

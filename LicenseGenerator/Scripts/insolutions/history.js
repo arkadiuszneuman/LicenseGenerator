@@ -3,7 +3,7 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
         $scope.filter = "";
         $scope.tableParams = new ngTableParams({
             page: 1,
-            count: 15
+            count: 15 // count per page
         }, {
             counts: [],
             getData: function ($defer, params) {
@@ -11,7 +11,7 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
                 $http.post('History/LoadLicenses', { filter: $scope.filter, page: params.page(), countPerPage: params.count() }).
                     success(function (data, status, headers, config) {
                     $scope.licenses = data.licenses;
-                    params.total(data.count);
+                    params.total(data.count); // set total for recalc pagination
                     $defer.resolve($scope.licenses);
                     $scope.loadervisible = false;
                 });
@@ -25,3 +25,4 @@ app.controller('HistoryController', ['$scope', '$http', '$filter', 'ngTableParam
             window.location.href = siteUrl + 'Home/HistoryLicense/' + license.id;
         };
     }]);
+//# sourceMappingURL=history.js.map

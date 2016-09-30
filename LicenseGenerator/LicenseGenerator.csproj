@@ -201,6 +201,10 @@
     <Compile Include="Migrations\201503172058550_IsForClientLicense.Designer.cs">
       <DependentUpon>201503172058550_IsForClientLicense.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609301043432_DefaultPrivileges.cs" />
+    <Compile Include="Migrations\201609301043432_DefaultPrivileges.Designer.cs">
+      <DependentUpon>201609301043432_DefaultPrivileges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\GeneratedLicense.cs" />
@@ -1111,6 +1115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503172058550_IsForClientLicense.resx">
       <DependentUpon>201503172058550_IsForClientLicense.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609301043432_DefaultPrivileges.resx">
+      <DependentUpon>201609301043432_DefaultPrivileges.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

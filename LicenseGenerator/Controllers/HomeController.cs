@@ -96,7 +96,8 @@ namespace LicenseGenerator.Controllers
                 {
                     LicenseName = product.LicenseName,
                     ProgramName = product.Name,
-                    Version = product.NewestVersion
+                    Version = product.NewestVersion,
+                    DefaultPrivileges = product.Privileges
                 });
             }
 

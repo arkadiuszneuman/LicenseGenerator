@@ -38,6 +38,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
             $scope.newestVersion = $model.version;
             $scope.lic.programName = $model.programName;
             $scope.lic.programVersion = "";
+            $scope.lic.privileges = $model.privileges;
         };
         $scope.onNipLostFocus = function () {
             if (!angular.isUndefined($scope.lic.nip) && $scope.lic.isNipLikeCompany) {
@@ -73,7 +74,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
         $scope.onAddionalInfoFocus = function (e) {
             $timeout(function () {
                 $(e.target).trigger('input');
-                $(e.target).trigger('change');
+                $(e.target).trigger('change'); // for IE
             });
         };
         $scope.stateComparator = function (state, viewValue) {
@@ -83,6 +84,9 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
             var file = $files[0];
             $scope.upload = $upload.upload({
                 url: siteUrl + 'Home/LoadLicense',
+                //method: 'POST' or 'PUT',
+                //headers: {'Authorization': 'xxx'}, // only for html5
+                //withCredentials: true,
                 data: { objectToUpload: file },
                 file: file,
             }).success(function (data, status, headers, config) {
@@ -133,7 +137,7 @@ var DropFileConfigurator = (function () {
     DropFileConfigurator.prototype.handleFileSelect = function (evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        var files = evt.dataTransfer.files;
+        var files = evt.dataTransfer.files; // FileList object.
         var file = files[0];
         var reader = new FileReader();
         reader.onload = (function (theFile) {
@@ -143,11 +147,20 @@ var DropFileConfigurator = (function () {
             };
         })(file);
         reader.readAsText(file);
+        //// files is a FileList of File objects. List some properties.
+        //var output = [];
+        //for (var i = 0, f; f = files[i]; i++) {
+        //    output.push('<li><strong>', f.name, '</strong> (', f.type || 'n/a', ') - ',
+        //        f.size, ' bytes, last modified: ',
+        //        f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+        //        '</li>');
+        //}
+        //document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
     };
     DropFileConfigurator.prototype.handleDragOver = function (evt) {
         evt.stopPropagation();
         evt.preventDefault();
-        evt.dataTransfer.dropEffect = 'move';
+        evt.dataTransfer.dropEffect = 'move'; // Explicitly show this is a copy.
     };
     DropFileConfigurator.prototype.configureDropFiles = function ($scope) {
         DropFileConfigurator.$scope = $scope;
@@ -172,6 +185,7 @@ var LicenseGeneratorButtonsCreator = (function () {
         $scope.generateLicense = function (lic) {
             var license = inLicenseFormatter.FormatLicense(lic);
             $.post(siteUrl + "Home/GenerateLicense", { licenseViewModel: license }, function (result) {
+                //var blob = new Blob([result], { type: "example/binary" });
                 saveToDisk(siteUrl + result, that.getLicenseName(license) + ".lic");
             });
         };
@@ -227,9 +241,11 @@ var DatePickerCreator = (function () {
             formatYear: 'yy',
             startingDay: 1,
         };
+        // TRANSLATION
         datepickerPopupConfig.currentText = 'Dzisiaj';
         datepickerPopupConfig.clearText = 'Licencja nieograniczona';
         datepickerPopupConfig.closeText = 'Zamknij';
     };
     return DatePickerCreator;
 }());
+//# sourceMappingURL=licgen.js.map
