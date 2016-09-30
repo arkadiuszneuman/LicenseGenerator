@@ -21,22 +21,22 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
 
         $scope.getClients = function (val) {
             return $http.post(siteUrl + "Home/LoadClients", { clientValue: val })
-                .success(function (response) {
-                    if (response.success) {
-                        return response.object;
+                .then(function (response) {
+                    if (response.data.success) {
+                        return response.data.object;
                     }
-                }).error(function (response) {
+                }).catch(function (response) {
                     console.log(response);
                 });
         };
 
         $scope.getProducts = function (val) {
             return $http.post(siteUrl + "Home/LoadProducts", { licenseName: val })
-                .success(function (response) {
-                    if (response.success) {
-                        return response.object;
+                .then(function (response) {
+                    if (response.data.success) {
+                        return response.data.object;
                     }
-                }).error(function(response) {
+                }).catch(function (response) {
                     console.log(response);
                 });
         };
@@ -51,7 +51,7 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
             $scope.newestVersion = $model.version;
             $scope.lic.programName = $model.programName;
             $scope.lic.programVersion = "";
-            $scope.lic.privileges = $model.privileges;
+            $scope.lic.privileges = $model.defaultPrivileges;
         };
 
         $scope.onNipLostFocus = function () {
@@ -118,13 +118,13 @@ app.controller('LicenseGeneratorController', ['$scope', 'datepickerPopupConfig',
                 // See #40#issuecomment-28612000 for sample code
 
             }).success(function (data, status, headers, config) {
-                    if (data.success === true) {
-                        $scope.lic = data.object;
-                    } else {
-                        $scope.message = data.object;
-                        $('#alertModal').modal('show');
-                    }
-                });
+                if (data.success === true) {
+                    $scope.lic = data.object;
+                } else {
+                    $scope.message = data.object;
+                    $('#alertModal').modal('show');
+                }
+            });
         }
 
         $scope.assignNewestVersion = function () {
